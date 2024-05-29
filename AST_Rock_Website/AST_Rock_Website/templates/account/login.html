@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load allauth account %}
+
+{% block title %}Sign In{% endblock %}
+
+{% block content %}
+<section id="one">
+    <div class="inner">
+        <header class="major">
+            <h1>{% trans "Sign In" %}</h1>
+        </header>
+        {% if not SOCIALACCOUNT_ONLY %}
+            <p>
+                {% blocktranslate %}If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.{% endblocktranslate %}
+            </p>
+            <form method="post" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                <div class="row gtr-uniform">
+                    <div class="col-12 col-12-xsmall">
+                        {{ form.login.label_tag }}
+                        {{ form.login }}
+                    </div>
+                    <div class="col-12 col-12-xsmall">
+                        {{ form.password.label_tag }}
+                        {{ form.password }}
+                    </div>
+                    <div class="col-12">
+                        {{ redirect_field }}
+                    </div>
+                    <div class="col-12">
+                        <ul class="actions">
+                            <li><button type="submit" class="button primary">{% trans "Sign In" %}</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        {% endif %}
+        {% if LOGIN_BY_CODE_ENABLED %}
+            <hr />
+            <h2>
+                <a class="button prominent secondary" href="{{ request_login_code_url }}">{% trans "Mail me a sign-in code" %}</a>
+            </h2>
+        {% endif %}
+        {% if SOCIALACCOUNT_ENABLED %}
+            {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

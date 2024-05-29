@@ -16,9 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include('dashboard.urls')),
+    path('landing/', TemplateView.as_view(template_name='landing.html'), name='landing'),
+    path('generic/', TemplateView.as_view(template_name='generic.html'), name='generic'),
+    path('elements/', TemplateView.as_view(template_name='elements.html'), name='elements'),
+    path('get_started/', TemplateView.as_view(template_name='get_started.html'), name='get_started'),
+    path('accounts/', include('allauth.urls')),
 ]
