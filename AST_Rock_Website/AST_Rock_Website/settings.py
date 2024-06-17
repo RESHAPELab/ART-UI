@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-z*zj)3tkrratfccl37agj%^f27!o=z+c#*_zt9%zkut)g!9d59'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'optional-default-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['AST_Rock_Website.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -53,16 +53,37 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
 
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+SOCIAL_AUTH_GITHUB_KEY = '#############'
+SOCIAL_AUTH_GITHUB_SECRET = '#################'
+
+# Specifies that only social login should be used (no username/password)
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
+SOCIALACCOUNT_AUTO_SIGNUP = True
+
+# Ensure social account is enabled
+SOCIALACCOUNT_ENABLED = True
+SOCIALACCOUNT_STORE_TOKENS = True
+
+
+# GitHub configuration - Make sure to replace CLIENT_ID and SECRET_KEY with your actual GitHub App credentials
 SOCIALACCOUNT_PROVIDERS = {
     'github': {
         'APP': {
-            'client_id': 'your_github_client_id',
-            'secret': 'your_github_client_secret',
-            'key': ''
-        }
+            'client_id': 'Ov23lijnUmdG7xvn06I0',
+            'secret': 'ac65ab83423f0950cdc67479182e7bca7d485c63',
+            'key' : ''
+        },
+        'SCOPE': ['user', 'user:email', 'repo'],  # Added 'repo' scope
+        'EXTRA_DATA': [
+            ('login', 'username'),
+        ]
     }
 }
 
@@ -90,6 +111,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
+
             ],
         },
     },
@@ -101,12 +124,11 @@ WSGI_APPLICATION = 'AST_Rock_Website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+import dj_database_url
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(default='postgres://localhost')
 }
+
 
 
 # Password validation
@@ -143,10 +165,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'AST_Rock_Website/static'),
-]
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

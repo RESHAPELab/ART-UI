@@ -1,11 +1,13 @@
+{% load static %}
+{% load socialaccount %}
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>AST by Fabio</title>
+		<title>AST</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="static/assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="static/assets/css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="{% static 'css/main.css' %}" />
+		<noscript><link rel="stylesheet" href="{% static 'css/noscript.css' %}" /></noscript>
 	</head>
 	<body class="is-preload">
 
@@ -14,7 +16,7 @@
 
 				<!-- Header -->
 					<header id="header" class="alt">
-						<a href="index.html" class="logo"><strong>AST</strong> <span>by Fabio</span></a>
+						<a href="{% url 'index' %}" class="logo"><strong>AST</strong> <span>Precision at Every Push</span></a>
 						<nav>
 							<a href="#menu">Menu</a>
 						</nav>
@@ -23,15 +25,16 @@
 				<!-- Menu -->
 					<nav id="menu">
 						<ul class="links">
-							<li><a href="{% url 'index' %}">Home</a></li>
-							<li><a href="landing.html">Landing</a></li>
-							<li><a href="generic.html">Generic</a></li>
-							<li><a href="elements.html">Elements</a></li>
+							<li><a href="{% url 'index' %}" class="button primary fit">Home</a></li>
 						</ul>
 						<ul class="actions stacked">
-							<li><a href="{% url 'dashboard' %}" class="button primary fit">Get Started</a></li>
-							{% if not user.is_authenticated %}
-								<li><a href="{% url 'account_login' %}" class="button fit">Log In</a></li>
+							{% if user.is_authenticated %}
+								<!-- Show dashboard link if user is logged in -->
+								<li><a href="{% url 'your_dashboard' %}" class="button primary fit">Your Dashboard</a></li>
+								<li><a href="{% url 'account_logout' %}" class="button primary fit">Log Out</a></li>
+							{% else %}
+								<!-- Show login link if user is not logged in -->
+								<li><a href="{% url 'account_login' %}" class="button primary fit">Log In</a></li>
 							{% endif %}
 						</ul>
 					</nav>
@@ -43,12 +46,12 @@
 								<h1>AST</h1>
 							</header>
 							<div class="content">
-								<p>A responsive site template designed by HTML5 UP<br />
-								and released under the Creative Commons.</p>
+								<p>This project automates the labeling of GitHub repositories based on their content, using a taxonomy of domains and subdomains. It implements a precision threshold of 75% to ensure that only high-confidence classifications are applied, enhancing the organization and searchability of repositories.</p>
 								<ul class="actions">
-									<li><a href="#one" class="button next scrolly">Get Started</a></li>
-									{% if not user.is_authenticated %}
-										<li><a href="{% url 'account_login' %}" class="button">Log In</a></li>
+									{% if user.is_authenticated %}
+										<li><a href="{% url 'your_dashboard' %}"  class="button next scrolly">Your Dashboard</a></li>
+									{% else %}
+										<li><a href="{% provider_login_url 'github' method='oauth2' %}" class="button">Log In</a></li>
 									{% endif %}
 								</ul>
 							</div>
@@ -62,69 +65,60 @@
 							<section id="one" class="tiles">
 								<article>
 									<span class="image">
-										<img src="static/images/pic01.jpg" alt="" />
+										<img src="{% static 'images/pic01.jpg' %}" alt="" />
 									</span>
 									<header class="major">
-										<h3><a href="landing.html" class="link">Aliquam</a></h3>
-										<p>Ipsum dolor sit amet</p>
+										<h3><a href="{% url 'index' %}" class="link">Team Engine</a></h3>
+										<p>Handles the core processing of data, including fetching and storing pull requests data.
+											Creates Abstract Syntax Trees (AST) from the files in the pull requests, identifies APIs and functions, and establishes their connections.
+											Uses AI to classify APIs into a set list of domains and functions into subdomains, storing these classifications in databases to minimize redundant processing.</p>
 									</header>
 								</article>
 								<article>
 									<span class="image">
-										<img src="images/pic02.jpg" alt="" />
+										<img src="{% static 'images/pic02.jpg' %}" alt="" />
 									</span>
 									<header class="major">
-										<h3><a href="landing.html" class="link">Tempus</a></h3>
-										<p>feugiat amet tempus</p>
+										<h3><a href="{% url 'index' %}" class="link">Team Data Mining</a></h3>
+										<p>Focuses on extracting and preparing data from GitHub repositories.
+											Converts data into usable formats like CSV and pickle, making it easier for other teams to integrate this data into their systems.
+											Cleans and fuses data from different sources to ensure it is accurate and comprehensive for further analysis.</p>
 									</header>
 								</article>
 								<article>
 									<span class="image">
-										<img src="images/pic03.jpg" alt="" />
+										<img src="{% static 'images/pic03.jpg' %}" alt="" />
 									</span>
 									<header class="major">
-										<h3><a href="landing.html" class="link">Magna</a></h3>
-										<p>Lorem etiam nullam</p>
+										<h3><a href="{% url 'index' %}" class="link">Team Predictions</a></h3>
+										<p>Develops and manages machine learning models to predict classifications of new data.
+											Utilizes models to analyze and categorize pull requests and other GitHub activities into predefined domains and subdomains.
+											Ensures that the prediction models meet specified metrics like precision, recall, and f-measure, and adjusts thresholds to optimize model performance.</p>
 									</header>
 								</article>
 								<article>
 									<span class="image">
-										<img src="images/pic04.jpg" alt="" />
+										<img src="{% static 'images/pic04.jpg' %}.jpg" alt="" />
 									</span>
 									<header class="major">
-										<h3><a href="landing.html" class="link">Ipsum</a></h3>
-										<p>Nisl sed aliquam</p>
+										<h3><a href="{% url 'index' %}" class="link">Team UI</a></h3>
+										<p>Responsible for populating the user interface with data.
+											Ensures that the UI is updated with the latest classification results and relevant data from other teams.
+											Conducts user studies to test if the UI improvements have provided better context and usability for contributors.</p>
 									</header>
 								</article>
-								<article>
-									<span class="image">
-										<img src="images/pic05.jpg" alt="" />
-									</span>
-									<header class="major">
-										<h3><a href="landing.html" class="link">Consequat</a></h3>
-										<p>Ipsum dolor sit amet</p>
-									</header>
-								</article>
-								<article>
-									<span class="image">
-										<img src="images/pic06.jpg" alt="" />
-									</span>
-									<header class="major">
-										<h3><a href="landing.html" class="link">Etiam</a></h3>
-										<p>Feugiat amet tempus</p>
-									</header>
-								</article>
+						
 							</section>
 
 						<!-- Two -->
 							<section id="two">
 								<div class="inner">
 									<header class="major">
-										<h2>Massa libero</h2>
+										<h2>The AST Team</h2>
 									</header>
-									<p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus amet pharetra et feugiat tempus.</p>
+									<p>Each team's efforts are interconnected, contributing to a comprehensive system that leverages machine learning and AI to enhance the management and categorization of software development tasks within GitHub repositories.</p>
 									<ul class="actions">
-										<li><a href="landing.html" class="button next">Get Started</a></li>
+										<li><a href="{% url 'your_dashboard' %}" class="button next">Your Dashboard</a></li>
 									</ul>
 								</div>
 							</section>
@@ -161,7 +155,7 @@
 									<div class="contact-method">
 										<span class="icon solid alt fa-envelope"></span>
 										<h3>Email</h3>
-										<a href="#">information@untitled.tld</a>
+										<a href="#">jackutzerath35@gmail.com</a>
 									</div>
 								</section>
 								<section>
@@ -175,8 +169,8 @@
 									<div class="contact-method">
 										<span class="icon solid alt fa-home"></span>
 										<h3>Address</h3>
-										<span>1234 Somewhere Road #5432<br />
-										Nashville, TN 00000<br />
+										<span>3300 West Camelback Road<br />
+										Phoenix, AZ 85017<br />
 										United States of America</span>
 									</div>
 								</section>
@@ -185,31 +179,18 @@
 					</section>
 
 				<!-- Footer -->
-					<footer id="footer">
-						<div class="inner">
-							<ul class="icons">
-								<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-								<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-								<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-								<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-							</ul>
-							<ul class="copyright">
-								<li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-							</ul>
-						</div>
-					</footer>
-
+					
 			</div>
 
-		<!-- Scripts -->
-			<script src="static/assets/js/jquery.min.js"></script>
-			<script src="static/assets/js/jquery.scrolly.min.js"></script>
-			<script src="static/assets/js/jquery.scrollex.min.js"></script>
-			<script src="static/assets/js/browser.min.js"></script>
-			<script src="static/assets/js/breakpoints.min.js"></script>
-			<script src="static/assets/js/util.js"></script>
-			<script src="static/assets/js/main.js"></script>
+			<!-- Scripts -->
+			<script src="{% static 'js/jquery.min.js' %}"></script>
+			<script src="{% static 'js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'js/browser.min.js' %}"></script>
+			<script src="{% static 'js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'js/util.js' %}"></script>
+			<script src="{% static 'js/main.js' %}"></script>
+			
 
 	</body>
 </html>
