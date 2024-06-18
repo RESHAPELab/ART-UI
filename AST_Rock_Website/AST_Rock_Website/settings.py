@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'optional-default-secret-key')
+SECRET_KEY = 'django-insecure-z*zj)3tkrratfccl37agj%^f27!o=z+c#*_zt9%zkut)g!9d59'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -75,7 +75,7 @@ SOCIALACCOUNT_PROVIDERS = {
     'github': {
         'APP': {
             'client_id': 'Ov23lijnUmdG7xvn06I0',
-            'secret': os.environ.get('GITHUB_SECRET_KEY'),
+            'secret': 'ac65ab83423f0950cdc67479182e7bca7d485c63',
             'key' : ''
         },
         'SCOPE': ['user', 'user:email', 'repo'],  # Added 'repo' scope
