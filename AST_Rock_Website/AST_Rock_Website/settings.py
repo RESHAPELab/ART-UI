@@ -57,8 +57,6 @@ AUTHENTICATION_BACKENDS = (
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-SOCIAL_AUTH_GITHUB_KEY = '#############'
-SOCIAL_AUTH_GITHUB_SECRET = '#################'
 
 # Specifies that only social login should be used (no username/password)
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
@@ -77,7 +75,7 @@ SOCIALACCOUNT_PROVIDERS = {
     'github': {
         'APP': {
             'client_id': 'Ov23lijnUmdG7xvn06I0',
-            'secret': 'ac65ab83423f0950cdc67479182e7bca7d485c63',
+            'secret': os.environ.get('GITHUB_SECRET_KEY'),
             'key' : ''
         },
         'SCOPE': ['user', 'user:email', 'repo'],  # Added 'repo' scope
