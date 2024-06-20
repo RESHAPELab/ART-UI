@@ -3,112 +3,169 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>{{ repo_name }}</title>
+        <title>AST</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="{% static 'css/main.css' %}" />
         <noscript><link rel="stylesheet" href="{% static 'css/noscript.css' %}" /></noscript>
     </head>
-    <body class="is-preload">
+	<body class="is-preload">
 
-        <!-- Wrapper -->
-        <div id="wrapper">
+		<!-- Wrapper -->
+			<div id="wrapper">
 
-            <!-- Header -->
-            <header id="header" class="alt">
-                <a href="{% url 'index' %}" class="logo"><strong>AST</strong> <span>Precision at Every Push</span></a>
-                <nav>
-                    <a href="#menu">Menu</a>
-                </nav>
-            </header>
+				<!-- Header -->
+					<header id="header" class="alt">
+						<a href="{% url 'index' %}" class="logo"><strong>AST</strong> <span>Precision at Every Push</span></a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
 
-            <!-- Menu -->
-            <nav id="menu">
-                <ul class="links">
-                    <li><a href="{% url 'index' %}" class="button primary fit">Home</a></li>
-                </ul>
-                <ul class="actions stacked">
-                    {% if user.is_authenticated %}
-                        <li><a href="{% url 'account_logout' %}" class="button primary fit">Log Out</a></li>
-                    {% else %}
-                        <li><a href="{% url 'account_login' %}" class="button primary fit">Log In</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="{% url 'index' %}" class="button primary fit">Home</a></li>
+							
+						</ul>
+						<ul class="actions stacked">
+							{% if user.is_authenticated %}
+								<li><a href="{% url 'account_logout' %}" class="button primary fit">Log Out</a></li>
+							{% else %}
+								<!-- Show login link if user is not logged in -->
+								<li><a href="{% url 'account_login' %}" class="button primary fit">Log In</a></li>
+							{% endif %}
+						</ul>
+					</nav>
 
-            <!-- Main -->
-            <div id="main">
-                <section id="content" class="main">
-                    <header class="major">
-                        <h1>{{ repo_name }}</h1>
-                    </header>
-                    <p>Details about the repository will go here.</p>
-                </section>
-            </div>
+				<!-- Banner -->
+					<section id="banner" class="major">
+						<div class="inner">
+							<header class="major">
+								<h1>Repositories By Link</h1>
+							</header>
+							<div class="content">
+								<p>This project automates the labeling of GitHub repositories based on their content, using a taxonomy of domains and subdomains. It implements a precision threshold of 75% to ensure that only high-confidence classifications are applied, enhancing the organization and searchability of repositories.</p>
+								<ul class="actions">
+									{% if user.is_authenticated %}
+										<li><a href="{% url 'index' %}"  class="button next scrolly">Home</a></li>
+									{% endif %}
+								</ul>
+							</div>
+						</div>
+					</section>
 
-            <!-- Contact -->
-            <section id="contact">
-                <div class="inner">
-                    <section>
-                        <form method="post" action="#">
-                            <div class="fields">
-                                <div class="field half">
-                                    <label for="name">Name</label>
-                                    <input type="text" name="name" id="name" />
-                                </div>
-                                <div class="field half">
-                                    <label for="email">Email</label>
-                                    <input type="text" name="email" id="email" />
-                                </div>
-                                <div class="field">
-                                    <label for="message">Message</label>
-                                    <textarea name="message" id="message" rows="6"></textarea>
-                                </div>
-                            </div>
-                            <ul class="actions">
-                                <li><input type="submit" value="Send Message" class="primary" /></li>
-                                <li><input type="reset" value="Clear" /></li>
-                            </ul>
-                        </form>
-                    </section>
-                    <section class="split">
-                        <section>
-                            <div class="contact-method">
-                                <span class="icon solid alt fa-envelope"></span>
-                                <h3>Email</h3>
-                                <a href="mailto:jackutzerath35@gmail.com">jackutzerath35@gmail.com</a>
-                            </div>
-                        </section>
-                        <section>
-                            <div class="contact-method">
-                                <span class="icon solid alt fa-phone"></span>
-                                <h3>Phone</h3>
-                                <span>(000) 000-0000 x12387</span>
-                            </div>
-                        </section>
-                        <section>
-                            <div class="contact-method">
-                                <span class="icon solid alt fa-home"></span>
-                                <h3>Address</h3>
-                                <span>3300 West Camelback Road<br />
-                                Phoenix, AZ 85017<br />
-                                United States of America</span>
-                            </div>
-                        </section>
-                    </section>
-                </div>
-            </section>
+				<!-- Main -->
+					<div id="main">
 
-        </div>
+						<!-- One -->
+							<section id="one" class="tiles">
+								<article>
+									<span class="image">
+										<img src="{% static 'images/pic01.jpg' %}" alt="" />
+									</span>
+									<header class="major">
+										<h3><a href="{% url 'index' %}" class="link">Your Respositores</a></h3>
+										<p>Handles the core processing of data, including fetching and storing pull requests data.
+											Creates Abstract Syntax Trees (AST) from the files in the pull requests, identifies APIs and functions, and establishes their connections.
+											Uses AI to classify APIs into a set list of domains and functions into subdomains, storing these classifications in databases to minimize redundant processing.</p>
+									</header>
+								</article>
+								<article>
+									<span class="image">
+										<img src="{% static 'images/pic02.jpg' %}" alt="" />
+									</span>
+									<header class="major">
+										<h3><a href="{% url 'index' %}" class="link">Search by Link</a></h3>
+										<p>Focuses on extracting and preparing data from GitHub repositories.
+											Converts data into usable formats like CSV and pickle, making it easier for other teams to integrate this data into their systems.
+											Cleans and fuses data from different sources to ensure it is accurate and comprehensive for further analysis.</p>
+									</header>
+								</article>
+								
+						
+							</section>
 
-        <!-- Scripts -->
-        <script src="{% static 'js/jquery.min.js' %}"></script>
-        <script src="{% static 'js/jquery.scrolly.min.js' %}"></script>
-        <script src="{% static 'js/jquery.scrollex.min.js' %}"></script>
-        <script src="{% static 'js/browser.min.js' %}"></script>
-        <script src="{% static 'js/breakpoints.min.js' %}"></script>
-        <script src="{% static 'js/util.js' %}"></script>
-        <script src="{% static 'js/main.js' %}"></script>
+						<!-- Two -->
+							<section id="two">
+								<div class="inner">
+									<header class="major">
+										<h2>The AST Team</h2>
+									</header>
+									<p>Each team's efforts are interconnected, contributing to a comprehensive system that leverages machine learning and AI to enhance the management and categorization of software development tasks within GitHub repositories.</p>
+									<ul class="actions">
+										<li><a href="{% url 'index' %}" class="button next">Home</a></li>
+									</ul>
+								</div>
+							</section>
 
-    </body>
+					</div>
+
+				<!-- Contact -->
+					<section id="contact">
+						<div class="inner">
+							<section>
+								<form method="post" action="#">
+									<div class="fields">
+										<div class="field half">
+											<label for="name">Name</label>
+											<input type="text" name="name" id="name" />
+										</div>
+										<div class="field half">
+											<label for="email">Email</label>
+											<input type="text" name="email" id="email" />
+										</div>
+										<div class="field">
+											<label for="message">Message</label>
+											<textarea name="message" id="message" rows="6"></textarea>
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send Message" class="primary" /></li>
+										<li><input type="reset" value="Clear" /></li>
+									</ul>
+								</form>
+							</section>
+							<section class="split">
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-envelope"></span>
+										<h3>Email</h3>
+										<a href="#">jackutzerath35@gmail.com</a>
+									</div>
+								</section>
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-phone"></span>
+										<h3>Phone</h3>
+										<span>(000) 000-0000 x12387</span>
+									</div>
+								</section>
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-home"></span>
+										<h3>Address</h3>
+										<span>3300 West Camelback Road<br />
+										Phoenix, AZ 85017<br />
+										United States of America</span>
+									</div>
+								</section>
+							</section>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					
+			</div>
+
+		<!-- Scripts -->
+			<script src="{% static 'js/jquery.min.js' %}"></script>
+			<script src="{% static 'js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'js/browser.min.js' %}"></script>
+			<script src="{% static 'js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'js/util.js' %}"></script>
+			<script src="{% static 'js/main.js' %}"></script>
+
+	</body>
 </html>
