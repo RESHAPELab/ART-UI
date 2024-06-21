@@ -42,10 +42,10 @@
 					<section id="banner" class="major">
 						<div class="inner">
 							<header class="major">
-								<h1>Repositories By Link</h1>
+								<h1>{{ repo_name }}</h1>
 							</header>
 							<div class="content">
-								<p>This project automates the labeling of GitHub repositories based on their content, using a taxonomy of domains and subdomains. It implements a precision threshold of 75% to ensure that only high-confidence classifications are applied, enhancing the organization and searchability of repositories.</p>
+								<p>Here is what we got for you:</p>
 								<ul class="actions">
 									{% if user.is_authenticated %}
 										<li><a href="{% url 'index' %}"  class="button next scrolly">Home</a></li>
@@ -65,10 +65,8 @@
 										<img src="{% static 'images/pic01.jpg' %}" alt="" />
 									</span>
 									<header class="major">
-										<h3><a href="{% url 'index' %}" class="link">Your Respositores</a></h3>
-										<p>Handles the core processing of data, including fetching and storing pull requests data.
-											Creates Abstract Syntax Trees (AST) from the files in the pull requests, identifies APIs and functions, and establishes their connections.
-											Uses AI to classify APIs into a set list of domains and functions into subdomains, storing these classifications in databases to minimize redundant processing.</p>
+										<h3><a href="{% url 'index' %}" class="link">Open_issues</a></h3>
+										<p></p>
 									</header>
 								</article>
 								<article>
@@ -76,10 +74,8 @@
 										<img src="{% static 'images/pic02.jpg' %}" alt="" />
 									</span>
 									<header class="major">
-										<h3><a href="{% url 'index' %}" class="link">Search by Link</a></h3>
-										<p>Focuses on extracting and preparing data from GitHub repositories.
-											Converts data into usable formats like CSV and pickle, making it easier for other teams to integrate this data into their systems.
-											Cleans and fuses data from different sources to ensure it is accurate and comprehensive for further analysis.</p>
+										<h3><a href="{% url 'index' %}" class="link">label</a></h3>
+										<p></p>
 									</header>
 								</article>
 								
@@ -101,60 +97,6 @@
 
 					</div>
 
-				<!-- Contact -->
-					<section id="contact">
-						<div class="inner">
-							<section>
-								<form method="post" action="#">
-									<div class="fields">
-										<div class="field half">
-											<label for="name">Name</label>
-											<input type="text" name="name" id="name" />
-										</div>
-										<div class="field half">
-											<label for="email">Email</label>
-											<input type="text" name="email" id="email" />
-										</div>
-										<div class="field">
-											<label for="message">Message</label>
-											<textarea name="message" id="message" rows="6"></textarea>
-										</div>
-									</div>
-									<ul class="actions">
-										<li><input type="submit" value="Send Message" class="primary" /></li>
-										<li><input type="reset" value="Clear" /></li>
-									</ul>
-								</form>
-							</section>
-							<section class="split">
-								<section>
-									<div class="contact-method">
-										<span class="icon solid alt fa-envelope"></span>
-										<h3>Email</h3>
-										<a href="#">jackutzerath35@gmail.com</a>
-									</div>
-								</section>
-								<section>
-									<div class="contact-method">
-										<span class="icon solid alt fa-phone"></span>
-										<h3>Phone</h3>
-										<span>(000) 000-0000 x12387</span>
-									</div>
-								</section>
-								<section>
-									<div class="contact-method">
-										<span class="icon solid alt fa-home"></span>
-										<h3>Address</h3>
-										<span>3300 West Camelback Road<br />
-										Phoenix, AZ 85017<br />
-										United States of America</span>
-									</div>
-								</section>
-							</section>
-						</div>
-					</section>
-
-				<!-- Footer -->
 					
 			</div>
 

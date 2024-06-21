@@ -11,6 +11,8 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount, SocialToken
 import requests
+from open_issue_classification import get_open_issues, get_gpt_responses, fine_tune_gpt
+import json
 
 
 @login_required
@@ -50,8 +52,51 @@ def your_repositories(request):
 
 @login_required
 def repo_detail(request, repo_name):
+
+    token = request.session.get('github_token')
+    username = request.session.get('username')
+    repositories = request.session.get('repositories', [])
+
+    # Load the domains from the file
+    with open('Domains.json', 'r') as file:
+        domains_data = json.load(file)
+
+    # Format the domains and subdomains for the prompt
+    domains_list = []
+    for domain, subdomains in domains_data.items():
+        for subdomain in subdomains:
+            for key, description in subdomain.items():
+                domains_list.append(f"{key} ({description})")
+
+    domains_data = ', '.join(domains_list)
+
+    if repo_name not in repositories:
+        return render(request, 'repo_detail.html', {
+            'error': 'Repository not found or access not authorized.'
+        })
+
+    # Call to get_open_issues function 
+    issues = get_open_issues(username, repo_name, token)
+
+    if issues is None:
+        return render(request, 'repo_detail.html', {
+            'error': 'Failed to fetch issues or no issues found.'
+        })
+    else:
+        openai_key = "sk-proj-ygVQ0psYETnLMkmAqXdjT3BlbkFJCeOYP4VgesLC892PCx2N"  # Ensure you store OpenAI API key in session or settings
+        issue_classifier = fine_tune_gpt(openai_key)  # You need to define or get this model id somehow
+        domains_string = domains_data
+        
+        responses = get_gpt_responses(issues, issue_classifier, domains_string, openai_key)
+    # Adapt issue data for display if necessary
+        
+
+    return render(request, 'repo_detail.html', {
+        'repo_name': repo_name,
+        'issues': issues,
+        'responses' : responses
+    })
     
-    return render(request, 'repo_detail.html', {'repo_name': repo_name})
     
 def index(request):
     return render(request, 'index.html')

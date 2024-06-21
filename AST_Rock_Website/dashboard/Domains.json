@@ -1,0 +1,250 @@
+{
+    "Application": [
+        {"Application-Integration": "Pertains to combining the application with other systems or platforms for enhanced functionality."},
+        {"Application-Plugin Management": "Involves handling, updating, and configuring add-ons that extend the application's capabilities."},
+        {"Application-User Customization": "Allows users to modify the application's settings or features according to their preferences."},
+        {"Application-App Configuration": "Focuses on setting up initial application settings and adjusting features to meet specific needs."},
+        {"Application-Version Control": "Deals with managing changes to application documents, programs, and other information stored as part of the development process."},
+        {"Application-Compatibility Checks": "Ensures the application functions correctly across different devices, operating systems, or with other applications."}
+    ],
+    "Application Performance Manager": [
+        {"Application Performance Manager-Performance Monitoring": "Tracks and analyzes the application performance to ensure it meets the desired standards."},
+        {"Application Performance Manager-Resource Allocation": "Manages and optimizes the distribution of resources used by the application for efficient performance."},
+        {"Application Performance Manager-Error Detection": "Identifies and reports errors within the application to help maintain stability and reliability."},
+        {"Application Performance Manager-Load Balancing": "Distributes workloads evenly across servers to ensure optimal resource use and performance."},
+        {"Application Performance Manager-Traffic Management": "Oversees and controls the flow of data within the application to prevent bottlenecks."},
+        {"Application Performance Manager-Diagnostic Tools": "Provides utilities to analyze, diagnose, and resolve issues in application performance."}
+    ],
+    "Big Data": [
+        {"Big Data-Data Processing": "Handles the manipulation and transformation of large data sets for analysis and reporting."},
+        {"Big Data-Data Storage": "Focuses on efficient storage solutions that manage large volumes of data."},
+        {"Big Data-Data Analysis": "Involves examining data sets to draw conclusions about the information they contain."},
+        {"Big Data-Real-Time Processing": "Deals with the processing of data as it is received, providing immediate outputs and responses."},
+        {"Big Data-Batch Processing": "Involves processing data in large batches, allowing for efficient handling of large volumes of data."},
+        {"Big Data-Data Visualization": "Transforms data into visual contexts, such as graphs or charts, to make data easier to understand and actionable."}
+    ],
+    "Cloud": [
+        {"Cloud-Resource Management": "Focuses on the efficient use of cloud resources to optimize cost and performance."},
+        {"Cloud-Virtualization": "Involves creating virtual versions of devices and resources for scalability and efficiency."},
+        {"Cloud-Scalability Solutions": "Pertains to strategies and technologies that enable cloud services to expand in capability without losing performance."},
+        {"Cloud-Cloud Security": "Ensures the protection of data stored online from theft, leakage, and deletion."},
+        {"Cloud-Data Migration": "Deals with moving data, applications, or other business elements to a cloud environment."},
+        {"Cloud-Service Configuration": "Involves setting up cloud services according to specifications and requirements."}
+    ],
+    "Computer Graphics": [
+        {"Computer Graphics-Image Rendering": "Converts data from a model into a visual format that can be viewed as images or animations."},
+        {"Computer Graphics-Animation": "The process of creating the illusion of movement by displaying a series of pictures or frames."},
+        {"Computer Graphics-Modeling": "The creation of 3D objects within a scene."},
+        {"Computer Graphics-Texture Mapping": "Applies a surface texture to a 3D model to give it more realism."},
+        {"Computer Graphics-Visual Effects": "Techniques used in media to create imagined environments and characters."},
+        {"Computer Graphics-Graphics Optimization": "Enhances the performance and quality of the graphical output."}
+    ],
+    "Data Structure": [
+        {"Data Structure-Linear Structures": "Manages data elements arranged in a linear sequence, such as arrays and lists."},
+        {"Data Structure-Tree Structures": "Handles hierarchical data structures where each node contains one or more child nodes."},
+        {"Data Structure-Graph Structures": "Deals with data elements organized as a network of interconnected nodes."},
+        {"Data Structure-Data Sorting": "Involves arranging data into a defined order based on their attributes."},
+        {"Data Structure-Search Algorithms": "Methods used to locate specific data among a collection of data."},
+        {"Data Structure-Data Manipulation": "The process of changing data to make it more organized and easier to read."}
+    ],
+    "Databases": [
+        {"Databases-Query Execution": "Handles the process of executing queries to retrieve or manipulate data within a database."},
+        {"Databases-Transaction Management": "Manages database transactions to ensure data integrity and handle concurrent access."},
+        {"Databases-Schema Design": "Involves designing the structure of databases including tables, relationships, and data types."},
+        {"Databases-Database Security": "Focuses on protecting database content from unauthorized access or corruption."},
+        {"Databases-Backup and Recovery": "Deals with creating backups of data and restoring data from backups in case of data loss."},
+        {"Databases-Database Optimization": "Enhances the performance of the database by optimizing queries and indices."}
+    ],
+    "Software Development and IT Operations": [
+        {"Software Development and IT Operations-Continuous Integration": "Automates the merging and testing of code, helping to identify integration errors early."},
+        {"Software Development and IT Operations-Continuous Deployment": "Automatically deploys all code changes to a testing or production environment after the build stage."},
+        {"Software Development and IT Operations-Automated Testing": "Utilizes tools to automatically execute tests and report outcomes, improving software quality."},
+        {"Software Development and IT Operations-Configuration Management": "Manages the configuration of software and systems to maintain consistency across environments."},
+        {"Software Development and IT Operations-Version Control": "Tracks modifications to a set of files over time so that specific versions can be recalled later."},
+        {"Software Development and IT Operations-Monitoring and Logging": "Involves tracking and logging the system's operational status to help diagnose faults and predict future issues."}
+    ],
+    "Error Handling": [
+        {"Error Handling-Exception Handling": "Involves techniques for catching and managing exceptions that occur during the execution of software."},
+        {"Error Handling-Error Logging": "Records errors and exceptions that occur during operation, allowing for later review and debugging."},
+        {"Error Handling-Fault Tolerance": "Enables a system to continue operating properly in the event of the failure of some of its components."},
+        {"Error Handling-Debugging Tools": "Tools and techniques used to identify, trace, and correct errors in software."},
+        {"Error Handling-User Notification": "Involves notifying users of errors or issues in a way that allows them to continue using the software effectively."},
+        {"Error Handling-Error Prevention": "Strategies and practices aimed at reducing the occurrence of errors within the software development process."}
+    ],
+    "Event Handling": [
+        {"Event Handling-User Interactions": "Manages how software responds to user inputs and actions."},
+        {"Event Handling-System Events": "Handles events generated by the system itself, such as startup, shutdown, and errors."},
+        {"Event Handling-Event Logging": "Records events that occur within the system, providing a history that can be analyzed for patterns or issues."},
+        {"Event Handling-Event Driven Processing": "A programming paradigm in which the flow of the program is determined by events such as user actions or sensor outputs."},
+        {"Event Handling-Notifications": "Mechanisms for alerting users or systems about important changes or updates."},
+        {"Event Handling-Asynchronous Processing": "Processing that does not block execution and allows a program to continue with other operations."}
+    ],
+    "Geographic Information System": [
+        {"Geographic Information System-Mapping": "Involves creating and manipulating geographic information to produce maps."},
+        {"Geographic Information System-Spatial Analysis": "Uses techniques to analyze spatial data and patterns."},
+        {"Geographic Information System-Data Collection": "Gathers geographic information from various sources for processing and analysis."},
+        {"Geographic Information System-Geographic Visualization": "Presents geographic data visually using maps and other graphic displays."},
+        {"Geographic Information System-Location Services": "Provides real-time location tracking and location-based services."},
+        {"Geographic Information System-Environmental Modeling": "Uses data and statistical methods to simulate environmental conditions."}
+    ],
+    "Input-Output": [
+        {"Input-Output-Data Reading": "Involves reading data from various inputs such as files or external devices."},
+        {"Input-Output-Data Writing": "Handles writing data to various outputs like files or network connections."},
+        {"Input-Output-Stream Management": "Manages continuous data streams for real-time processing."},
+        {"Input-Output-Buffering Strategies": "Utilizes techniques to manage data buffers for efficient input/output operations."},
+        {"Input-Output-File Management": "Deals with creating, modifying, and deleting files."},
+        {"Input-Output-Network IO": "Handles data transfer across network connections, managing both inputs and outputs."}
+    ],
+    "Interpreter": [
+        {"Interpreter-Script Execution": "Executes written scripts in a programming language."},
+        {"Interpreter-Code Translation": "Translates code from one programming language to another."},
+        {"Interpreter-Memory Management": "Oversees the allocation and deallocation of memory during program execution."},
+        {"Interpreter-Syntax Analysis": "Analyzes code to ensure it adheres to the rules of the programming language."},
+        {"Interpreter-Optimization": "Improves the performance of script execution through various techniques."},
+        {"Interpreter-Debugging": "Identifies and resolves issues within the scripts or programming code."}
+    ],
+    "Internationalization": [
+        {"Internationalization-Localization": "Adapts software for specific cultures or regions, including translating text and adjusting functional elements."},
+        {"Internationalization-Language Support": "Enables software to operate with multiple languages."},
+        {"Internationalization-Cultural Adaptation": "Adjusts software elements to fit the cultural norms and expectations of different regions."},
+        {"Internationalization-Currency Conversion": "Implements features to handle and convert between different currencies."},
+        {"Internationalization-Date/Time Formatting": "Manages the representation of dates and times according to local conventions."},
+        {"Internationalization-Right-to-Left Layouts": "Supports and implements layouts for languages written from right to left."}
+    ],
+    "Logic": [
+        {"Logic-Control Structures": "Handles logical constructs that manage the flow of a program, such as loops and conditionals."},
+        {"Logic-Algorithm Implementation": "Involves the creation and utilization of algorithms to solve problems."},
+        {"Logic-Logic Optimization": "Enhances logical operations to improve efficiency and performance."},
+        {"Logic-Validation Checks": "Ensures that data inputs or configurations are valid before processing."},
+        {"Logic-Rule Processing": "Manages and executes sets of rules within software applications."},
+        {"Logic-Decision Making": "Implements decision-making processes based on data or predefined rules."}
+    ],
+    "Language": [
+        {"Language-Syntax Features": "Focuses on the specific syntactical elements and capabilities of a programming language."},
+        {"Language-Compiler/Interpreter Enhancements": "Refers to improvements and optimizations in the language's compilation or interpretation processes."},
+        {"Language-Runtime Optimization": "Involves techniques to enhance the execution performance of programs."},
+        {"Language-Standard Libraries": "Pertains to the set of pre-written code and functionalities commonly used in programming."},
+        {"Language-Language Extensions": "Enables the addition of new features and capabilities to a programming language."},
+        {"Language-Type Systems": "Deals with the classification of data types within a language and the enforcement of type-related rules."}
+    ],
+    "Logging": [
+        {"Logging-Event Logging": "Records system or application events for monitoring and troubleshooting purposes."},
+        {"Logging-System Monitoring": "Involves continuously observing system operations to detect and respond to changes or problems."},
+        {"Logging-Performance Tracking": "Tracks various performance metrics to assess how well a system or application is functioning."},
+        {"Logging-Error Logs": "Maintains a record of error messages and system malfunctions for debugging purposes."},
+        {"Logging-User Activity Logs": "Logs actions taken by users to monitor behavior and interactions within the application."},
+        {"Logging-Audit Trails": "Provides a secure, chronological record of system activities to enable the reconstruction and examination of the sequence of events."}
+    ],
+    "Machine Learning": [
+        {"Machine Learning-Training Models": "Involves developing and training algorithms to perform tasks based on data."},
+        {"Machine Learning-Prediction": "Utilizes trained models to make predictions or decisions based on input data."},
+        {"Machine Learning-Data Preprocessing": "Prepares raw data for processing and analysis, ensuring it is suitable for use in machine learning models."},
+        {"Machine Learning-Feature Extraction": "Identifies and selects specific attributes of data that are most relevant to the prediction or analysis tasks."},
+        {"Machine Learning-Model Evaluation": "Assesses the performance and accuracy of machine learning models."},
+        {"Machine Learning-Deployment": "Involves the integration of trained machine learning models into production environments."}
+    ],
+    "Microservices/Services": [
+        {"Microservices/Services-Service Discovery": "Enables services to find and communicate with each other without hard-coding service addresses."},
+        {"Microservices/Services-Load Balancing": "Distributes incoming service requests evenly across multiple service instances to optimize resource use and maximize throughput."},
+        {"Microservices/Services-API Gateway": "Acts as a gatekeeper for microservices, providing a single entry point for managing external requests to services."},
+        {"Microservices/Services-Service Communication": "Handles the exchange of data between services, ensuring that interactions are efficient and secure."},
+        {"Microservices/Services-Fault Tolerance": "Ensures that the system continues to function even if one or more services fail."},
+        {"Microservices/Services-Service Deployment": "Manages the deployment of microservices across different environments, ensuring they are launched and scaled properly."}
+    ],
+    "Multimedia": [
+        {"Multimedia-Media Playback": "Controls the playing of audio and video files."},
+        {"Multimedia-Media Editing": "Involves tools and techniques for modifying audio and video content."},
+        {"Multimedia-Encoding and Decoding": "Processes that convert data to and from various media formats."},
+        {"Multimedia-Streaming": "Delivers content in real-time over the internet."},
+        {"Multimedia-Content Delivery": "Distributes multimedia content to end-users efficiently."},
+        {"Multimedia-Media Storage": "Involves the storage and retrieval of multimedia content."}
+    ],
+    "Multi-Thread": [
+        {"Multi-Thread-Concurrency Control": "Manages access to shared resources when multiple threads or processes are involved."},
+        {"Multi-Thread-Synchronization": "Ensures that threads or processes operate in the correct order or time."},
+        {"Multi-Thread-Thread Safety": "Ensures that program behavior is free from unwanted issues when multiple threads operate concurrently."},
+        {"Multi-Thread-Parallel Processing": "Handles the execution of multiple computations or processes simultaneously."},
+        {"Multi-Thread-Resource Sharing": "Involves managing how different threads or processes share and access common resources."},
+        {"Multi-Thread-Deadlock Resolution": "Techniques to avoid or resolve deadlocks in systems where different components are waiting on each other to release resources."}
+    ],
+    "Natural Language Processing": [
+        {"Natural Language Processing-Text Analysis": "The process of deriving high-quality information from text."},
+        {"Natural Language Processing-Speech Recognition": "Involves identifying spoken words and converting them to text."},
+        {"Natural Language Processing-Language Generation": "Automatically generates human-like text based on input data."},
+        {"Natural Language Processing-Sentiment Analysis": "Determines the emotional tone behind a series of words, used to gain an understanding of the attitudes, opinions and emotions expressed."},
+        {"Natural Language Processing-Machine Translation": "Automatically translates text or speech from one language to another."},
+        {"Natural Language Processing-Chatbot Interfaces": "Designs and implements interactive interfaces for automated systems that communicate with users via text or speech."}
+    ],
+    "Network": [
+        {"Network-Protocol Implementation": "Involves implementing network protocols that govern the exchange of data over a network."},
+        {"Network-Connection Management": "Manages the establishment, maintenance, and termination of network connections."},
+        {"Network-Data Transmission": "Handles the transfer of data across a network."},
+        {"Network-Network Security": "Ensures the protection and integrity of data transmitted across a network."},
+        {"Network-Bandwidth Optimization": "Enhances the efficiency of data transfer rates within network constraints."},
+        {"Network-Network Monitoring": "Involves overseeing a network's operations to detect potential issues or threats."}
+    ],
+    "Operating System": [
+        {"Operating System-Process Management": "Handles the creation, scheduling, and termination of processes."},
+        {"Operating System-Memory Management": "Involves the allocation and management of memory within the computer system."},
+        {"Operating System-Device Drivers": "Software that communicates with and controls hardware attached to the computer."},
+        {"Operating System-File Systems": "Manages the creation, deletion, and access to files on storage devices."},
+        {"Operating System-User Interface": "Provides mechanisms for user interaction with the computer system."},
+        {"Operating System-System Security": "Protects the system against unauthorized access and threats."}
+    ],
+    "Parser": [
+        {"Parser-Syntax Parsing": "Analyzes syntactic structure of input data based on formal grammar."},
+        {"Parser-Error Recovery": "Techniques used to handle errors gracefully during parsing."},
+        {"Parser-Data Conversion": "Transforms data from one format to another."},
+        {"Parser-Optimization": "Improves the performance of parsing operations."},
+        {"Parser-Code Generation": "Automatically produces code based on input specifications."},
+        {"Parser-Validation": "Ensures that data conforms to established rules and formats."}
+    ],
+    "Search": [
+        {"Search-Indexing": "Creates search indexes to speed up data retrieval."},
+        {"Search-Query Processing": "Handles the execution of queries by breaking down and interpreting search requests."},
+        {"Search-Ranking": "Orders search results based on relevance to the search criteria."},
+        {"Search-Optimization": "Improves the efficiency and effectiveness of the search processes."},
+        {"Search-Caching": "Stores recently or frequently accessed data in a fast-access storage layer."},
+        {"Search-Personalization": "Adapts search results based on user preferences and history."}
+    ],
+    "Security": [
+        {"Security-Authentication": "Confirms the identity of a user or system."},
+        {"Security-Authorization": "Determines what resources a user or system is allowed to access."},
+        {"Security-Encryption": "Secures data by encoding it."},
+        {"Security-Intrusion Detection": "Monitors systems for malicious activities or policy violations."},
+        {"Security-Compliance": "Ensures that systems adhere to laws and regulations."},
+        {"Security-Data Integrity": "Maintains the accuracy and consistency of data over its lifecycle."}
+    ],
+    "Setup": [
+        {"Setup-Installation": "Processes involved in setting up software or hardware."},
+        {"Setup-Configuration": "Setting up system parameters and options to ensure correct operation."},
+        {"Setup-System Requirements": "Defines the minimum technical criteria needed to run software or hardware."},
+        {"Setup-Update Management": "Oversees the process of updating software to newer versions."},
+        {"Setup-Licensing": "Manages the legal permissions involved in using software."},
+        {"Setup-Environment Setup": "Prepares the operational setting where software will run."}
+    ],
+    "User Interface": [
+        {"User Interface-Layout Design": "Involves arranging visual elements within an interface."},
+        {"User Interface-Interaction Design": "Designs interactive elements for effective human-computer interaction."},
+        {"User Interface-Accessibility": "Ensures that interfaces are accessible to all users, including those with disabilities."},
+        {"User Interface-Animation": "Applies dynamic visual effects to enhance user interface experience."},
+        {"User Interface-Responsive Design": "Creates interfaces that adjust smoothly to different screen sizes and orientations."},
+        {"User Interface-User Feedback": "Collects and integrates user responses to improve interface usability."}
+    ],
+    "Utility": [
+        {"Utility-Data Conversion": "Involves changing data from one format to another."},
+        {"Utility-System Tools": "Provides utilities that help in the maintenance and monitoring of computer systems."},
+        {"Utility-Automation Scripts": "Uses scripts to automate routine tasks to save time and reduce errors."},
+        {"Utility-Performance Tools": "Tools designed to analyze and enhance system performance."},
+        {"Utility-Diagnostic Utilities": "Helps diagnose and resolve system and software issues."},
+        {"Utility-Backup Tools": "Enables the creation of copies of data to prevent data loss."}
+    ],
+    "Test": [
+        {"Test-Unit Testing": "Tests individual components of software for correct behavior."},
+        {"Test-Integration Testing": "Checks the interfaces between components for faults."},
+        {"Test-Performance Testing": "Assesses the speed and effectiveness of software."},
+        {"Test-Security Testing": "Evaluates the security features of software."},
+        {"Test-Usability Testing": "Determines how user-friendly the software is."},
+        {"Test-Regression Testing": "Ensures that recent program changes have not adversely affected existing features."}
+    ]
+}
