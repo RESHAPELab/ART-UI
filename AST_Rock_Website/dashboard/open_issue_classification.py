@@ -1,7 +1,6 @@
 import pandas as pd
 import sqlite3
 from openai import OpenAI
-import emoji
 import re
 import string
 import json
@@ -67,51 +66,6 @@ def get_column_names(db_path):
     return column_names
 
 
-def clean_text(text):
-    cleaned_count = 0
-    original_count = 0
-    if not isinstance(text, str):
-        original_count += 1
-        return text
-
-    # Remove double quotation marks
-    text = text.replace('"', '')
-
-    # Remove text starting with "DevTools" and ending with "(automated)"
-    text = re.sub(r'DevTools.*?\(automated\)', '', text)
-
-    # Lowercasing should be one of the first steps to ensure uniformity
-    text = text.lower()
-
-    # Remove emojis
-    text = emoji.demojize(text)
-
-    # Remove URLs
-    text = re.sub(r'https?://\S+|www\.\S+', '', text)
-
-    # Remove HTML tags
-    text = re.sub(r'<.*?>', '', text)
-
-    # Remove special characters and punctuation
-    text = re.sub(f"[{re.escape(string.punctuation)}]", '', text)
-
-    # Remove '#' characters
-    text = text.replace("#", "")
-
-    # Remove consecutive whitespaces and replace with a single space
-    text = re.sub(r'\s+', ' ', text)
-
-    # Split the text into words
-    words = text.split()
-
-    # Remove words that are over 20 characters
-    words = [word for word in words if len(word) <= 20]
-
-    # Join the remaining words back into cleaned text
-    cleaned_text = ' '.join(words)
-
-    cleaned_count += 1
-    return cleaned_text
 
 
 def sort_dict_by_values(d, reverse=True):
