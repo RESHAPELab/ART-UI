@@ -11,7 +11,7 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount, SocialToken
 import requests
-from AST_Rock_Website.dashboard.open_issue_classification import get_open_issues, get_gpt_responses, fine_tune_gpt, generate_system_message
+from open_issue_classification import get_open_issues, get_gpt_responses, fine_tune_gpt, generate_system_message
 import json
 
 
