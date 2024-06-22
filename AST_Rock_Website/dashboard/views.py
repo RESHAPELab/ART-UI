@@ -11,7 +11,7 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount, SocialToken
 import requests
-from open_issue_classification import get_open_issues, get_gpt_responses, fine_tune_gpt
+from AST_Rock_Website.dashboard.open_issue_classification import get_open_issues, get_gpt_responses, fine_tune_gpt, generate_system_message
 import json
 
 
@@ -58,7 +58,7 @@ def repo_detail(request, repo_name):
     repositories = request.session.get('repositories', [])
 
     # Load the domains from the file
-    with open('Domains.json', 'r') as file:
+    with open('AST_Rock_Website.dashboard.Domains', 'r') as file:
         domains_data = json.load(file)
 
     # Format the domains and subdomains for the prompt
@@ -68,7 +68,7 @@ def repo_detail(request, repo_name):
             for key, description in subdomain.items():
                 domains_list.append(f"{key} ({description})")
 
-    domains_data = ', '.join(domains_list)
+    domains = ', '.join(domains_list)
 
     if repo_name not in repositories:
         return render(request, 'repo_detail.html', {
@@ -85,7 +85,7 @@ def repo_detail(request, repo_name):
     else:
         openai_key = "sk-proj-ygVQ0psYETnLMkmAqXdjT3BlbkFJCeOYP4VgesLC892PCx2N"  # Ensure you store OpenAI API key in session or settings
         issue_classifier = fine_tune_gpt(openai_key)  # You need to define or get this model id somehow
-        domains_string = domains_data
+        domains_string = generate_system_message(domains, issues)
         
         responses = get_gpt_responses(issues, issue_classifier, domains_string, openai_key)
     # Adapt issue data for display if necessary
@@ -112,4 +112,13 @@ def repositories_by_link(request):
 
 def home(request):
     return render(request, 'index.html')
+
+
+
+
+
+
+
+
+
 
