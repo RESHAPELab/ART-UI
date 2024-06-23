@@ -58,7 +58,7 @@ def repo_detail(request, repo_name):
     repositories = request.session.get('repositories', [])
 
     # Load the domains from the file
-    with open('Domains', 'r') as file:
+    with open('Domains.json', 'r') as file:
         domains_data = json.load(file)
 
     # Format the domains and subdomains for the prompt
