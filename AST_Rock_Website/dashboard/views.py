@@ -61,18 +61,9 @@ def repo_detail(request, repo_name):
     with open('Domains.json', 'r') as file:
         domains_data = json.load(file)
 
-    # Format the domains and subdomains for the prompt
-    domains_list = []
-    for domain, subdomains in domains_data.items():
-        for subdomain in subdomains:
-            for key, description in subdomain.items():
-                domains_list.append(f"{key} ({description})")
-
     # Call to get_open_issues function 
     issues = get_open_issues(username, repo_name, token)
-
-    domains = ', '.join(domains_list)
-    domains_string = generate_system_message(domains, issues)
+    domains_string = generate_system_message(domains_data, issues)
 
 
     if repo_name not in repositories:
