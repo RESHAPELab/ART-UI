@@ -13,6 +13,7 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.ensemble import RandomForestClassifier
 import random
 import argparse  # Import argparse module
+import dashboard.models
 
 
 def db_to_df(db_path):
@@ -133,48 +134,64 @@ def generate_system_message(domain_dictionary, df):
 
 
 def generate_gpt_messages(system_message, gpt_output, df):
-    # Open the file in write mode
-    with open('gpt_messages.jsonl', 'w', encoding='utf-8') as f:
-        assistant_message = gpt_output
-        # Iterate over the rows in the DataFrame
-        for index, row in df.iterrows():
-            # Create the user message by formatting the prompt with the title and body
-            user_message = (
-                f"Classify a GitHub issue by indicating whether each domain and subdomain is relevant to the issue based on its title: [{row['issue text']}] "
-                f"and body: [{row['issue description']}]. Ensure that every domain/subdomain is accounted for, and its relevance is indicated with a 1 (relevant) or a 0 (not relevant)."
-            )
+    assistant_message = gpt_output  # Assuming gpt_output is already a dictionary that can be modified directly
 
-            # logic to update assistant message with values in df
-            for column in df.columns:
-                if column in gpt_output:
-                    if row[column] > 0:
-                        assistant_message[column] = 1
-                    else:
-                        assistant_message[column] = 0
+    # Iterate over the rows in the DataFrame
+    for index, row in df.iterrows():
+        # Create the user message by formatting the prompt with the title and body
+        user_message = (
+            f"Classify a GitHub issue by indicating whether each domain and subdomain is relevant to the issue based on its title: [{row['issue text']}] "
+            f"and body: [{row['issue description']}]. Ensure that every domain/subdomain is accounted for, and its relevance is indicated with a 1 (relevant) or a 0 (not relevant)."
+        )
 
-            # Construct the conversation object
-            conversation_object = {
-                "messages": [
-                    {"role": "system",
-                     "content": "Refer to these domains and subdomains when classifying " + system_message},
-                    {"role": "user", "content": user_message},
-                    {"role": "assistant", "content": str(assistant_message)}
-                ]
-            }
+        # Update assistant message with values in df
+        for column in df.columns:
+            if column in assistant_message:
+                assistant_message[column] = 1 if row[column] > 0 else 0
 
-            # Write the conversation object to one line in the file
-            f.write(json.dumps(conversation_object, ensure_ascii=False) + '\n')
+        # Construct the conversation object
+        conversation_object = {
+            "messages": [
+                {"role": "system", "content": "Refer to these domains and subdomains when classifying " + system_message},
+                {"role": "user", "content": user_message},
+                {"role": "assistant", "content": str(assistant_message)}
+            ]
+        }
+
+        # Save each conversation object to the database
+        message = dashboard.models.GPTMessage(
+            system_content=conversation_object["messages"][0]["content"],
+            user_content=conversation_object["messages"][1]["content"],
+            assistant_content=conversation_object["messages"][2]["content"]
+        )
+        message.save()
 
 
 def fine_tune_gpt(api_key):
     client = OpenAI(api_key=api_key)
-    # uploading a training file
+    # Fetch messages from the database
+    messages = dashboard.models.GPTMessage.objects.all()
+
+    # Create a JSONL file for training
+    with open('gpt_messages.jsonl', 'w', encoding='utf-8') as f:
+        for message in messages:
+            conversation_object = {
+                "messages": [
+                    {"role": "system", "content": message.system_content},
+                    {"role": "user", "content": message.user_content},
+                    {"role": "assistant", "content": message.assistant_content}
+                ]
+            }
+            f.write(json.dumps(conversation_object, ensure_ascii=False) + '\n')
+
+    # Uploading a training file
     domain_classifier_training_file = client.files.create(
         file=open("gpt_messages.jsonl", "rb"),
         purpose="fine-tune"
     )
+    
     print("Beginning fine tuning process")
-    # creating a fine-tuned model
+    # Creating a fine-tuned model
     ft_job_dc = client.fine_tuning.jobs.create(
         training_file=domain_classifier_training_file.id,
         model="gpt-3.5-turbo",
@@ -190,6 +207,7 @@ def fine_tune_gpt(api_key):
         if response.status == 'failed':
             print('process failed')
             return
+
 
 
 def get_open_issues(owner, repo, access_token):
