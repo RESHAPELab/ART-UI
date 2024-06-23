@@ -69,6 +69,8 @@ def repo_detail(request, repo_name):
                 domains_list.append(f"{key} ({description})")
 
     domains = ', '.join(domains_list)
+    domains_string = generate_system_message(domains, issues)
+
 
     if repo_name not in repositories:
         return render(request, 'repo_detail.html', {
