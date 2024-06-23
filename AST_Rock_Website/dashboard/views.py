@@ -1,3 +1,4 @@
+import os
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -76,7 +77,7 @@ def repo_detail(request, repo_name):
             'error': 'Failed to fetch issues or no issues found.'
         })
     else:
-        openai_key = "sk-proj-ygVQ0psYETnLMkmAqXdjT3BlbkFJCeOYP4VgesLC892PCx2N"  # Ensure you store OpenAI API key in session or settings
+        openai_key = os.getenv('OPENAI_API_KEY')  # Ensure you store OpenAI API key in session or settings
         issue_classifier = fine_tune_gpt(openai_key)  # You need to define or get this model id somehow
         
         responses = get_gpt_responses(issues, issue_classifier, domains_string, openai_key)
