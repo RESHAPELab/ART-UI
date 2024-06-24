@@ -40,11 +40,13 @@ def your_repositories(request):
         request.session['github_token'] = token
         request.session['username'] = user.username
         request.session['repositories'] = repo_names
-
+        print(request.session.get('github_token'))
+        print(request.session.get('username'))
+        print(request.session.get('repositories'))
         # Send both username and repo_names to the template
         return render(request, 'your_repositories.html', {
-            'username': user.username,
-            'repositories': repo_names
+            'username': request.session.get('username'),
+            'repositories': request.session.get('repositories')
         })
         
     except SocialToken.DoesNotExist:
