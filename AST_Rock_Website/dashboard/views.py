@@ -70,6 +70,7 @@ def repo_detail(request, repo_name):
     issues = get_open_issues(username, repo_name, token)
     print("open issues: ", issues)
     domains_string = generate_system_message(domains_data, issues)
+    print("Domains_string: ", domains_string)
 
 
     if repo_name not in repositories:
@@ -79,7 +80,7 @@ def repo_detail(request, repo_name):
 
     if issues is None:
         return render(request, 'repo_detail.html', {
-            'error': 'Failed to fetch issues or no issues found.'
+            'responses': 'No issues found.'
         })
     else:
         openai_key = os.getenv('OPENAI_API_KEY')  # Ensure you store OpenAI API key in session or settings

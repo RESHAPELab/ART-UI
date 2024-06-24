@@ -174,7 +174,7 @@ def fine_tune_gpt(api_key):
     messages = dashboard.models.GPTMessage.objects.all()
     if not messages.exists():
         print("No messages found in the database.")
-        return
+    
     # Create a JSONL file for training
     with open('gpt_messages.jsonl', 'w', encoding='utf-8') as f:
         for message in messages:
