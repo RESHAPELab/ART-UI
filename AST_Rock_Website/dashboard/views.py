@@ -63,9 +63,12 @@ def repo_detail(request, repo_name):
     # Load the domains from the file
     with open('Domains.json', 'r') as file:
         domains_data = json.load(file)
+        print("Domains: ", domains_data)
+        
 
     # Call to get_open_issues function 
     issues = get_open_issues(username, repo_name, token)
+    print("open issues: ", issues)
     domains_string = generate_system_message(domains_data, issues)
 
 

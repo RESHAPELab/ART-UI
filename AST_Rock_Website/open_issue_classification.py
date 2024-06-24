@@ -164,13 +164,13 @@ def generate_gpt_messages(system_message, gpt_output, df):
             user_content=conversation_object["messages"][1]["content"],
             assistant_content=conversation_object["messages"][2]["content"]
         )
+        print("message: ", message)
         message.save()
 
 
 def fine_tune_gpt(api_key):
     client = OpenAI(api_key=api_key)
     # Fetch messages from the database
-    messages = dashboard.models.GPTMessage.objects.all()
     messages = dashboard.models.GPTMessage.objects.all()
     if not messages.exists():
         print("No messages found in the database.")
