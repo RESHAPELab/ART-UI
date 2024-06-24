@@ -43,7 +43,7 @@
 					<section id="banner" class="major">
 						<div class="inner">
 							<header class="major">
-								<h1>{{ repo_name }}'s </h1>
+								<h1>{{ username }}'s Repositories</h1>
 							</header>
 							<div class="content">
 								<p>This project automates the labeling of GitHub repositories based on their content, using a taxonomy of domains and subdomains. It implements a precision threshold of 75% to ensure that only high-confidence classifications are applied, enhancing the organization and searchability of repositories.</p>
@@ -62,16 +62,16 @@
 						<!-- One -->
 						<section id="one" class="tiles">
 							<!-- Dynamic generation of repository tiles -->
-							{% for reponse in reponses %}
+							{% for repo in repositories %}
 							<article>
 								<header class="major">
-									<p>{{ reponse }}</p>
+									<h3><a href="{% url 'repo_detail' repo_name=repo %}" class="link">{{ repo }}</a></h3>
+									<p>Details about {{ repo }}</p>
 								</header>
 							</article>
 							{% endfor %}
 						</section>
 					</div>
-
 
 			</div>
 

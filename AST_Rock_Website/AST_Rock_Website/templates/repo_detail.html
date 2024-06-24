@@ -27,6 +27,7 @@
 						<ul class="links">
 							<li><a href="{% url 'index' %}" class="button primary fit">Home</a></li>
 							
+							
 						</ul>
 						<ul class="actions stacked">
 							{% if user.is_authenticated %}
@@ -42,10 +43,10 @@
 					<section id="banner" class="major">
 						<div class="inner">
 							<header class="major">
-								<h1>{{ repo_name }}</h1>
+								<h1>{{ repo_name }}'s </h1>
 							</header>
 							<div class="content">
-								<p>Here is what we got for you:</p>
+								<p>This project automates the labeling of GitHub repositories based on their content, using a taxonomy of domains and subdomains. It implements a precision threshold of 75% to ensure that only high-confidence classifications are applied, enhancing the organization and searchability of repositories.</p>
 								<ul class="actions">
 									{% if user.is_authenticated %}
 										<li><a href="{% url 'index' %}"  class="button next scrolly">Home</a></li>
@@ -56,48 +57,22 @@
 					</section>
 
 				<!-- Main -->
+					<!-- Min -->
 					<div id="main">
-
 						<!-- One -->
-							<section id="one" class="tiles">
-								<article>
-									<span class="image">
-										<img src="{% static 'images/pic01.jpg' %}" alt="" />
-									</span>
-									<header class="major">
-										<h3><a href="{% url 'index' %}" class="link">Open_issues</a></h3>
-										<p></p>
-									</header>
-								</article>
-								<article>
-									<span class="image">
-										<img src="{% static 'images/pic02.jpg' %}" alt="" />
-									</span>
-									<header class="major">
-										<h3><a href="{% url 'index' %}" class="link">label</a></h3>
-										<p></p>
-									</header>
-								</article>
-								
-						
-							</section>
-
-						<!-- Two -->
-							<section id="two">
-								<div class="inner">
-									<header class="major">
-										<h2>The AST Team</h2>
-									</header>
-									<p>Each team's efforts are interconnected, contributing to a comprehensive system that leverages machine learning and AI to enhance the management and categorization of software development tasks within GitHub repositories.</p>
-									<ul class="actions">
-										<li><a href="{% url 'index' %}" class="button next">Home</a></li>
-									</ul>
-								</div>
-							</section>
-
+						<section id="one" class="tiles">
+							<!-- Dynamic generation of repository tiles -->
+							{% for reponse in reponses %}
+							<article>
+								<header class="major">
+									<p>{{ reponse }}</p>
+								</header>
+							</article>
+							{% endfor %}
+						</section>
 					</div>
 
-					
+
 			</div>
 
 		<!-- Scripts -->
