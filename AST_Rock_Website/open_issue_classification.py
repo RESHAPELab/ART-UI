@@ -171,7 +171,10 @@ def fine_tune_gpt(api_key):
     client = OpenAI(api_key=api_key)
     # Fetch messages from the database
     messages = dashboard.models.GPTMessage.objects.all()
-
+    messages = dashboard.models.GPTMessage.objects.all()
+    if not messages.exists():
+        print("No messages found in the database.")
+        return
     # Create a JSONL file for training
     with open('gpt_messages.jsonl', 'w', encoding='utf-8') as f:
         for message in messages:
@@ -183,7 +186,8 @@ def fine_tune_gpt(api_key):
                 ]
             }
             f.write(json.dumps(conversation_object, ensure_ascii=False) + '\n')
-
+        if f.tell() == 0:  # f.tell() returns the current position of the file cursor
+                print("File is still empty after attempting to write.")
     # Uploading a training file
     domain_classifier_training_file = client.files.create(
         file=open("gpt_messages.jsonl", "rb"),
