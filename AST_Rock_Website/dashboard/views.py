@@ -23,7 +23,7 @@ sys.path.insert(0, src_dir)
 
 from database_manager import DatabaseManager
 from issue_class import Issue
-from open_issue_classification import get_open_issues
+from AST_Rock_Website.open_issue import get_open_issues
 
 
 
