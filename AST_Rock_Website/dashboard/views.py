@@ -20,13 +20,6 @@ import sys
 import os
 import json
 
-# Assuming this script is running from within the 'dashboard' directory
-base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'CoreEngine'))
-
-# Path to the RF model
-rf_model_path = os.path.join(base_dir, 'output', 'rf_model.pkl')
-# Path to the domain labels file
-domain_labels_path = os.path.join(base_dir, 'data', 'domain_labels.json')
 
 # Function to load the RF model
 def load_rf_model(path):
@@ -112,8 +105,8 @@ def repo_detail(request, repo_name):
     
     
     # Loading the model and labels
-    rf_model = load_rf_model(rf_model_path)
-    domain_labels = load_domain_labels(domain_labels_path)
+    rf_model = load_rf_model("rf_model.pkl")
+    domain_labels = load_domain_labels("domain_labels.json")
 
     db = DatabaseManager()
     external = External_Model_Interface(
