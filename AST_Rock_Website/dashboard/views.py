@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount, SocialToken
 import requests
 from external_file import External_Model_Interface
+from open_issue import get_open_issues
 import sys
 import os
 import json
@@ -23,7 +24,7 @@ sys.path.insert(0, src_dir)
 
 from database_manager import DatabaseManager
 from issue_class import Issue
-from AST_Rock_Website.open_issue import get_open_issues
+
 
 
 
