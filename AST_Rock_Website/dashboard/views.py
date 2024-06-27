@@ -12,9 +12,9 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount, SocialToken
 import requests
-from CoreEngine.src.database_manager import DatabaseManager
-from CoreEngine.src.external import External_Model_Interface
-from CoreEngine.src.issue_class import Issue
+from database_manager import DatabaseManager
+from external import External_Model_Interface
+from issue_class import Issue
 from open_issue_classification import get_open_issues
 import json
 
