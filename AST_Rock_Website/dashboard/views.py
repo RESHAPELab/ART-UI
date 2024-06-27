@@ -1,4 +1,5 @@
 import os
+import pickle
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -18,6 +19,26 @@ from database_manager_file import DatabaseManager
 import sys
 import os
 import json
+
+# Assuming this script is running from within the 'dashboard' directory
+base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'CoreEngine'))
+
+# Path to the RF model
+rf_model_path = os.path.join(base_dir, 'output', 'rf_model.pkl')
+# Path to the domain labels file
+domain_labels_path = os.path.join(base_dir, 'data', 'domain_labels.json')
+
+# Function to load the RF model
+def load_rf_model(path):
+    with open(path, 'rb') as file:
+        rf_model = pickle.load(file)
+    return rf_model
+
+# Function to load domain labels
+def load_domain_labels(path):
+    with open(path, 'r') as file:
+        labels = json.load(file)
+    return labels
 
 # Add the src directory to the sys.path
 src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'CoreEngine', 'src'))
@@ -89,9 +110,14 @@ def repo_detail(request, repo_name):
         openai_key = os.getenv('OPENAI_API_KEY')  # Ensure you store OpenAI API key in session or settings
     # Adapt issue data for display if necessary
     
+    
+    # Loading the model and labels
+    rf_model = load_rf_model(rf_model_path)
+    domain_labels = load_domain_labels(domain_labels_path)
+
     db = DatabaseManager()
     external = External_Model_Interface(
-        openai_key, db, "CoreEngine/output/rf_model.pkl", "CoreEngine/data/domain_labels.json", None
+        openai_key, db, rf_model, domain_labels, None
     )
 
     db.close()
