@@ -12,7 +12,10 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount, SocialToken
 import requests
-from open_issue_classification import get_open_issues, get_gpt_responses, fine_tune_gpt, generate_system_message
+from AST_Rock_Website.CoreEngine.src.database_manager import DatabaseManager
+from AST_Rock_Website.CoreEngine.src.external import External_Model_Interface
+from AST_Rock_Website.CoreEngine.src.issue import Issue
+from open_issue_classification import get_open_issues
 import json
 
 
@@ -56,27 +59,17 @@ def your_repositories(request):
 @login_required
 def repo_detail(request, repo_name):
 
+    
     token = request.session.get('github_token')
     username = request.session.get('username')
     repositories = request.session.get('repositories', [])
 
-    # Load the domains from the file
-    with open('Domains.json', 'r') as file:
-        domains_data = json.load(file)
-        print("Domains: ", domains_data)
-        
+
 
     # Call to get_open_issues function 
     issues = get_open_issues(username, repo_name, token)
     print("open issues: ", issues)
-    domains_string = generate_system_message(domains_data, issues)
-    print("Domains_string: ", domains_string)
 
-
-    if repo_name not in repositories:
-        return render(request, 'repo_detail.html', {
-            'error': 'Repository not found or access not authorized.'
-        })
 
     if issues is None:
         return render(request, 'repo_detail.html', {
@@ -84,18 +77,32 @@ def repo_detail(request, repo_name):
         })
     else:
         openai_key = os.getenv('OPENAI_API_KEY')  # Ensure you store OpenAI API key in session or settings
-        issue_classifier = fine_tune_gpt(openai_key)  # You need to define or get this model id somehow
-        
-        responses = get_gpt_responses(issues, issue_classifier, domains_string, openai_key)
     # Adapt issue data for display if necessary
         
 
+    
+    
+    db = DatabaseManager()
+    external = External_Model_Interface(
+        openai_key, db, "./output/rf_model.pkl", "./data/domain_labels.json"
+    )
+
+    db.close()
+
+    db_gpt = DatabaseManager()
+    external_gpt = External_Model_Interface(
+        openai_key, db, "AST_Rock_Website/CoreEngine/output/gpt_model.pkl", "AST_Rock_Website/CoreEngine/data/domain_labels.json"
+    )
+
+    db_gpt.close()
+    
     return render(request, 'repo_detail.html', {
         'repo_name': repo_name,
         'issues': issues,
-        'responses' : responses
+        'responses_rf' : external.predict_issue(issues),
+        'responses_gpt' : external_gpt.predict_issue(issues)
     })
-    
+
     
 def index(request):
     return render(request, 'index.html')
