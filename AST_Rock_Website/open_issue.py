@@ -303,7 +303,7 @@ def get_gpt_responses(open_issue_df, issue_classifier, domains_string, openai_ke
     for index, row in open_issue_df.iterrows():
         # create user and system messages
         user_message = (
-            f"Classify a GitHub issue by indicating up to THREE domains and subdomains that are relevant to the issue based on its title: [{row['Title']}] "
+            f"Classify a GitHub issue by indicating up to THREE domains and THREE subdomains that are relevant to the issue based on its title: [{row['Title']}] "
             f"and body: [{row['Body']}]. Prioritize positive precision by marking an issue with a 1 only when VERY CERTAIN a domain is relevant to the issue text. Ensure that you only provide three domains and refer to ONLY THESE domains and subdomains when classifying: {domains_string}."
             f"\n\nImportant: only provide the name of the domains in list format."
         )
@@ -321,13 +321,14 @@ def get_gpt_responses(open_issue_df, issue_classifier, domains_string, openai_ke
 def get_gpt_response_one_issue(issue, issue_classifier, domains_string, openai_key):
     # create user and system messages
     user_message = (
-        f"Classify a GitHub issue by indicating up to THREE domains and subdomains that are relevant to the issue based on its title: [{issue.title}] "
+        f"Classify a GitHub issue by indicating up to THREE domains and THREE subdomains that are relevant to the issue based on its title: [{issue.title}] "
         f"and body: [{issue.body}]. Prioritize positive precision by marking an issue with a 1 only when VERY CERTAIN a domain is relevant to the issue text. Ensure that you only provide three domains and refer to ONLY THESE domains and subdomains when classifying: {domains_string}."
         f"\n\nImportant: only provide the name of the domains in list format."
     )
 
     # query fine tuned model
     response = query_gpt(user_message, issue_classifier, openai_key)
+    print(response)
     return response
 
 
