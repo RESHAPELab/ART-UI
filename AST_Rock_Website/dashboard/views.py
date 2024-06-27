@@ -21,7 +21,7 @@ src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'CoreEng
 sys.path.insert(0, src_dir)
 
 from database_manager import DatabaseManager
-from external import External_Model_Interface
+from external_copy import External_Model_Interface
 from issue_class import Issue
 from open_issue_classification import get_open_issues
 import json
