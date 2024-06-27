@@ -110,7 +110,7 @@ def repo_detail(request, repo_name):
 
     db = DatabaseManager()
     external = External_Model_Interface(
-        openai_key, db, rf_model, domain_labels, None
+        openai_key, db, "rf_model.pkl", "domain_labels.json", None
     )
 
     db.close()
