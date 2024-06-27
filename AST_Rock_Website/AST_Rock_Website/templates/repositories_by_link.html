@@ -59,11 +59,12 @@
 				<!-- Main -->
 					<!-- Min -->
 					<div id="main">
-						<!-- One -->
-						<form action="{% url 'repositories_by_link' %}" method="POST">
+						<form action="{% url 'repositories_by_link' %}" method="POST" class="alt">
 							{% csrf_token %}
-							<input type="url" name="github_link" placeholder="Enter GitHub repository link" required>
-							<button type="submit">Submit</button>
+							<input type="url" name="github_link" placeholder="Enter GitHub repository link" required class="alt">
+							<ul class="actions">
+								<li><input type="submit" value="Submit" class="primary"></li>
+							</ul>
 						</form>
 					</div>
 

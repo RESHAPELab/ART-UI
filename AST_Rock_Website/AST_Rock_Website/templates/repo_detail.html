@@ -1,3 +1,5 @@
+
+
 {% load static %}
 {% load socialaccount %}
 
@@ -60,22 +62,17 @@
 				<!-- Main -->
 					<!-- Min -->
 					<div id="main">
-						<!-- One -->
-						<section id="one" class="tiles">
-							<!-- Dynamic generation of repository tiles -->
+						<section id="one" class="tiles special">
 							<h1>Issues in Repository: {{ repo_name }}</h1>
-								<ul>
-									{% for issue, rf_response, gpt_response in issues_responses %}
-									<li>
-										<strong>Issue:</strong> {{ issue }}
-										<br>
-										<strong>RF Response:</strong> {{ rf_response }}
-										<br>
-										<strong>GPT Response:</strong> {{ gpt_response }}
-									</li>
-									{% endfor %}
-								</ul>
-								<li><strong>{{ responses }}</strong></li>
+							<ul class="alt">
+								{% for issue, rf_response, gpt_response in issues_responses %}
+								<li>
+									<strong>Issue:</strong> {{ issue }}<br>
+									<strong>RF Response:</strong> {{ rf_response }}<br>
+									<strong>GPT Response:</strong> {{ gpt_response }}
+								</li>
+								{% endfor %}
+							</ul>
 						</section>
 					</div>
 
