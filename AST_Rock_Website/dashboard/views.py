@@ -103,10 +103,6 @@ def repo_detail(request, repo_name):
         openai_key = os.getenv('OPENAI_API_KEY')  # Ensure you store OpenAI API key in session or settings
     # Adapt issue data for display if necessary
     
-    
-    # Loading the model and labels
-    rf_model = load_rf_model("rf_model.pkl")
-    domain_labels = load_domain_labels("domain_labels.json")
 
     db = DatabaseManager()
     external = External_Model_Interface(
@@ -116,7 +112,16 @@ def repo_detail(request, repo_name):
     db.close()
 
     
-    responses_rf = external.predict_issue(issues)
+    # Prepare to collect responses for each issue
+    responses_rf = []
+
+    # Iterate over each Issue object and predict using the external model interface
+    for issue in issues:
+        try:
+            response = external.predict_issue(issue)
+            responses_rf.append(response)
+        except AttributeError as e:
+            print(f"Error processing issue {issue.number}: {str(e)}")
     
     # Zip lists together for easier template use
     issues_responses = zip(issues, responses_rf)
