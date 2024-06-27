@@ -21,11 +21,11 @@ from open_issue import (
     clean_text_rf,
     predict_open_issues,
 )
+from database_manager_file import DatabaseManager
+
 src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CoreEngine', 'src'))
 sys.path.insert(0, src_dir)
 
-
-from AST_Rock_Website.database_manager_file import DatabaseManager
 
 from issue_class import Issue
 
