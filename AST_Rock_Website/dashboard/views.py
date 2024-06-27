@@ -97,6 +97,7 @@ def repo_detail(request, repo_name):
 
     if issues is None:
         return render(request, 'repo_detail.html', {
+            'repo_name': repo_name,
             'responses': 'No issues found.'
         })
     else:
