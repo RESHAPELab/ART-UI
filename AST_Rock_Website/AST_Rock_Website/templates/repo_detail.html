@@ -67,7 +67,8 @@
 							<ul class="alt">
 								{% for issue, rf_response, gpt_response in issues_responses %}
 								<li>
-									<strong>Open Issue:</strong> {{ issue }}<br>
+									<strong>Open Issue:</strong> {{ issue.title }}<br>
+									<strong>Issue Description:</strong> {{ issue.body }}<br>
 									<strong>Random Forest Classification:</strong> {{ rf_response }}<br>
 									<strong>OpenAI Classification:</strong> {{ gpt_response }}
 								</li>
