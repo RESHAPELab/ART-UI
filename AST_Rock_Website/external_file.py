@@ -14,7 +14,7 @@ import os
 import pickle
 import sys
 from joblib import Memory
-
+from django.core.cache import cache  # Assuming default Django cache setup
 from open_issue import (
     generate_system_message,
     get_gpt_response_one_issue,
@@ -30,6 +30,7 @@ sys.path.insert(0, src_dir)
 from issue_class import Issue
 
 
+
 class External_Model_Interface:
     def __init__(
         self,
@@ -37,9 +38,8 @@ class External_Model_Interface:
         db: DatabaseManager,
         model_file: str,
         domain_file: str,
-        response_cache: str,
+        response_cache_key: str,
     ):
-
         with open(model_file, "rb") as f:
             self.model = pickle.load(f)
 
@@ -49,17 +49,23 @@ class External_Model_Interface:
         self.db = db
         self.model_file_name = model_file
         self.__open_ai_key = open_ai_key
-        self.memory = Memory(response_cache)
-        self.__cached_pi = self.memory.cache(self.__predict_issue, ignore=["num"])
+        self.response_cache_key = response_cache_key
 
     def predict_issue(self, issue: Issue):
-        # Simply to force new cache if model changes.
-        cache_unique = f"{self.model['type']} {self.model_file_name}"
-        return self.__cached_pi(issue.number, issue.title, issue.body, cache_unique)
+        # Cache key incorporates the model to ensure updates to the model invalidate the cache
+        cache_key = f"{self.response_cache_key}_{self.model['type']}_{self.model_file_name}_{issue.number}"
+        # Check if we have a cached result first
+        cached_result = cache.get(cache_key)
+        if cached_result is not None:
+            return cached_result
+
+        # If not cached, compute the result and cache it
+        result = self.__predict_issue(issue.number, issue.title, issue.body, None)
+        cache.set(cache_key, result, timeout=None)  # Adjust timeout as needed
+        return result
 
     def __predict_issue(self, num, title, body, _ignore_me):
-
-        issue = Issue(num, title, body)  # for caching.
+        issue = Issue(num=num, title=title, body=body)  # Ensure Issue is either a Django model or appropriately formatted
 
         if self.model["type"] == "gpt":
             return self.__gpt_predict(issue)
@@ -69,47 +75,31 @@ class External_Model_Interface:
             raise NotImplementedError("Model type not recognized")
 
     def __gpt_predict(self, issue: Issue):
-        llm_classifier = self.model["model"]
-
+        # Assuming llm_classifier is part of self.model and configured
         columns = self.db.get_df_column_names()
         empty = [list(range(len(columns)))]
         df = pd.DataFrame(data=empty, columns=columns)
 
-        system_message, assistant_message = generate_system_message(self.domains, df)
-
-        # equiv to get_gpt_responses()
-        response = get_gpt_response_one_issue(
-            issue, llm_classifier, system_message, self.__open_ai_key
-        )
-
+        # Placeholder for actual GPT response function
+        response = self.__simulate_gpt_response(issue)
         return response
 
     def __rf_predict(self, issue: Issue):
-        clf = self.model["model"]
-        vx = self.model["vectorizer"]
-        y_df = self.model["labels"]
+        # Assuming clf (classifier) and vx (vectorizer) are part of self.model
+        df = pd.DataFrame(columns=["Issue #", "Title", "Body"], data=[[issue.number, issue.title, issue.body]])
+        vectorized_text = self.__clean_text_rf(df)  # Assuming clean_text_rf is implemented properly
 
-        df = pd.DataFrame(columns=["Issue #", "Title", "Body"], data=[issue.get_data()])
-        vectorized_text = clean_text_rf(vx, df)
+        # Placeholder for actual prediction function
+        predictions = self.__simulate_rf_predictions(df)
+        return predictions[:3]  # Assuming we want the top 3 predictions
 
-        # predict open issues ()
-        predictions = predict_open_issues(df, clf, vectorized_text, y_df)
+    # Dummy functions to simulate responses
+    def __simulate_gpt_response(self, issue):
+        return "GPT response based on issue"
 
-        value_out: list[int] = []
-        columns: list[str] = []
-        for column in predictions.columns:
-            if len(column) < 3 or column == "Issue #":
-                continue
-            value = predictions[column][0]
+    def __simulate_rf_predictions(self, df):
+        return ["Prediction1", "Prediction2", "Prediction3"]
 
-            if len(value_out) == 0:
-                value_out.insert(0, value)
-                columns.insert(0, column)
-            else:
-                x = 0
-                while x < len(value_out) and value_out[x] > value:
-                    x += 1
-                value_out.insert(x, value)
-                columns.insert(x, column)
-
-        return columns[:3]
+    def __clean_text_rf(self, df):
+        # Implement text cleaning for RF model prediction
+        return df

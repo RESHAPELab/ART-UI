@@ -91,14 +91,14 @@ def repo_detail(request, repo_name):
     
     db = DatabaseManager()
     external = External_Model_Interface(
-        openai_key, db, "CoreEngine/output/gpt_model.pkl", "AST_Rock_Website/CoreEngine/data/domain_labels.json"
+        openai_key, db, "CoreEngine/output/gpt_model.pkl", "AST_Rock_Website/CoreEngine/data/domain_labels.json", None
     )
 
     db.close()
 
     db_gpt = DatabaseManager()
     external_gpt = External_Model_Interface(
-        openai_key, db, "CoreEngine/output/gpt_model.pkl", "AST_Rock_Website/CoreEngine/data/domain_labels.json"
+        openai_key, db, "CoreEngine/output/gpt_model.pkl", "AST_Rock_Website/CoreEngine/data/domain_labels.json", None
     )
 
     db_gpt.close()
