@@ -43,10 +43,10 @@
 					<section id="banner" class="major">
 						<div class="inner">
 							<header class="major">
-								<h1>Query a Repository by Link</h1>
+								<h1>{{ username }}'s Repositories</h1>
 							</header>
 							<div class="content">
-								<p></p>
+								<p>SkillScope aims to assist new contributors in finding tasks to work on OSS projects by revealing skills needed to solve open tasks. SkillScope mines projects data identifying intrinsic souce code program structure from where It is able to classify internal libraries and funcions and train a ML model ou Fine tune LLM. The model ir LLM can predict the skills showed in its UI.</p>
 								<ul class="actions">
 									{% if user.is_authenticated %}
 										<li><a href="{% url 'index' %}"  class="button next scrolly">Home</a></li>
@@ -60,12 +60,21 @@
 					<!-- Min -->
 					<div id="main">
 						<!-- One -->
-						<form action="{% url 'submit_repo_link' %}" method="POST">
-							{% csrf_token %}
-							<input type="url" name="github_link" placeholder="Enter GitHub repository link" required>
-							<button type="submit">Submit</button>
-						</form>
+						<section id="one" class="tiles">
+							<!-- Dynamic generation of repository tiles -->
+							{% for repo in repositories %}
+							<article>
+								<header class="major">
+									<h3><a href="{% url 'repo_detail' repo_name=repo %}" class="link">{{ repo }}</a></h3>
+									<p>Details about {{ repo }}</p>
+								</header>
+							</article>
+							{% endfor %}
+						</section>
 					</div>
+
+
+					
 
 			</div>
 
