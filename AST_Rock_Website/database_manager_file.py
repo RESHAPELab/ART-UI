@@ -24,9 +24,9 @@ class DatabaseManager:
 
     def __init__(
         self,
-        dbfile: str = "./output/main.db",  # Retained for potential future use or logging
-        cachefile: str = "./output/ai_result_backup.db",  # Retained for potential future use or logging
-        label_file: str = "./data/subdomain_labels.json",
+        dbfile: str = "CoreEngine/output/main.db",  # Retained for potential future use or logging
+        cachefile: str = "CoreEngine/output/ai_result_backup.db",  # Retained for potential future use or logging
+        label_file: str = "CoreEngine/data/subdomain_labels.json",
     ):
         """Construct and load label data.
 
