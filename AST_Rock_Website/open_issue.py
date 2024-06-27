@@ -121,17 +121,15 @@ def generate_system_message(domain_dictionary, df):
     formatted_domains = {}
     assistant_message = {}
 
-    # reformat domains to increase clarity for gpt model and create dictionary with only domains/subdomains (to serve as expected gpt output)
+    # Reformat domains to increase clarity for gpt model and create dictionary with only domains/subdomains (to serve as expected gpt output)
     for key, value in domain_dictionary.items():
         if key in df.columns:
             formatted_domains[key] = "Domain"
             assistant_message[key] = 0
-        # iterate through each subdomain in list and add to dictionary
-        for i in range(len(value)):
-            subdomain, description = list(value[i].items())[0]
-            if subdomain in df.columns:
-                formatted_domains[subdomain] = description
-                assistant_message[subdomain] = 0
+        # Assuming the value is a description string, not a list of dictionaries
+        # Directly use the string as the description for the domain
+        formatted_domains[key] = value
+        assistant_message[key] = 0
 
     system_message = str(formatted_domains)
 
