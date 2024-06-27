@@ -12,9 +12,9 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount, SocialToken
 import requests
-from AST_Rock_Website.CoreEngine.src.database_manager import DatabaseManager
-from AST_Rock_Website.CoreEngine.src.external import External_Model_Interface
-from AST_Rock_Website.CoreEngine.src.issue import Issue
+from CoreEngine.src.database_manager import DatabaseManager
+from CoreEngine.src.external import External_Model_Interface
+from CoreEngine.src.issue_class import Issue
 from open_issue_classification import get_open_issues
 import json
 
@@ -78,20 +78,17 @@ def repo_detail(request, repo_name):
     else:
         openai_key = os.getenv('OPENAI_API_KEY')  # Ensure you store OpenAI API key in session or settings
     # Adapt issue data for display if necessary
-        
-
-    
     
     db = DatabaseManager()
     external = External_Model_Interface(
-        openai_key, db, "./output/rf_model.pkl", "./data/domain_labels.json"
+        openai_key, db, "CoreEngine/output/gpt_model.pkl", "AST_Rock_Website/CoreEngine/data/domain_labels.json"
     )
 
     db.close()
 
     db_gpt = DatabaseManager()
     external_gpt = External_Model_Interface(
-        openai_key, db, "AST_Rock_Website/CoreEngine/output/gpt_model.pkl", "AST_Rock_Website/CoreEngine/data/domain_labels.json"
+        openai_key, db, "CoreEngine/output/gpt_model.pkl", "AST_Rock_Website/CoreEngine/data/domain_labels.json"
     )
 
     db_gpt.close()
