@@ -12,7 +12,7 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount, SocialToken
 import requests
-from external import External_Model_Interface
+from external_file import External_Model_Interface
 import sys
 import os
 import json
