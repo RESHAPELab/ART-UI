@@ -15,15 +15,15 @@ import requests
 from external import External_Model_Interface
 import sys
 import os
-from open_issue_classification import get_open_issues
 import json
+
 # Add the src directory to the sys.path
 src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'CoreEngine', 'src'))
 sys.path.insert(0, src_dir)
 
 from database_manager import DatabaseManager
 from issue_class import Issue
-
+from open_issue_classification import get_open_issues
 
 
 

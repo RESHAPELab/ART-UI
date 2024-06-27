@@ -8,15 +8,19 @@ The contents of this class shall not depend on anything external.
 It must be self contained.
 
 """
-
+import pandas as pd
 import json
 import os
 import pickle
+import sys
 from joblib import Memory
 
-import pandas as pd
-from src.database_manager import DatabaseManager
-from src.open_issue_classification import (
+src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CoreEngine', 'src'))
+sys.path.insert(0, src_dir)
+
+
+from database_manager import DatabaseManager
+from open_issue_classification import (
     generate_system_message,
     get_gpt_response_one_issue,
     clean_text_rf,
