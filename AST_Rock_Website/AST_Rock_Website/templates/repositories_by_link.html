@@ -60,7 +60,7 @@
 					<!-- Min -->
 					<div id="main">
 						<!-- One -->
-						<form action="{% url 'submit_repo_link' %}" method="POST">
+						<form action="{% url 'repositories_by_link' %}" method="POST">
 							{% csrf_token %}
 							<input type="url" name="github_link" placeholder="Enter GitHub repository link" required>
 							<button type="submit">Submit</button>
