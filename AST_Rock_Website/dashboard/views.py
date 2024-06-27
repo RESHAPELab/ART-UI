@@ -1,5 +1,6 @@
 import os
 import pickle
+import re
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -86,8 +87,6 @@ def repo_detail(request, repo_name):
     
     token = request.session.get('github_token')
     username = request.session.get('username')
-    repositories = request.session.get('repositories', [])
-
 
 
     # Call to get_open_issues function 
@@ -151,6 +150,70 @@ def your_dashboard(request):
 
 @login_required
 def repositories_by_link(request):
+    token = request.session.get('github_token')
+
+    if request.method == 'POST':
+        github_link = request.POST.get('github_link')
+        # Regex to extract username and repository name from GitHub URL
+        match = re.search(r"github\.com/(.+?)/(.+?)(\.git|$)", github_link)
+        if match:
+            username, repo_name = match.groups()[:2]
+
+            # Call to get_open_issues function 
+            issues = get_open_issues(username, repo_name, token)
+            print("open issues: ", issues)
+
+
+            if issues is None:
+                return render(request, 'repo_detail.html', {
+                    'repo_name': repo_name,
+                    'responses': 'No issues found.'
+                })
+            else:
+                openai_key = os.getenv('OPENAI_API_KEY')  # Ensure you store OpenAI API key in session or settings
+            # Adapt issue data for display if necessary
+            
+
+            db = DatabaseManager()
+            external = External_Model_Interface(
+                openai_key, db, "rf_model.pkl", "domain_labels.json", None
+            )
+
+            db.close()
+
+            db2 = DatabaseManager()
+            external2 = External_Model_Interface(
+                openai_key, db2, "gpt_model.pkl", "domain_labels.json", None
+            )
+
+            
+            # Prepare to collect responses for each issue
+            responses_rf = []
+            responses_gpt= []
+
+            
+            # Iterate over each Issue object and predict using the external model interface
+            for issue in issues:
+                try:
+                    response = external.predict_issue(issue)
+                    responses_rf.append(response)
+                except AttributeError as e:
+                    print(f"Error processing issue {issue.number}: {str(e)}")
+            print(responses_rf)
+            print(responses_gpt)
+            # Zip lists together for easier template use
+            issues_responses = zip(issues, responses_rf)
+            
+            return render(request, 'repo_detail.html', {
+                'repo_name': repo_name,
+                'issues_responses': issues_responses,
+            })
+            # Process the username and repo_name as needed
+            # For example, save them, or pass them to another function
+        else:
+            return render(request, 'repositories_by_link.html')
+
+
     return render(request, 'repositories_by_link.html')
 
 def home(request):

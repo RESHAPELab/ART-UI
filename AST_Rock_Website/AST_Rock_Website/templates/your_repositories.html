@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>AST</title>
+        <title>SkillScope</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="{% static 'css/main.css' %}" />
@@ -16,7 +16,7 @@
 
 				<!-- Header -->
 					<header id="header" class="alt">
-						<a href="{% url 'index' %}" class="logo"><strong>AST</strong> <span>Precision at Every Push</span></a>
+						<a href="{% url 'index' %}" class="logo"><strong>SkillScope</strong> <span>Precision at Every Push</span></a>
 						<nav>
 							<a href="#menu">Menu</a>
 						</nav>
@@ -43,10 +43,10 @@
 					<section id="banner" class="major">
 						<div class="inner">
 							<header class="major">
-								<h1>{{ username }}'s Repositories</h1>
+								<h1>Query a Repository by Link</h1>
 							</header>
 							<div class="content">
-								<p>This project automates the labeling of GitHub repositories based on their content, using a taxonomy of domains and subdomains. It implements a precision threshold of 75% to ensure that only high-confidence classifications are applied, enhancing the organization and searchability of repositories.</p>
+								<p></p>
 								<ul class="actions">
 									{% if user.is_authenticated %}
 										<li><a href="{% url 'index' %}"  class="button next scrolly">Home</a></li>
@@ -60,17 +60,11 @@
 					<!-- Min -->
 					<div id="main">
 						<!-- One -->
-						<section id="one" class="tiles">
-							<!-- Dynamic generation of repository tiles -->
-							{% for repo in repositories %}
-							<article>
-								<header class="major">
-									<h3><a href="{% url 'repo_detail' repo_name=repo %}" class="link">{{ repo }}</a></h3>
-									<p>Details about {{ repo }}</p>
-								</header>
-							</article>
-							{% endfor %}
-						</section>
+						<form action="{% url 'submit_repo_link' %}" method="POST">
+							{% csrf_token %}
+							<input type="url" name="github_link" placeholder="Enter GitHub repository link" required>
+							<button type="submit">Submit</button>
+						</form>
 					</div>
 
 			</div>

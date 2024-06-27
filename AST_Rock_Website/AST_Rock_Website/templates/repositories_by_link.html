@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>AST</title>
+        <title>SkillScope</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="{% static 'css/main.css' %}" />
@@ -16,7 +16,7 @@
 
 				<!-- Header -->
 					<header id="header" class="alt">
-						<a href="{% url 'index' %}" class="logo"><strong>AST</strong> <span>Precision at Every Push</span></a>
+						<a href="{% url 'index' %}" class="logo"><strong>SkillScope</strong> <span>Precision at Every Push</span></a>
 						<nav>
 							<a href="#menu">Menu</a>
 						</nav>
@@ -45,7 +45,7 @@
 								<h1>Repositories By Link</h1>
 							</header>
 							<div class="content">
-								<p>This project automates the labeling of GitHub repositories based on their content, using a taxonomy of domains and subdomains. It implements a precision threshold of 75% to ensure that only high-confidence classifications are applied, enhancing the organization and searchability of repositories.</p>
+								<p>SkillScope aims to assist new contributors in finding tasks to work on OSS projects by revealing skills needed to solve open tasks. SkillScope mines projects data identifying intrinsic souce code program structure from where It is able to classify internal libraries and funcions and train a ML model ou Fine tune LLM. The model ir LLM can predict the skills showed in its UI.</p>
 								<ul class="actions">
 									{% if user.is_authenticated %}
 										<li><a href="{% url 'index' %}"  class="button next scrolly">Home</a></li>
