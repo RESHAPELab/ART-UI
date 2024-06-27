@@ -14,6 +14,7 @@ from allauth.socialaccount.models import SocialAccount, SocialToken
 import requests
 from external_file import External_Model_Interface
 from open_issue import get_open_issues
+from database_manager_file import DatabaseManager
 import sys
 import os
 import json
@@ -22,7 +23,7 @@ import json
 src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'CoreEngine', 'src'))
 sys.path.insert(0, src_dir)
 
-from database_manager import DatabaseManager
+
 from issue_class import Issue
 
 

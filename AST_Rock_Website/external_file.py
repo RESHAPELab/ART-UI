@@ -25,7 +25,7 @@ src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CoreEngine', 
 sys.path.insert(0, src_dir)
 
 
-from database_manager import DatabaseManager
+from AST_Rock_Website.database_manager_file import DatabaseManager
 
 from issue_class import Issue
 

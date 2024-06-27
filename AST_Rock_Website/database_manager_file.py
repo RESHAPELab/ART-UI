@@ -14,7 +14,6 @@ import time
 from typing import Iterable, Optional
 from django.db import connection, connections
 from django.db import transaction
-
 import numpy as np
 import pandas as pd
 import tqdm
