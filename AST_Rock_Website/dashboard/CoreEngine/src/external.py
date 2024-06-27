@@ -15,7 +15,7 @@ import pickle
 from joblib import Memory
 
 import pandas as pd
-from database_manager import DatabaseManager
+
 from open_issue_classification import (
     generate_system_message,
     get_gpt_response_one_issue,
