@@ -96,18 +96,11 @@ def repo_detail(request, repo_name):
 
     db.close()
 
-    db_gpt = DatabaseManager()
-    external_gpt = External_Model_Interface(
-        openai_key, db, "CoreEngine/output/gpt_model.pkl", "AST_Rock_Website/CoreEngine/data/domain_labels.json", None
-    )
-
-    db_gpt.close()
     
     responses_rf = external.predict_issue(issues)
-    responses_gpt = external_gpt.predict_issue(issues)
     
     # Zip lists together for easier template use
-    issues_responses = zip(issues, responses_rf, responses_gpt)
+    issues_responses = zip(issues, responses_rf)
     
     return render(request, 'repo_detail.html', {
         'repo_name': repo_name,
