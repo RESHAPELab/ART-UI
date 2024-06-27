@@ -102,11 +102,15 @@ def repo_detail(request, repo_name):
 
     db_gpt.close()
     
+    responses_rf = external.predict_issue(issues)
+    responses_gpt = external_gpt.predict_issue(issues)
+    
+    # Zip lists together for easier template use
+    issues_responses = zip(issues, responses_rf, responses_gpt)
+    
     return render(request, 'repo_detail.html', {
         'repo_name': repo_name,
-        'issues': issues,
-        'responses_rf' : external.predict_issue(issues),
-        'responses_gpt' : external_gpt.predict_issue(issues)
+        'issues_responses': issues_responses,
     })
 
     
