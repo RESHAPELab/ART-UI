@@ -1,6 +1,23 @@
 {% load static %}
 {% load socialaccount %}
+
 <!DOCTYPE HTML>
+<style>
+    /* CSS for centering the content within the section with class "tiles" */
+    .tiles {
+        display: flex;
+        flex-direction: column; /* Aligns children (like ul) in a column */
+        justify-content: center; /* Center vertically in the container */
+        align-items: center; /* Center horizontally in the container */
+        height: 100vh; /* Take the full height of the viewport */
+        text-align: center; /* Center text within each block */
+    }
+
+    ul {
+        list-style-type: none; /* Removes bullet points */
+        padding: 0; /* Removes padding */
+    }
+</style>
 <html>
     <head>
         <title>AST</title>
