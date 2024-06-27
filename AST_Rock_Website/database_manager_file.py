@@ -24,21 +24,22 @@ class DatabaseManager:
 
     def __init__(
         self,
-        dbfile: str = "./output/main.db",
-        cachefile: str = "./output/ai_result_backup.db",
+        dbfile: str = "./output/main.db",  # Retained for potential future use or logging
+        cachefile: str = "./output/ai_result_backup.db",  # Retained for potential future use or logging
         label_file: str = "./data/subdomain_labels.json",
     ):
-        """Construct and open connection to database.
+        """Construct and load label data.
 
         Args:
-            dbfile (str, optional): _description_. Defaults to "./output/main.db".
-            cachefile (str, optional): _description_. Defaults to "./output/cache.db".
-            label_file (str, optional): List of labels/sublabels for APIs
+            dbfile (str, optional): Path to main database file. Defaults to "./output/main.db".
+            cachefile (str, optional): Path to cache database file. Defaults to "./output/cache.db".
+            label_file (str, optional): Path to JSON file with labels.
         """
-        self.conn = sqlite3.connect(dbfile)
+        self.dbfile = dbfile
         self.cache_file = cachefile
         self.cache_update = False
 
+        # Load domain labels from a JSON file
         with open(label_file, "r", encoding="UTF-8") as f:
             self.domain_labels = json.load(f)
 
