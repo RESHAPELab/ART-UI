@@ -64,7 +64,7 @@
 							<!-- Dynamic generation of repository tiles -->
 							<h1>Issues in Repository: {{ repo_name }}</h1>
 								<ul>
-									{% for issue, rf_response, gpt_response in issues_responses %}
+									{% for issue, rf_response in issues_responses %}
 									<li>
 										<strong>Issue:</strong> {{ issue }}
 										<br>

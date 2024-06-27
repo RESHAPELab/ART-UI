@@ -79,31 +79,47 @@ class External_Model_Interface:
             raise NotImplementedError("Model type not recognized")
 
     def __gpt_predict(self, issue: Issue):
-        # Assuming llm_classifier is part of self.model and configured
+        llm_classifier = self.model["model"]
+
         columns = self.db.get_df_column_names()
         empty = [list(range(len(columns)))]
         df = pd.DataFrame(data=empty, columns=columns)
 
-        # Placeholder for actual GPT response function
-        response = self.__simulate_gpt_response(issue)
+        system_message, assistant_message = generate_system_message(self.domains, df)
+
+        # equiv to get_gpt_responses()
+        response = get_gpt_response_one_issue(
+            issue, llm_classifier, system_message, self.__open_ai_key
+        )
+
         return response
 
     def __rf_predict(self, issue: Issue):
-        # Assuming clf (classifier) and vx (vectorizer) are part of self.model
-        df = pd.DataFrame(columns=["Issue #", "Title", "Body"], data=[[issue.number, issue.title, issue.body]])
-        vectorized_text = self.__clean_text_rf(df)  # Assuming clean_text_rf is implemented properly
+        clf = self.model["model"]
+        vx = self.model["vectorizer"]
+        y_df = self.model["labels"]
 
-        # Placeholder for actual prediction function
-        predictions = self.__simulate_rf_predictions(df)
-        return predictions[:3]  # Assuming we want the top 3 predictions
+        df = pd.DataFrame(columns=["Issue #", "Title", "Body"], data=[issue.get_data()])
+        vectorized_text = clean_text_rf(vx, df)
 
-    # Dummy functions to simulate responses
-    def __simulate_gpt_response(self, issue):
-        return "GPT response based on issue"
+        # predict open issues ()
+        predictions = predict_open_issues(df, clf, vectorized_text, y_df)
 
-    def __simulate_rf_predictions(self, df):
-        return ["Prediction1", "Prediction2", "Prediction3"]
+        value_out: list[int] = []
+        columns: list[str] = []
+        for column in predictions.columns:
+            if len(column) < 3 or column == "Issue #":
+                continue
+            value = predictions[column][0]
 
-    def __clean_text_rf(self, df):
-        # Implement text cleaning for RF model prediction
-        return df
+            if len(value_out) == 0:
+                value_out.insert(0, value)
+                columns.insert(0, column)
+            else:
+                x = 0
+                while x < len(value_out) and value_out[x] > value:
+                    x += 1
+                value_out.insert(x, value)
+                columns.insert(x, column)
+
+        return columns[:3]
