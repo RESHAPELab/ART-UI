@@ -111,20 +111,29 @@ def repo_detail(request, repo_name):
 
     db.close()
 
+    db2 = DatabaseManager()
+    external2 = External_Model_Interface(
+        openai_key, db2, "gpt_model.pkl", "domain_labels.json", None
+    )
+
     
     # Prepare to collect responses for each issue
     responses_rf = []
+    responses_gpt= []
 
+    
     # Iterate over each Issue object and predict using the external model interface
     for issue in issues:
         try:
             response = external.predict_issue(issue)
             responses_rf.append(response)
+            response = external2.predict_issue(issue)
+            responses_gpt.append(response)
         except AttributeError as e:
             print(f"Error processing issue {issue.number}: {str(e)}")
     
     # Zip lists together for easier template use
-    issues_responses = zip(issues, responses_rf)
+    issues_responses = zip(issues, responses_rf, responses_gpt)
     
     return render(request, 'repo_detail.html', {
         'repo_name': repo_name,
