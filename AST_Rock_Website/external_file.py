@@ -62,9 +62,10 @@ class External_Model_Interface:
         result = None
         # If not cached, compute the result and cache it
         #result = self.__predict_issue(issue.number, issue.title, issue.body, None)
-        if self.model["type"] == "rf":
+        if self.model["type"] == "gpt":
+            result = self.__gpt_predict(issue)
+        elif self.model["type"] == "rf":
             result = self.__rf_predict(issue)
-        
         cache.set(cache_key, result, timeout=None)  # Adjust timeout as needed
         return result
 
