@@ -124,13 +124,12 @@ def repo_detail(request, repo_name):
     
     # Iterate over each Issue object and predict using the external model interface
     for issue in issues:
-        try:
-            response = external.predict_issue(issue)
-            responses_rf.append(response)
-            response = external2.predict_issue(issue)
-            responses_gpt.append(response)
-        except AttributeError as e:
-            print(f"Error processing issue {issue.number}: {str(e)}")
+    
+        response = external.predict_issue(issue)
+        responses_rf.append(response)
+        response = external2.predict_issue(issue)
+        responses_gpt.append(response)
+        
     print(responses_rf)
     print(responses_gpt)
     # Zip lists together for easier template use
