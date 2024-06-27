@@ -127,6 +127,7 @@ def repo_detail(request, repo_name):
         try:
             response = external.predict_issue(issue)
             responses_rf.append(response)
+            responses_gpt.append(response)
         except AttributeError as e:
             print(f"Error processing issue {issue.number}: {str(e)}")
     print(responses_rf)
