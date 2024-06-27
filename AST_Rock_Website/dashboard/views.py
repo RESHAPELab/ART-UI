@@ -91,7 +91,7 @@ def repo_detail(request, repo_name):
     
     db = DatabaseManager()
     external = External_Model_Interface(
-        openai_key, db, "CoreEngine/output/gpt_model.pkl", "AST_Rock_Website/CoreEngine/data/domain_labels.json", None
+        openai_key, db, "CoreEngine/output/rf_model.pkl", "CoreEngine/data/domain_labels.json", None
     )
 
     db.close()
