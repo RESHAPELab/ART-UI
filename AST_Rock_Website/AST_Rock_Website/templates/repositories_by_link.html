@@ -58,11 +58,11 @@
 
 				<!-- Main -->
 					<!-- Min -->
-					<div id="main">
-						<form action="{% url 'repositories_by_link' %}" method="POST" class="alt">
+					<div id="main" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+						<form action="{% url 'repositories_by_link' %}" method="POST" class="alt" style="width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center;">
 							{% csrf_token %}
-							<input type="url" name="github_link" placeholder="Enter GitHub repository link" required class="alt">
-							<ul class="actions">
+							<input type="url" name="github_link" placeholder="Enter GitHub repository link" required class="alt" style="width: 100%; margin-bottom: 20px;">
+							<ul class="actions" style="width: 100%; justify-content: center;">
 								<li><input type="submit" value="Submit" class="primary"></li>
 							</ul>
 						</form>
