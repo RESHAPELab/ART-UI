@@ -129,9 +129,10 @@ def repo_detail(request, repo_name):
             responses_rf.append(response)
         except AttributeError as e:
             print(f"Error processing issue {issue.number}: {str(e)}")
-    
+    print(responses_rf)
+    print(responses_gpt)
     # Zip lists together for easier template use
-    issues_responses = zip(issues, responses_rf, responses_gpt)
+    issues_responses = zip(issues, responses_rf)
     
     return render(request, 'repo_detail.html', {
         'repo_name': repo_name,
