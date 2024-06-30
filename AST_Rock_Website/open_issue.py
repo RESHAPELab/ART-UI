@@ -116,31 +116,35 @@ def filter_domains(df):
     num_of_domains = 15
     return get_top_domains(num_of_domains, occurrence_dictionary, df)
 
-
 def generate_system_message(domain_dictionary, subdomain_dictionary, df):
     formatted_domains = {}
+    formatted_subdomains = {}
     assistant_message = {}
 
-    # Reformat domains and subdomains to increase clarity for the GPT model
+    # Iterate through each domain and format it based on its presence in df.columns
     for key, value in domain_dictionary.items():
+        # Check if the domain is one of the df columns
         if key in df.columns:
-            # Include both domain description and subdomain details
-            subdomains = subdomain_dictionary.get(key, [])
-            formatted_subdomains = {sub['name']: sub['description'] for sub in subdomains}
-            formatted_domains[key] = {
-                "Domain Description": value,
-                "Subdomains": formatted_subdomains
-            }
-        else:
-            # If no subdomains are present, just the description
-            formatted_domains[key] = {"Domain Description": value}
-        
-        # Initialize an empty dictionary for assistant messages per domain
-        assistant_message[key] = {}
+            formatted_domains[key] = "Domain"  # Mark it specifically as "Domain" if in df.columns
+            assistant_message[key] = 0  # Initialize message count for this domain
 
+        # Always use the domain description from the dictionary
+        formatted_domains[key] = value
+
+        # Prepare subdomains for this domain if any
+        if key in subdomain_dictionary:
+            # Create a subdomain entry for each subdomain under this domain
+            subdomain_list = subdomain_dictionary[key]
+            formatted_subdomain_details = {}
+            for subdomain in subdomain_list:
+                subdomain_name = list(subdomain.keys())[0]  # Assumes each subdomain dict has one key
+                formatted_subdomain_details[subdomain_name] = subdomain[subdomain_name]
+            formatted_subdomains[key] = formatted_subdomain_details  # Store subdomain details under the domain
+
+    # The system_message could be adjusted to include just domain names if detailed info is not needed
     system_message = str(formatted_domains)
 
-    return system_message, assistant_message
+    return system_message, formatted_subdomains, assistant_message
 
 
 def generate_gpt_messages(system_message, gpt_output, df, out_jsonl):
@@ -325,11 +329,11 @@ def get_gpt_responses(open_issue_df, issue_classifier, domains_string, openai_ke
     return responses
 
 
-def get_gpt_response_one_issue(issue, issue_classifier, domains_string, openai_key):
+def get_gpt_response_one_issue(issue, issue_classifier, domains_string, subdomain_string, openai_key):
     # create user and system messages
     user_message = (
-        f"Classify a GitHub issue by indicating up to THREE domains and THREE subdomains that are relevant to the issue based on its title: [{issue.title}] "
-        f"and body: [{issue.body}]. Prioritize positive precision by marking an issue with a 1 only when VERY CERTAIN a domain is relevant to the issue text. Ensure that you only provide three domains and refer to ONLY THESE domains and subdomains when classifying: {domains_string}."
+        f"Classify a GitHub issue by indicating up to THREE domains and THREE subdomains (every domain has a corresponding 5 subdomains so make sure the subdomain matches up to the corresponding domain) that are relevant to the issue based on its title: [{issue.title}] "
+        f"and body: [{issue.body}]. Prioritize positive precision by marking an issue with a 1 only when VERY CERTAIN a domain is relevant to the issue text. Ensure that you only provide three domains and refer to ONLY THESE domains and subdomains when classifying. Domains: {domains_string}. Domains with corresponding Subdomains: {subdomain_string}"
         f"\n\nImportant: only provide the name of the domains and subdomains in the following format: ['First Domain-First Subdomain', 'Second Domain-Second Subdomain', 'Third Domain-Third Subdomain']."
     )
 
