@@ -101,8 +101,13 @@
 							<ul class="alt">
 								{% for issue, rf_response, gpt_response in issues_responses %}
 								<li>
-									<strong>Issue Number:</strong> {{ issue.number }}<br>
-									<strong>Open Issue:</strong> {{ issue.title }}<br>
+									<div>
+										<strong>Issue Number:</strong> {{ issue.number }}
+									</div>
+
+									<div>
+										<strong>Open Issue:</strong> {{ issue.title }}
+									</div>
 									
 									<!-- Collapsible section toggle on a new line -->
 									<div>
