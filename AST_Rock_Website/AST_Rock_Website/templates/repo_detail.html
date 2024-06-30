@@ -20,9 +20,7 @@
         padding: 0; /* Removes padding */
     }
 	.tiles li {
-    width: 100%; /* Full width to fill the ul element */
-    display: flex;
-    justify-content: flex-start; /* Aligns content to the left */
+    justify-content: left; /* Aligns content to the left */
 	}
 </style>
 <html>
@@ -32,19 +30,38 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="{% static 'css/main.css' %}" />
         <noscript><link rel="stylesheet" href="{% static 'css/noscript.css' %}" /></noscript>
+		<style>
+            /* Additional inline styles if needed */
+            #splash-screen {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #242943; /* Assuming this is the background color from your CSS */
+                color: white; /* Assuming white text color */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 24px;
+                z-index: 9999; /* Ensure it's above all other content */
+            }
+        </style>
     </head>
-	<body class="is-preload">
+	<body onload="hideSplashScreen()">
+        <!-- Splash Screen -->
+        <div id="splash-screen">Loading...</div>
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+        <!-- Wrapper -->
+        <div id="wrapper" style="display: none;">  <!-- Initially hide the wrapper -->
 
-				<!-- Header -->
-					<header id="header" class="alt">
-						<a href="{% url 'index' %}" class="logo"><strong>SkillScope</strong> <span>Precision at Every Push</span></a>
-						<nav>
-							<a href="#menu">Menu</a>
-						</nav>
-					</header>
+            <!-- Header -->
+            <header id="header" class="alt">
+                <a href="{% url 'index' %}" class="logo"><strong>SkillScope</strong> <span>Precision at Every Push</span></a>
+                <nav>
+                    <a href="#menu">Menu</a>
+                </nav>
+            </header>
 
 				<!-- Menu -->
 					<nav id="menu">
@@ -97,21 +114,25 @@
 						</section>
 					</div>
 
-					<script>
-						function toggleDescription(id) {
-							var element = document.getElementById(id);
-							if (element.style.display === 'none') {
-								element.style.display = 'block';
-							} else {
-								element.style.display = 'none';
-							}
-						}
-					</script>
-
-
 			</div>
 
 		<!-- Scripts -->
+			<script>
+				function toggleDescription(id) {
+					var element = document.getElementById(id);
+					if (element.style.display === 'none') {
+						element.style.display = 'block';
+					} else {
+						element.style.display = 'none';
+					}
+				}
+			</script>
+			<script>
+				function hideSplashScreen() {
+					document.getElementById('splash-screen').style.display = 'none';
+					document.getElementById('wrapper').style.display = 'block';  // Show the wrapper after loading
+				}
+			</script>
 			<script src="{% static 'js/jquery.min.js' %}"></script>
 			<script src="{% static 'js/jquery.scrolly.min.js' %}"></script>
 			<script src="{% static 'js/jquery.scrollex.min.js' %}"></script>
