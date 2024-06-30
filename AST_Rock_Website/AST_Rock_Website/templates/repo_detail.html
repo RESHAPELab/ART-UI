@@ -67,15 +67,33 @@
 							<ul class="alt">
 								{% for issue, rf_response, gpt_response in issues_responses %}
 								<li>
+									<strong>Issue Number:</strong> {{ issue.number }}<br>
 									<strong>Open Issue:</strong> {{ issue.title }}<br>
-									<strong>Issue Description:</strong> {{ issue.body }}<br>
+									
+									<!-- Collapsible section for issue description -->
+									<a href="#!" class="button small" onclick="toggleDescription('desc{{ forloop.counter }}')">Toggle Description</a>
+									<div id="desc{{ forloop.counter }}" style="display: none;">
+										<p>{{ issue.body }}</p>
+									</div>
+					
 									<strong>Random Forest Classification:</strong> {{ rf_response }}<br>
-									<strong>OpenAI Classification:</strong> {{ gpt_response }}
+									<strong>OpenAI Classification:</strong> {{ gpt_response }}<br>
 								</li>
 								{% endfor %}
 							</ul>
 						</section>
 					</div>
+
+					<script>
+						function toggleDescription(id) {
+							var element = document.getElementById(id);
+							if (element.style.display === 'none') {
+								element.style.display = 'block';
+							} else {
+								element.style.display = 'none';
+							}
+						}
+					</script>
 
 
 			</div>
