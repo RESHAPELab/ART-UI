@@ -16,11 +16,19 @@
     }
 
     ul {
-        list-style-type: none; /* Removes bullet points */
-        padding: 0; /* Removes padding */
-    }
+		list-style-type: none;
+		padding: 0;
+		width: 100%; /* Ensure the ul spans the full width */
+		display: flex;
+		justify-content: center; /* This will help in centering the ul itself */
+	}
 	.tiles li {
-    justify-content: left; /* Aligns content to the left */
+    	justify-content: flex-start; /* Align content to the left */
+		text-align: left; /* Ensure text within li is left aligned */
+		width: 100%; /* Set width to fill the container */
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start; /* Aligns items to the left side within each li */
 	}
 </style>
 <html>
@@ -94,20 +102,19 @@
 									
 									<!-- Collapsible section toggle on a new line -->
 									<div>
-										<a href="#!" class="button small" onclick="toggleDescription('desc{{ forloop.counter }}')">Toggle Description</a>
+										<a href="#!" class="button small" onclick="toggleDescription('desc{{ forloop.counter }}')">Issue Information</a>
 									</div>
 									
 									<div id="desc{{ forloop.counter }}" style="display: none;">
 										<p>{{ issue.body }}</p>
+										<div>
+											<strong>Random Forest Classification:</strong> {{ rf_response }}
+										</div>
+										<div>
+											<strong>OpenAI Classification:</strong> {{ gpt_response }}
+										</div>
 									</div>
 									
-									<!-- Classification information on separate lines -->
-									<div>
-										<strong>Random Forest Classification:</strong> {{ rf_response }}
-									</div>
-									<div>
-										<strong>OpenAI Classification:</strong> {{ gpt_response }}
-									</div>
 								</li>
 								{% endfor %}
 							</ul>
