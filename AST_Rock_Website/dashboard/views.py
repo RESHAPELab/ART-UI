@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount, SocialToken
 import requests
 from external_file import External_Model_Interface
-from open_issue import get_open_issues
+from open_issue import get_open_issues, get_open_issues_without_token
 from database_manager_file import DatabaseManager
 import sys
 import os
@@ -161,7 +161,7 @@ def repositories_by_link(request):
             username, repo_name = match.groups()[:2]
 
             # Call to get_open_issues function 
-            issues = get_open_issues(username, repo_name, token)
+            issues = get_open_issues_without_token(username, repo_name)
             print("open issues: ", issues)
 
 

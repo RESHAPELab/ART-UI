@@ -284,6 +284,43 @@ def get_open_issues(owner, repo, access_token) -> list[Issue]:
 
     return data
 
+def get_open_issues_without_token(owner: str, repo: str) -> list[Issue]:
+    data = []
+    # GitHub API URL for fetching issues
+    url = f"https://api.github.com/repos/{owner}/{repo}/issues"
+
+    # Headers for the request
+    headers = {
+        "Accept": "application/vnd.github.v3+json",
+    }
+
+    # Parameters to fetch only open issues
+    params = {
+        "state": "open",
+        "per_page": 100,  # Number of issues per page (maximum is 100)
+        "page": 1,  # Page number to start fetching from
+    }
+
+    issues = []
+    while True:
+        response = requests.get(url, headers=headers, params=params)
+        if response.status_code != 200:
+            print(f"Error: {response.status_code}")
+            break
+
+        issues_page = response.json()
+        if not issues_page:
+            break
+
+        issues.extend(issues_page)
+        params["page"] += 1
+
+    # Add extracted issues to list
+    for i in issues:
+        data.append(Issue(i["number"], i["title"], i["body"]))
+    print(f"Total issues fetched: {len(issues)}")
+
+    return data
 
 def query_gpt(user_message, issue_classifier, openai_key, max_retries=5):
     client = OpenAI(api_key=openai_key)
