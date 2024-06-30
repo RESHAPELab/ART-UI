@@ -38,6 +38,7 @@ class External_Model_Interface:
         db: DatabaseManager,
         model_file: str,
         domain_file: str,
+        subdomain_file : str,
         response_cache_key: str,
     ):
         with open(model_file, "rb") as f:
@@ -45,6 +46,9 @@ class External_Model_Interface:
 
         with open(domain_file, "r") as f:
             self.domains = json.load(f)
+        
+        with open(subdomain_file, "r") as f:
+            self.subdomains = json.load(f)
 
         self.db = db
         self.model_file_name = model_file
@@ -86,7 +90,7 @@ class External_Model_Interface:
         empty = [list(range(len(columns)))]
         df = pd.DataFrame(data=empty, columns=columns)
 
-        system_message, assistant_message = generate_system_message(self.domains, df)
+        system_message, assistant_message = generate_system_message(self.domains, self.subdomains, df)
 
         # equiv to get_gpt_responses()
         response = get_gpt_response_one_issue(

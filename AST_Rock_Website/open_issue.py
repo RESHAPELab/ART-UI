@@ -117,19 +117,26 @@ def filter_domains(df):
     return get_top_domains(num_of_domains, occurrence_dictionary, df)
 
 
-def generate_system_message(domain_dictionary, df):
+def generate_system_message(domain_dictionary, subdomain_dictionary, df):
     formatted_domains = {}
     assistant_message = {}
 
-    # Reformat domains to increase clarity for gpt model and create dictionary with only domains/subdomains (to serve as expected gpt output)
+    # Reformat domains and subdomains to increase clarity for the GPT model
     for key, value in domain_dictionary.items():
         if key in df.columns:
-            formatted_domains[key] = "Domain"
-            assistant_message[key] = 0
-        # Assuming the value is a description string, not a list of dictionaries
-        # Directly use the string as the description for the domain
-        formatted_domains[key] = value
-        assistant_message[key] = 0
+            # Include both domain description and subdomain details
+            subdomains = subdomain_dictionary.get(key, [])
+            formatted_subdomains = {sub['name']: sub['description'] for sub in subdomains}
+            formatted_domains[key] = {
+                "Domain Description": value,
+                "Subdomains": formatted_subdomains
+            }
+        else:
+            # If no subdomains are present, just the description
+            formatted_domains[key] = {"Domain Description": value}
+        
+        # Initialize an empty dictionary for assistant messages per domain
+        assistant_message[key] = {}
 
     system_message = str(formatted_domains)
 
@@ -323,7 +330,7 @@ def get_gpt_response_one_issue(issue, issue_classifier, domains_string, openai_k
     user_message = (
         f"Classify a GitHub issue by indicating up to THREE domains and THREE subdomains that are relevant to the issue based on its title: [{issue.title}] "
         f"and body: [{issue.body}]. Prioritize positive precision by marking an issue with a 1 only when VERY CERTAIN a domain is relevant to the issue text. Ensure that you only provide three domains and refer to ONLY THESE domains and subdomains when classifying: {domains_string}."
-        f"\n\nImportant: only provide the name of the domains in list format."
+        f"\n\nImportant: only provide the name of the domains and subdomains in the following format: ['First Domain-First Subdomain', 'Second Domain-Second Subdomain', 'Third Domain-Third Subdomain']."
     )
 
     # query fine tuned model
