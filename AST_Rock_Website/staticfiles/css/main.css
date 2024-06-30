@@ -2742,17 +2742,17 @@ input, select, textarea {
 			-webkit-transition: -webkit-transform 0.25s ease, opacity 0.25s ease, -webkit-filter 1s ease, -webkit-filter 1s ease;
 			-ms-transition: -ms-transform 0.25s ease, opacity 0.25s ease, -ms-filter 1s ease, -webkit-filter 1s ease;
 			transition: transform 0.25s ease, opacity 0.25s ease, filter 1s ease, -webkit-filter 1s ease;
-			padding: 2em 2em 1em 2em ;
+			padding: 4em 4em 2em 4em ;
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: cover;
 			cursor: default;
 			height: 40vh;
-			max-height: 30em;
-			min-height: 18em;
+			max-height: 40em;
+			min-height: 23em;
 			overflow: hidden;
 			position: relative;
-			width: 20%;
+			width: 40%;
 		}
 
 			.tiles article .image {
@@ -2857,7 +2857,7 @@ input, select, textarea {
 		@media screen and (max-width: 1280px) {
 
 			.tiles article {
-				padding: 3em 2em ;
+				padding: 4em 3em 2em 3em ;
 				height: 30vh;
 				max-height: 30em;
 				min-height: 20em;
