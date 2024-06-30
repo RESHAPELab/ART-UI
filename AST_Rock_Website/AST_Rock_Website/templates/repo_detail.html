@@ -19,6 +19,11 @@
         list-style-type: none; /* Removes bullet points */
         padding: 0; /* Removes padding */
     }
+	.tiles li {
+    width: 100%; /* Full width to fill the ul element */
+    display: flex;
+    justify-content: flex-start; /* Aligns content to the left */
+	}
 </style>
 <html>
     <head>
@@ -70,14 +75,22 @@
 									<strong>Issue Number:</strong> {{ issue.number }}<br>
 									<strong>Open Issue:</strong> {{ issue.title }}<br>
 									
-									<!-- Collapsible section for issue description -->
-									<a href="#!" class="button small" onclick="toggleDescription('desc{{ forloop.counter }}')">Toggle Description</a>
+									<!-- Collapsible section toggle on a new line -->
+									<div>
+										<a href="#!" class="button small" onclick="toggleDescription('desc{{ forloop.counter }}')">Toggle Description</a>
+									</div>
+									
 									<div id="desc{{ forloop.counter }}" style="display: none;">
 										<p>{{ issue.body }}</p>
 									</div>
-					
-									<strong>Random Forest Classification:</strong> {{ rf_response }}<br>
-									<strong>OpenAI Classification:</strong> {{ gpt_response }}<br>
+									
+									<!-- Classification information on separate lines -->
+									<div>
+										<strong>Random Forest Classification:</strong> {{ rf_response }}
+									</div>
+									<div>
+										<strong>OpenAI Classification:</strong> {{ gpt_response }}
+									</div>
 								</li>
 								{% endfor %}
 							</ul>
