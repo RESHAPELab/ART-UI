@@ -141,10 +141,12 @@ def generate_system_message(domain_dictionary, subdomain_dictionary, df):
                 formatted_subdomain_details[subdomain_name] = subdomain[subdomain_name]
             formatted_subdomains[key] = formatted_subdomain_details  # Store subdomain details under the domain
 
+    formatted_subdomains_str = str(formatted_subdomains)
     # The system_message could be adjusted to include just domain names if detailed info is not needed
     system_message = str(formatted_domains)
 
-    return system_message, formatted_subdomains, assistant_message
+
+    return system_message, formatted_subdomains_str, assistant_message
 
 
 def generate_gpt_messages(system_message, gpt_output, df, out_jsonl):
@@ -371,7 +373,7 @@ def get_gpt_response_one_issue(issue, issue_classifier, domains_string, subdomai
     user_message = (
         f"Classify a GitHub issue by indicating up to THREE domains and THREE subdomains (every domain has a corresponding 5 subdomains so make sure the subdomain matches up to the corresponding domain) that are relevant to the issue based on its title: [{issue.title}] "
         f"and body: [{issue.body}]. Prioritize positive precision by marking an issue with a 1 only when VERY CERTAIN a domain is relevant to the issue text. Ensure that you only provide three domains and refer to ONLY THESE domains and subdomains when classifying. Domains: {domains_string}. Domains with corresponding Subdomains: {subdomain_string}"
-        f"\n\nImportant: only provide the name of the domains and subdomains in the following format: ['First Domain-First Subdomain', 'Second Domain-Second Subdomain', 'Third Domain-Third Subdomain']."
+        f"\n\nImportant: ONLY provide the NAME of the domains and subdomains in the following format. DO NOT PROVIDE ANY DESCRIPTIONS: ['First Domain-First Subdomain', 'Second Domain-Second Subdomain', 'Third Domain-Third Subdomain']."
     )
 
     # query fine tuned model
