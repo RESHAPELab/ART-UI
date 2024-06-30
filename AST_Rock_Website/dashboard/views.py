@@ -161,7 +161,7 @@ def repositories_by_link(request):
             username, repo_name = match.groups()[:2]
 
             # Call to get_open_issues function 
-            issues = get_open_issues_without_token(username, repo_name)
+            issues = get_open_issues(username, repo_name, token)
             print("open issues: ", issues)
 
 

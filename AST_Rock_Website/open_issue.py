@@ -135,18 +135,20 @@ def generate_system_message(domain_dictionary, subdomain_dictionary, df):
         if key in subdomain_dictionary:
             # Create a subdomain entry for each subdomain under this domain
             subdomain_list = subdomain_dictionary[key]
-            formatted_subdomain_details = {}
+            subdomain_pairs = []
             for subdomain in subdomain_list:
                 subdomain_name = list(subdomain.keys())[0]  # Assumes each subdomain dict has one key
-                formatted_subdomain_details[subdomain_name] = subdomain[subdomain_name]
-            formatted_subdomains[key] = formatted_subdomain_details  # Store subdomain details under the domain
+                # Create the domain-subdomain pair format
+                subdomain_pairs.append(f"{key}-{subdomain_name}")
+            formatted_subdomains[key] = subdomain_pairs  # Store subdomain details under the domain
 
-    formatted_subdomains_str = str(formatted_subdomains)
+    # Convert the subdomains to a single string with domain-subdomain pairs
+    subdomain_str = ", ".join([f"['{pair}']" for sublist in formatted_subdomains.values() for pair in sublist])
+
     # The system_message could be adjusted to include just domain names if detailed info is not needed
     system_message = str(formatted_domains)
 
-
-    return system_message, formatted_subdomains_str, assistant_message
+    return system_message, subdomain_str, assistant_message
 
 
 def generate_gpt_messages(system_message, gpt_output, df, out_jsonl):
