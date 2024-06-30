@@ -183,8 +183,8 @@ input, select, textarea {
 	h1, h2, h3, h4, h5, h6 {
 		color: #ffffff;
 		font-weight: 600;
-		line-height: 1.65;
-		margin: 0 0 1em 0;
+		margin: 0 0 0.5em 0; /* Tighter margin */
+		line-height: 1.2; /* Tighter line-height */
 	}
 
 		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
@@ -193,27 +193,27 @@ input, select, textarea {
 		}
 
 	h1 {
-		font-size: 2.5em;
+		font-size: 2em;
 	}
 
 	h2 {
-		font-size: 1.75em;
+		font-size: 1.5em;
 	}
 
 	h3 {
-		font-size: 1.35em;
+		font-size: 1.2em;
 	}
 
 	h4 {
-		font-size: 1.1em;
+		font-size: 1em;
 	}
 
 	h5 {
-		font-size: 0.9em;
+		font-size: 0.8em;
 	}
 
 	h6 {
-		font-size: 0.7em;
+		font-size: 0.6em;
 	}
 
 	@media screen and (max-width: 736px) {
