@@ -14,9 +14,6 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount, SocialToken
 import requests
-from external_file import External_Model_Interface
-from open_issue import get_open_issues, get_open_issues_without_token
-from database_manager_file import DatabaseManager
 import sys
 import os
 import json
@@ -40,7 +37,9 @@ sys.path.insert(0, src_dir)
 
 
 from issue_class import Issue
-
+from open_issue_classification import get_open_issues, get_open_issues_without_token
+from database_manager import DatabaseManager
+from external import External_Model_Interface
 
 
 
@@ -106,14 +105,14 @@ def repo_detail(request, repo_name):
 
     db = DatabaseManager()
     external = External_Model_Interface(
-        openai_key, db, "rf_model.pkl", "domain_labels.json", "subdomain_labels.json", None
+        openai_key, db, "CoreEngine/output/rf_model.pkl", "CoreEngine/data/domain_labels.json", "CoreEngine/data/subdomain_labels.json", None
     )
 
     db.close()
 
     db2 = DatabaseManager()
     external2 = External_Model_Interface(
-        openai_key, db2, "gpt_model.pkl", "domain_labels.json", "subdomain_labels.json", None
+        openai_key, db2, "CoreEngine/output/gpt_model.pkl", "CoreEngine/data/domain_labels.json", "CoreEngine/data/subdomain_labels.json", None
     )
 
     
@@ -161,7 +160,7 @@ def repositories_by_link(request):
             username, repo_name = match.groups()[:2]
 
             # Call to get_open_issues function 
-            issues = get_open_issues(username, repo_name, token)
+            issues = get_open_issues_without_token(username, repo_name)
             print("open issues: ", issues)
 
 
@@ -177,14 +176,14 @@ def repositories_by_link(request):
 
             db = DatabaseManager()
             external = External_Model_Interface(
-                openai_key, db, "rf_model.pkl", "domain_labels.json", "subdomain_labels.json", None
+                openai_key, db, "CoreEngine/output/rf_model.pkl", "CoreEngine/data/domain_labels.json", "CoreEngine/data/subdomain_labels.json", None
             )
 
             db.close()
 
             db2 = DatabaseManager()
             external2 = External_Model_Interface(
-                openai_key, db2, "gpt_model.pkl", "domain_labels.json", "subdomain_labels.json", None
+                openai_key, db2, "CoreEngine/output/gpt_model.pkl", "CoreEngine/data/domain_labels.json", "CoreEngine/data/subdomain_labels.json", None
             )
 
             
