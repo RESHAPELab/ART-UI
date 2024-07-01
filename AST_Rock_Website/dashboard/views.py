@@ -95,9 +95,10 @@ def repo_detail(request, repo_name):
 
     if issues is None:
         return render(request, 'repo_detail.html', {
-            'repo_name': repo_name,
+            'repo_name': "No Open Issues to Evaluate",
             'responses': 'No issues found.'
         })
+    
     else:
         openai_key = os.getenv('OPENAI_API_KEY')  # Ensure you store OpenAI API key in session or settings
     # Adapt issue data for display if necessary
@@ -206,7 +207,7 @@ def repositories_by_link(request):
             issues_responses = zip(issues, responses_rf, responses_gpt)
             
             return render(request, 'repo_detail.html', {
-                'repo_name': repo_name,
+                'repo_name': "No Open Issues to Evaluate",
                 'issues_responses': issues_responses,
             })
             # Process the username and repo_name as needed
