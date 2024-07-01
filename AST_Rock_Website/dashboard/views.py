@@ -167,7 +167,7 @@ def repositories_by_link(request):
 
             if issues is None:
                 return render(request, 'repo_detail.html', {
-                    'repo_name': repo_name,
+                    'repo_name': "No Open Issues to Evaluate",
                     'responses': 'No issues found.'
                 })
             else:
@@ -207,7 +207,7 @@ def repositories_by_link(request):
             issues_responses = zip(issues, responses_rf, responses_gpt)
             
             return render(request, 'repo_detail.html', {
-                'repo_name': "No Open Issues to Evaluate",
+                'repo_name': repo_name,
                 'issues_responses': issues_responses,
             })
             # Process the username and repo_name as needed
