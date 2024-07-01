@@ -105,14 +105,14 @@ def repo_detail(request, repo_name):
 
     db = DatabaseManager()
     external = External_Model_Interface(
-        openai_key, db, "CoreEngine/output/rf_model.pkl", "CoreEngine/data/domain_labels.json", "CoreEngine/data/subdomain_labels.json", None
+        openai_key, db, "setup/rf_model.pkl", "setup/domain_labels.json", "setup/subdomain_labels.json", None
     )
 
     db.close()
 
     db2 = DatabaseManager()
     external2 = External_Model_Interface(
-        openai_key, db2, "CoreEngine/output/gpt_model.pkl", "CoreEngine/data/domain_labels.json", "CoreEngine/data/subdomain_labels.json", None
+        openai_key, db2, "setup/gpt_model.pkl", "setup/domain_labels.json", "setup/subdomain_labels.json", None
     )
 
     
@@ -176,14 +176,14 @@ def repositories_by_link(request):
 
             db = DatabaseManager()
             external = External_Model_Interface(
-                openai_key, db, "CoreEngine/output/rf_model.pkl", "CoreEngine/data/domain_labels.json", "CoreEngine/data/subdomain_labels.json", None
+                openai_key, db, "setup/rf_model.pkl", "setup/domain_labels.json", "setup/subdomain_labels.json", None
             )
 
             db.close()
 
             db2 = DatabaseManager()
             external2 = External_Model_Interface(
-                openai_key, db2, "CoreEngine/output/gpt_model.pkl", "CoreEngine/data/domain_labels.json", "CoreEngine/data/subdomain_labels.json", None
+                openai_key, db2, "setup/gpt_model.pkl", "setup/domain_labels.json", "setup/subdomain_labels.json", None
             )
 
             
