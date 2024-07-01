@@ -41,18 +41,6 @@ from open_issue_classification import get_open_issues, get_open_issues_without_t
 from database_manager import DatabaseManager
 from external import External_Model_Interface
 
-# Calculate the absolute path to the setup directory
-setup_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'CoreEngine', 'data'))
-
-domain_labels_path = os.path.join(setup_dir, 'domain_labels.json')
-subdomain_labels_path = os.path.join(setup_dir, 'subdomain_labels.json')
-
-
-model_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'CoreEngine', 'output'))
-
-gpt_model_path = os.path.join(model_dir, 'gpt_model.pkl')
-rf_model_path = os.path.join(model_dir, 'rf_model.pkl')
-
 
 
 @login_required
@@ -117,14 +105,14 @@ def repo_detail(request, repo_name):
 
     db = DatabaseManager()
     external = External_Model_Interface(
-        openai_key, db, rf_model_path, domain_labels_path, subdomain_labels_path, None
+        openai_key, db, "setup/rf_model.pkl", "setup/domain_labels.json", "setup/subdomain_labels.json", None
     )
 
     db.close()
 
     db2 = DatabaseManager()
     external2 = External_Model_Interface(
-        openai_key, db2, gpt_model_path, domain_labels_path, subdomain_labels_path, None
+        openai_key, db2, "setup/gpt_model.pkl", "setup/domain_labels.json", "setup/subdomain_labels.json", None
     )
 
     
@@ -188,14 +176,14 @@ def repositories_by_link(request):
 
             db = DatabaseManager()
             external = External_Model_Interface(
-                openai_key, db, rf_model_path, domain_labels_path, subdomain_labels_path, None
+                openai_key, db, "setup/rf_model.pkl", "setup/domain_labels.json", "setup/subdomain_labels.json", None
             )
 
             db.close()
 
             db2 = DatabaseManager()
             external2 = External_Model_Interface(
-                openai_key, db2, gpt_model_path, domain_labels_path, subdomain_labels_path, None
+                openai_key, db2, "setup/gpt_model.pkl", "setup/domain_labels.json", "setup/subdomain_labels.json", None
             )
 
             
