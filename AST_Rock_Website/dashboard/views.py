@@ -129,7 +129,8 @@ def repo_detail(request, repo_name):
         # Zip lists together for easier template use
     issues_responses = zip(issues, responses_rf, responses_gpt)
 
-    if not issues_responses:
+    issues_responses_list = list(zip(issues, responses_rf, responses_gpt))
+    if not issues_responses_list:
         print("There is no issues")
         # If there are no issues, render a page with a specific message
         return render(request, 'repo_detail.html', {
