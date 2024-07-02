@@ -93,51 +93,53 @@ def repo_detail(request, repo_name):
     print("open issues: ", issues)
 
 
-    if issues is None:
-        return render(request, 'repo_detail.html', {
-            'repo_name': "No Open Issues to Evaluate",
-        })
-    
-    else:
-        openai_key = os.getenv('OPENAI_API_KEY')  # Ensure you store OpenAI API key in session or settings
+
+    openai_key = os.getenv('OPENAI_API_KEY')  # Ensure you store OpenAI API key in session or settings
     # Adapt issue data for display if necessary
         
 
-        db = DatabaseManager()
-        external = External_Model_Interface(
-            openai_key, db, "rf_model.pkl", "domain_labels.json", "subdomain_labels.json", None
-        )
+    db = DatabaseManager()
+    external = External_Model_Interface(
+        openai_key, db, "rf_model.pkl", "domain_labels.json", "subdomain_labels.json", None
+    )
 
-        db.close()
+    db.close()
 
-        db2 = DatabaseManager()
-        external2 = External_Model_Interface(
-            openai_key, db2, "gpt_model.pkl", "domain_labels.json", "subdomain_labels.json", None
-        )
+    db2 = DatabaseManager()
+    external2 = External_Model_Interface(
+        openai_key, db2, "gpt_model.pkl", "domain_labels.json", "subdomain_labels.json", None
+    )
 
         
         # Prepare to collect responses for each issue
-        responses_rf = []
-        responses_gpt= []
+    responses_rf = []
+    responses_gpt= []
 
         
         # Iterate over each Issue object and predict using the external model interface
-        for issue in issues:
+    for issue in issues:
         
-            response = external.predict_issue(issue)
-            responses_rf.append(response)
-            response = external2.predict_issue(issue)
-            responses_gpt.append(response)
+        response = external.predict_issue(issue)
+        responses_rf.append(response)
+        response = external2.predict_issue(issue)
+        responses_gpt.append(response)
             
-        print(responses_rf)
-        print(responses_gpt)
+    print(responses_rf)
+    print(responses_gpt)
         # Zip lists together for easier template use
-        issues_responses = zip(issues, responses_rf, responses_gpt)
+    issues_responses = zip(issues, responses_rf, responses_gpt)
 
+    if not issues_responses:
+        # If there are no issues, render a page with a specific message
         return render(request, 'repo_detail.html', {
             'repo_name': repo_name,
-            'issues_responses': issues_responses,
+            'message': 'No issues found for this repository.'
         })
+
+    return render(request, 'repo_detail.html', {
+        'repo_name': repo_name,
+        'issues_responses': issues_responses,
+    })
 
     
 def index(request):
