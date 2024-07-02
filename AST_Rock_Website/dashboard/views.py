@@ -4,6 +4,7 @@ import re
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+import pandas as pd
 import requests
 from allauth.socialaccount.models import SocialToken
 # views.py in your Django app
@@ -167,6 +168,12 @@ def repositories_by_link(request):
             # Call to get_open_issues function 
             issues = get_open_issues_without_token(username, repo_name)
             print("open issues: ", issues)
+
+            # Preprocess the issues to ensure 'title' and 'body' are not NaN and are strings
+            for issue in issues:
+                # Check and replace NaN or None with an empty string in both 'title' and 'body'
+                issue.title = "" if pd.isna(issue.title) or not isinstance(issue.title, str) else issue.title
+                issue.body = "" if pd.isna(issue.body) or not isinstance(issue.body, str) else issue.body
 
             openai_key = os.getenv('OPENAI_API_KEY')  # Ensure you store OpenAI API key in session or settings
             # Adapt issue data for display if necessary
