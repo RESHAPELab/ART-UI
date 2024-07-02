@@ -130,12 +130,14 @@ def repo_detail(request, repo_name):
     issues_responses = zip(issues, responses_rf, responses_gpt)
 
     if not issues_responses:
+        print("There is no issues")
         # If there are no issues, render a page with a specific message
         return render(request, 'repo_detail.html', {
             'repo_name': repo_name,
             'message': 'No issues found for this repository.'
         })
 
+    print("There is some issues")
     return render(request, 'repo_detail.html', {
         'repo_name': repo_name,
         'issues_responses': issues_responses,
