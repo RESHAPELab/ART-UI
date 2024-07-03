@@ -1,9 +1,3 @@
-[submodule "AST_Rock_Website/ART-CoreEngine"]
-	path = AST_Rock_Website/ART-CoreEngine
-	url = https://github.com/RESHAPELab/ART-CoreEngine.git
-[submodule "AST_Rock_Website/Corengine"]
-	path = AST_Rock_Website/Corengine
-	url = https://github.com/RESHAPELab/ART-CoreEngine.git
 [submodule "AST_Rock_Website/CoreEngine"]
 	path = AST_Rock_Website/CoreEngine
 	url = https://github.com/RESHAPELab/ART-CoreEngine.git
