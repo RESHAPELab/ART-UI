@@ -156,7 +156,7 @@ def repositories_by_link(request):
             openai_key = os.getenv('OPENAI_API_KEY')
             # Trigger the RQ job
             queue = django_rq.get_queue('default')
-            job = queue.enqueue('dashboard.tasks.process_repository_issues', username, repo_name, openai_key)
+            job = queue.enqueue('tasks.process_repository_issues', username, repo_name, openai_key)
             request.session['job_id_' + repo_name] = job.id
             print("Asynchronous Task is in queue")
             # Immediately redirect to a loading page

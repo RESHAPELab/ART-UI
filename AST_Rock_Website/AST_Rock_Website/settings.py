@@ -184,13 +184,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": os.getenv('REDIS_URL', 'redis://localhost:6379')
+        "LOCATION": 'redis://:p155c9e6f4e3b35d7dc1cea4cc35049b9eb52e6d961b10d04485088c365c3fe84@ec2-54-166-204-188.compute-1.amazonaws.com:17489'
     }
 }
 
 RQ_QUEUES = {
     'default': {
-        'URL': os.getenv('REDIS_URL', 'redis://localhost:6379'),  # Adjust as necessary
+        'URL': 'redis://:p155c9e6f4e3b35d7dc1cea4cc35049b9eb52e6d961b10d04485088c365c3fe84@ec2-54-166-204-188.compute-1.amazonaws.com:17489',  # Adjust as necessary
         'DEFAULT_TIMEOUT': 500,
     },
 }
