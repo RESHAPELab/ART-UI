@@ -12,5 +12,6 @@ urlpatterns = [
     path('', auth_views.LogoutView.as_view(), name='logout'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('repositories/<str:repo_name>/', views.repo_detail, name='repo_detail'),
+    path('results/<str:username>/<str:repo_name>/', views.render_issues_results, name='render_issues_results'),
 ]
 

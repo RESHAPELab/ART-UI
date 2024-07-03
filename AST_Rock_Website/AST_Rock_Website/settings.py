@@ -30,6 +30,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['still-mesa-24591-bad3365c7700.herokuapp.com', 'localhost', '127.0.0.1']
 
+CELERY_BROKER_URL = os.getenv('REDIS_TLS_URL')
 
 # Application definition
 
