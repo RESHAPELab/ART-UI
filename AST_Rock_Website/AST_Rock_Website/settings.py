@@ -30,12 +30,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['still-mesa-24591-bad3365c7700.herokuapp.com', 'localhost', '127.0.0.1']
 
-CELERY_BROKER_URL = 'redis://:p155c9e6f4e3b35d7dc1cea4cc35049b9eb52e6d961b10d04485088c365c3fe84@ec2-54-166-204-188.compute-1.amazonaws.com:17489'
-CELERY_RESULT_BACKEND = 'redis://:p155c9e6f4e3b35d7dc1cea4cc35049b9eb52e6d961b10d04485088c365c3fe84@ec2-54-166-204-188.compute-1.amazonaws.com:17489'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'dashboard',
+    'django_rq',
 ]
 
 SITE_ID = 1
@@ -189,6 +184,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": 'redis://:p155c9e6f4e3b35d7dc1cea4cc35049b9eb52e6d961b10d04485088c365c3fe84@ec2-54-166-204-188.compute-1.amazonaws.com:17489'
+        "LOCATION": os.getenv('REDIS_URL', 'redis://localhost:6379')
     }
+}
+
+RQ_QUEUES = {
+    'default': {
+        'URL': os.getenv('REDIS_URL', 'redis://localhost:6379'),  # Adjust as necessary
+        'DEFAULT_TIMEOUT': 500,
+    },
 }

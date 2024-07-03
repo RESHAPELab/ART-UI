@@ -21,6 +21,7 @@ import os
 import json
 from .tasks import process_repository_issues
 from django.core.cache import cache
+import django_rq
 
 # Add the src directory to the sys.path
 src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'CoreEngine', 'src'))
@@ -145,7 +146,6 @@ def your_dashboard(request):
 
 
 
-@login_required
 def repositories_by_link(request):
     token = request.session.get('github_token')
     if request.method == 'POST':
@@ -154,8 +154,10 @@ def repositories_by_link(request):
         if match:
             username, repo_name = match.groups()[:2]
             openai_key = os.getenv('OPENAI_API_KEY')
-            # Trigger the Celery task
-            process_repository_issues.delay(username, repo_name, openai_key)
+            # Trigger the RQ job
+            queue = django_rq.get_queue('default')
+            queue.enqueue('dashboard.tasks.process_repository_issues', username, repo_name, openai_key)
+            print("Asynchronous Task is in queue")
             # Immediately redirect to a loading page
             return HttpResponseRedirect(reverse('splash_screen', kwargs={'repo_name': repo_name}))
     return render(request, 'repositories_by_link.html')

@@ -1,6 +1,5 @@
 import os
 import sys
-from celery import shared_task
 from django.core.cache import cache
 
 # Add the src directory to the sys.path
@@ -13,7 +12,7 @@ from open_issue_classification import get_open_issues, get_open_issues_without_t
 from database_manager import DatabaseManager
 from external import External_Model_Interface
 
-@shared_task
+
 def process_repository_issues(username, repo_name, openai_key):
     # Call to get_open_issues function 
     issues = get_open_issues_without_token(username, repo_name)
