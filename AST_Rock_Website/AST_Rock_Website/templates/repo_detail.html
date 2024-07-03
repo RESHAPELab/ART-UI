@@ -7,13 +7,14 @@
 <style>
     /* CSS for centering the content within the section with class "tiles" */
     .tiles {
-        display: flex;
-        flex-direction: column; /* Aligns children (like ul) in a column */
-        justify-content: center; /* Center vertically in the container */
-        align-items: center; /* Center horizontally in the container */
-        height: 100vh; /* Take the full height of the viewport */
-        text-align: center; /* Center text within each block */
-    }
+		display: flex;
+		flex-direction: column; /* Aligns children (like ul) in a column */
+		justify-content: flex-start; /* Start aligning items from the top, allowing natural flow */
+		align-items: center; /* Center horizontally in the container */
+		min-height: 100vh; /* Ensure at least full viewport height but can grow */
+		text-align: center; /* Center text within each block */
+		overflow-y: auto; /* Enable vertical scrolling */
+	}
 
     ul {
         list-style-type: none;
