@@ -160,7 +160,7 @@ def repositories_by_link(request):
             request.session['job_id_' + repo_name] = job.id
             print("Asynchronous Task is in queue")
             # Immediately redirect to a loading page
-            return HttpResponseRedirect(reverse('splash_screen', args=(repo_name,)))
+            return render(request, 'splash_screen.html', {'repo_name': repo_name})
     return render(request, 'repositories_by_link.html')
 
 @login_required
