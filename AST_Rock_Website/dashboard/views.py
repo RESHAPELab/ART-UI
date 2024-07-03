@@ -30,11 +30,14 @@ src_dir = os.path.abspath(
 )
 sys.path.insert(0, src_dir)
 
-
-from issue_class import Issue
-from open_issue_classification import get_open_issues, get_open_issues_without_token
-from database_manager import DatabaseManager
-from external import External_Model_Interface
+# Core Engine Classes.
+from CoreEngine.src import Issue
+from CoreEngine.src.classifier import (
+    get_open_issues,
+    get_open_issues_without_token,
+)
+from CoreEngine.src.database_manager import DatabaseManager
+from CoreEngine.src.external import External_Model_Interface
 
 
 @login_required
@@ -96,25 +99,28 @@ def repo_detail(request, repo_name):
     )  # Ensure you store OpenAI API key in session or settings
     # Adapt issue data for display if necessary
 
-    db = DatabaseManager()
-    external = External_Model_Interface(
+    db = DatabaseManager(
+        dbfile="CoreEngine/output/main.db",
+        cachefile="CoreEngine/output/ai_result_backup.db",
+        label_file="CoreEngine/data/subdomain_labels.json",
+    )
+    external_rf = External_Model_Interface(
         openai_key,
         db,
-        "rf_model.pkl",
-        "domain_labels.json",
-        "subdomain_labels.json",
+        "CoreEngine/output/rf_model.pkl",
+        "CoreEngine/data/domain_labels.json",
+        "CoreEngine/data/subdomain_labels.json",
+        None,
         None,
     )
 
-    db.close()
-
-    db2 = DatabaseManager()
-    external2 = External_Model_Interface(
+    external_gpt = External_Model_Interface(
         openai_key,
-        db2,
-        "gpt_model.pkl",
-        "domain_labels.json",
-        "subdomain_labels.json",
+        db,
+        "CoreEngine/output/gpt_model.pkl",
+        "CoreEngine/data/domain_labels.json",
+        "CoreEngine/data/subdomain_labels.json",
+        None,
         None,
     )
 
@@ -124,16 +130,16 @@ def repo_detail(request, repo_name):
 
     # Iterate over each Issue object and predict using the external model interface
     for issue in issues:
-
-        response = external.predict_issue(issue)
+        response = external_rf.predict_issue(issue)
         responses_rf.append(response)
-        response = external2.predict_issue(issue)
+        response = external_gpt.predict_issue(issue)
         responses_gpt.append(response)
 
     print(responses_rf)
     print(responses_gpt)
     # Zip lists together for easier template use
     issues_responses = zip(issues, responses_rf, responses_gpt)
+    db.close()
 
     issues_responses_list = list(zip(issues, responses_rf, responses_gpt))
     if not issues_responses_list:
