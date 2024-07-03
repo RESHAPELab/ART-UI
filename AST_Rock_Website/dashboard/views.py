@@ -160,7 +160,8 @@ def repositories_by_link(request):
             request.session['job_id_' + repo_name] = job.id
             print("Asynchronous Task is in queue")
             # Immediately redirect to a loading page
-            return HttpResponseRedirect(reverse('splash_screen'))
+            context = {'repo_name': repo_name, 'username': username}
+            return render(request, 'splash_screen.html', context)
     return render(request, 'repositories_by_link.html')
 
 @login_required
@@ -179,7 +180,7 @@ def render_issues_results(request, username, repo_name):
     cache_key = f"{username}_{repo_name}_issues_responses"
     issues_responses = cache.get(cache_key)
     issues_responses_list = list(issues_responses)
-    
+
     if not issues_responses_list:
         return render(request, 'repo_detail.html', {
             'repo_name': repo_name,
