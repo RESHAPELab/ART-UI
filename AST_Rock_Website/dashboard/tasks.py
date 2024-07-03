@@ -52,4 +52,4 @@ def process_repository_issues(username, repo_name, openai_key):
 
     cache_key = f"{username}_{repo_name}_issues_responses"
     cache.set(cache_key, issues_responses, timeout=3600)  # Cache for 1 hour
-    return 
+    return None
