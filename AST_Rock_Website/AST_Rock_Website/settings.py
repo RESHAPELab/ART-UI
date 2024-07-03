@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +30,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['still-mesa-24591-bad3365c7700.herokuapp.com', 'localhost', '127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'dashboard',
+    'django_rq',
 ]
 
 SITE_ID = 1
@@ -94,6 +96,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'AST_Rock_Website.urls'
@@ -122,14 +125,17 @@ WSGI_APPLICATION = 'AST_Rock_Website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-import dj_database_url
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://localhost')
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
+    )
 }
 
+# Activate Django-Heroku.
+django_heroku.settings(locals())
 
 
-# Password validation
+# Password validation   
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -166,7 +172,25 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": 'redis://:p155c9e6f4e3b35d7dc1cea4cc35049b9eb52e6d961b10d04485088c365c3fe84@ec2-54-166-204-188.compute-1.amazonaws.com:17489'
+    }
+}
+
+RQ_QUEUES = {
+    'default': {
+        'URL': 'redis://:p155c9e6f4e3b35d7dc1cea4cc35049b9eb52e6d961b10d04485088c365c3fe84@ec2-54-166-204-188.compute-1.amazonaws.com:17489',  # Adjust as necessary
+        'DEFAULT_TIMEOUT': 500,
+    },
+}
