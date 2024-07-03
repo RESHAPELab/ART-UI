@@ -5,7 +5,7 @@ from django.conf import settings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project_name.settings')
 
-app = Celery('background_tasks')
+app = Celery('AST_Rock_Website')
 
 # Use REDIS_TLS_URL for secure connection to Redis
 app.conf.broker_url = os.getenv('REDIS_TLS_URL')
