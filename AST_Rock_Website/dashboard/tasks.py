@@ -14,13 +14,10 @@ from database_manager import DatabaseManager
 from external import External_Model_Interface
 
 @shared_task
-def process_repository_issues(username, repo_name):
+def process_repository_issues(username, repo_name, openai_key):
     # Call to get_open_issues function 
-    issues = get_open_issues_without_token(username, repo_name, openai_key)
+    issues = get_open_issues_without_token(username, repo_name)
     print("open issues: ", issues)
-
-    openai_key = openai_key  # Ensure you store OpenAI API key in session or settings
-    # Adapt issue data for display if necessary
         
 
     db = DatabaseManager()
