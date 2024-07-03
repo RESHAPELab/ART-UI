@@ -1,7 +1,7 @@
 import os
 import pickle
 import re
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -156,18 +156,31 @@ def repositories_by_link(request):
             openai_key = os.getenv('OPENAI_API_KEY')
             # Trigger the RQ job
             queue = django_rq.get_queue('default')
-            queue.enqueue('dashboard.tasks.process_repository_issues', username, repo_name, openai_key)
+            job = queue.enqueue('dashboard.tasks.process_repository_issues', username, repo_name, openai_key)
+            request.session['job_id_' + repo_name] = job.id
             print("Asynchronous Task is in queue")
             # Immediately redirect to a loading page
-            return HttpResponseRedirect(reverse('splash_screen', kwargs={'repo_name': repo_name}))
+            return HttpResponseRedirect(reverse('splash_screen'))
     return render(request, 'repositories_by_link.html')
+
+@login_required
+def task_status(request, repo_name):
+    queue = django_rq.get_queue('default')
+    # Assuming you have stored the job ID in the session or a similar retrievable location
+    job_id = request.session.get('job_id_' + repo_name, '')
+    job = queue.fetch_job(job_id)
+    if job is None or job.is_finished:
+        return JsonResponse({'complete': True})
+    else:
+        return JsonResponse({'complete': False})
 
 @login_required
 def render_issues_results(request, username, repo_name):
     cache_key = f"{username}_{repo_name}_issues_responses"
     issues_responses = cache.get(cache_key)
-
-    if not issues_responses:
+    issues_responses_list = list(issues_responses)
+    
+    if not issues_responses_list:
         return render(request, 'repo_detail.html', {
             'repo_name': repo_name,
             'message': 'No Open Issues Found in this Repository'
