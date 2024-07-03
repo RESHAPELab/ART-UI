@@ -1,0 +1,166 @@
+
+
+{% load static %}
+{% load socialaccount %}
+
+<!DOCTYPE HTML>
+<style>
+    /* CSS for centering the content within the section with class "tiles" */
+    .tiles {
+        display: flex;
+        flex-direction: column; /* Aligns children (like ul) in a column */
+        justify-content: center; /* Center vertically in the container */
+        align-items: center; /* Center horizontally in the container */
+        height: 100vh; /* Take the full height of the viewport */
+        text-align: center; /* Center text within each block */
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        width: 80%; /* Control the width of the ul to not span full width */
+        max-width: 960px; /* Set a max-width for larger screens */
+        display: flex;
+        flex-direction: column; /* Stack li vertically */
+        align-items: flex-start; /* Align li to the start (left) */
+        margin: 0 auto; /* Center the ul within the .tiles */
+    }
+
+    .tiles li {
+        justify-content: flex-start; /* Align content to the left */
+        text-align: left; /* Ensure text within li is left aligned */
+        width: 100%; /* Set width to fill the ul */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Aligns items to the left side within each li */
+    }
+</style>
+<html>
+    <head>
+        <title>SkillScope</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+        <noscript><link rel="stylesheet" href="{% static 'css/noscript.css' %}" /></noscript>
+		<style>
+            /* Additional inline styles if needed */
+            #splash-screen {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #242943; /* Assuming this is the background color from your CSS */
+                color: white; /* Assuming white text color */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 24px;
+                z-index: 9999; /* Ensure it's above all other content */
+            }
+        </style>
+    </head>
+	<body onload="hideSplashScreen()">
+        <!-- Splash Screen -->
+        <div id="splash-screen" style="display: flex;">Loading...</div>
+
+        <!-- Wrapper -->
+        <div id="wrapper" style="display: none;">  <!-- Initially hide the wrapper -->
+
+            <!-- Header -->
+            <header id="header" class="alt">
+                <a href="{% url 'index' %}" class="logo"><strong>SkillScope</strong> <span>Precision at Every Push</span></a>
+                <nav>
+                    <a href="#menu">Menu</a>
+                </nav>
+            </header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="{% url 'index' %}" class="button primary fit">Home</a></li>
+							
+							
+						</ul>
+						<ul class="actions stacked">
+							{% if user.is_authenticated %}
+								<li><a href="{% url 'account_logout' %}" class="button primary fit">Log Out</a></li>
+							{% else %}
+								<!-- Show login link if user is not logged in -->
+								<li><a href="{% url 'account_login' %}" class="button primary fit">Log In</a></li>
+							{% endif %}
+						</ul>
+					</nav>
+
+
+				<!-- Main -->
+					<!-- Min -->
+					<div id="main">
+						<section id="one" class="tiles special">
+							<h1>{{ repo_name }}</h1>
+							<h2>{{ message }}</h2>
+							<ul class="alt">
+								{% for issue, rf_response, gpt_response in issues_responses %}
+								<li>
+									<div>
+										<strong>Issue Number:</strong> {{ issue.number }}
+									</div>
+
+									<div>
+										<strong>Open Issue:</strong> {{ issue.title }}
+									</div>
+									
+									<!-- Collapsible section toggle on a new line -->
+									<div>
+										<a href="#!" class="button small" onclick="toggleDescription('desc{{ forloop.counter }}')">Issue Information</a>
+									</div>
+									
+									<div id="desc{{ forloop.counter }}" style="display: none;">
+										<p>{{ issue.body }}</p>
+										<div>
+											<strong>Random Forest Classification:</strong> {{ rf_response }}
+										</div>
+										<div>
+											<strong>OpenAI Classification:</strong> {{ gpt_response }}
+										</div>
+									</div>
+									
+								</li>
+								{% endfor %}
+							</ul>
+						</section>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				// This ensures that the splash screen only hides when the DOM is fully loaded
+				hideSplashScreen();
+			});
+			
+			function hideSplashScreen() {
+				document.getElementById('splash-screen').style.display = 'none';
+				document.getElementById('wrapper').style.display = 'block';  // Show the wrapper after loading
+			}
+			
+			function toggleDescription(id) {
+				var element = document.getElementById(id);
+				if (element.style.display === 'none') {
+					element.style.display = 'block';
+				} else {
+					element.style.display = 'none';
+				}
+			}
+			</script>
+			<script src="{% static 'js/jquery.min.js' %}"></script>
+			<script src="{% static 'js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'js/browser.min.js' %}"></script>
+			<script src="{% static 'js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'js/util.js' %}"></script>
+			<script src="{% static 'js/main.js' %}"></script>
+
+	</body>
+</html>

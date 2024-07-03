@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>AST</title>
+        <title>SkillScope</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="{% static 'css/main.css' %}" />
@@ -16,7 +16,7 @@
 
 				<!-- Header -->
 					<header id="header" class="alt">
-						<a href="{% url 'index' %}" class="logo"><strong>AST</strong> <span>Precision at Every Push</span></a>
+						<a href="{% url 'index' %}" class="logo"><strong>SkillScope</strong> <span>Precision at Every Push</span></a>
 						<nav>
 							<a href="#menu">Menu</a>
 						</nav>
@@ -33,7 +33,7 @@
 								<li><a href="{% url 'account_logout' %}" class="button primary fit">Log Out</a></li>
 							{% else %}
 								<!-- Show login link if user is not logged in -->
-								<li><a href="{% url 'account_login' %}" class="button primary fit"</a></li>
+								<li><a href="{% url 'account_login' %}" class="button primary fit"></a></li>
 							{% endif %}
 						</ul>
 					</nav>
@@ -45,7 +45,7 @@
 								<h1>Dashboard</h1>
 							</header>
 							<div class="content">
-								<p>This project automates the labeling of GitHub repositories based on their content, using a taxonomy of domains and subdomains. It implements a precision threshold of 75% to ensure that only high-confidence classifications are applied, enhancing the organization and searchability of repositories.</p>
+								<p>The open issues in the GitHub repository project are evaluated based on their relevance to specific domains and subdomains. These classifications are integrated into the project’s development workflows through automated tools that display relevant issues to developers based on their skills and current work focus. This ensures that developers are aware of and can address the most pertinent issues.</p>
 								<ul class="actions">
 									{% if user.is_authenticated %}
 										<li><a href="{% url 'index' %}"  class="button next scrolly">Home</a></li>
@@ -66,7 +66,7 @@
 									</span>
 									<header class="major">
 										<h3><a href="{% url 'your_repositories' %}" class="link">Your Respositores</a></h3>
-										<p>The open issues in the GitHub repository project are evaluated based on their relevance to specific domains and subdomains. These classifications are integrated into the project’s development workflows through automated tools that display relevant issues to developers based on their skills and current work focus. This ensures that developers are aware of and can address the most pertinent issues. </p>
+										<p>Classify Open Issues in your Respositories! </p>
 									</header>
 								</article>
 								<article>
@@ -75,7 +75,7 @@
 									</span>
 									<header class="major">
 										<h3><a href="{% url 'repositories_by_link' %}" class="link">Search by a Repository Link</a></h3>
-										<p>The open issues in the GitHub repository project are evaluated based on their relevance to specific domains and subdomains. These classifications are integrated into the project’s development workflows through automated tools that display relevant issues to developers based on their skills and current work focus. This ensures that developers are aware of and can address the most pertinent issues.</p>
+										<p>Classify Open Issues with a Github Repository URL!</p>
 									</header>
 								</article>
 								
@@ -86,7 +86,7 @@
 							<section id="two">
 								<div class="inner">
 									<header class="major">
-										<h2>The AST Team</h2>
+										<h2>The SkillScope Team</h2>
 									</header>
 									<p>Each team's efforts are interconnected, contributing to a comprehensive system that leverages machine learning and AI to enhance the management and categorization of software development tasks within GitHub repositories.</p>
 									<ul class="actions">
