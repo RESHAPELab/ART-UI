@@ -1,6 +1,7 @@
 from django.db import models
 import json
 
+
 class GPTMessage(models.Model):
     system_content = models.TextField()
     user_content = models.TextField()

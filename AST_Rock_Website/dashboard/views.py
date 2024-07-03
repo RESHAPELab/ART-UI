@@ -8,6 +8,7 @@ from django.urls import reverse
 import pandas as pd
 import requests
 from allauth.socialaccount.models import SocialToken
+
 # views.py in your Django app
 from allauth.socialaccount.providers.oauth2.views import OAuth2Adapter
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
@@ -24,7 +25,9 @@ from django.core.cache import cache
 import django_rq
 
 # Add the src directory to the sys.path
-src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'CoreEngine', 'src'))
+src_dir = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "CoreEngine", "src")
+)
 sys.path.insert(0, src_dir)
 
 
@@ -34,178 +37,199 @@ from database_manager import DatabaseManager
 from external import External_Model_Interface
 
 
-
 @login_required
 def your_repositories(request):
     user = request.user
     print(user)
-    
+
     try:
         # Get the social token for GitHub
-        social_account = SocialAccount.objects.get(user=user, provider='github')
+        social_account = SocialAccount.objects.get(user=user, provider="github")
         token = SocialToken.objects.get(account=social_account).token
         print(f"Token: {token}")
 
         # GitHub API endpoint to fetch repositories
-        url = 'https://api.github.com/user/repos'
-        headers = {'Authorization': f'token {token}'}
+        url = "https://api.github.com/user/repos"
+        headers = {"Authorization": f"token {token}"}
         response = requests.get(url, headers=headers)
         repositories = response.json()
-        
-        repo_names = [repo['name'] for repo in repositories]
+
+        repo_names = [repo["name"] for repo in repositories]
         print(f"Repositories: {repo_names}")
 
         # Store data in the session
-        request.session['github_token'] = token
-        request.session['username'] = user.username
-        request.session['repositories'] = repo_names
-        print(request.session.get('github_token'))
-        print(request.session.get('username'))
-        print(request.session.get('repositories'))
+        request.session["github_token"] = token
+        request.session["username"] = user.username
+        request.session["repositories"] = repo_names
+        print(request.session.get("github_token"))
+        print(request.session.get("username"))
+        print(request.session.get("repositories"))
         # Send both username and repo_names to the template
-        return render(request, 'your_repositories.html', {
-            'username': request.session.get('username'),
-            'repositories': request.session.get('repositories')
-        })
-        
+        return render(
+            request,
+            "your_repositories.html",
+            {
+                "username": request.session.get("username"),
+                "repositories": request.session.get("repositories"),
+            },
+        )
+
     except SocialToken.DoesNotExist:
         print("GitHub token not found")
-        return render(request, 'your_repositories.html', {'error': 'GitHub token not found'})
+        return render(
+            request, "your_repositories.html", {"error": "GitHub token not found"}
+        )
+
 
 @login_required
 def repo_detail(request, repo_name):
 
-    
-    token = request.session.get('github_token')
-    username = request.session.get('username')
+    token = request.session.get("github_token")
+    username = request.session.get("username")
 
-
-    # Call to get_open_issues function 
+    # Call to get_open_issues function
     issues = get_open_issues(username, repo_name, token)
     print("open issues: ", issues)
 
-
-
-    openai_key = os.getenv('OPENAI_API_KEY')  # Ensure you store OpenAI API key in session or settings
+    openai_key = os.getenv(
+        "OPENAI_API_KEY"
+    )  # Ensure you store OpenAI API key in session or settings
     # Adapt issue data for display if necessary
-        
 
     db = DatabaseManager()
     external = External_Model_Interface(
-        openai_key, db, "rf_model.pkl", "domain_labels.json", "subdomain_labels.json", None
+        openai_key,
+        db,
+        "rf_model.pkl",
+        "domain_labels.json",
+        "subdomain_labels.json",
+        None,
     )
 
     db.close()
 
     db2 = DatabaseManager()
     external2 = External_Model_Interface(
-        openai_key, db2, "gpt_model.pkl", "domain_labels.json", "subdomain_labels.json", None
+        openai_key,
+        db2,
+        "gpt_model.pkl",
+        "domain_labels.json",
+        "subdomain_labels.json",
+        None,
     )
 
-        
-        # Prepare to collect responses for each issue
+    # Prepare to collect responses for each issue
     responses_rf = []
-    responses_gpt= []
+    responses_gpt = []
 
-        
-        # Iterate over each Issue object and predict using the external model interface
+    # Iterate over each Issue object and predict using the external model interface
     for issue in issues:
-        
+
         response = external.predict_issue(issue)
         responses_rf.append(response)
         response = external2.predict_issue(issue)
         responses_gpt.append(response)
-            
+
     print(responses_rf)
     print(responses_gpt)
-        # Zip lists together for easier template use
+    # Zip lists together for easier template use
     issues_responses = zip(issues, responses_rf, responses_gpt)
 
     issues_responses_list = list(zip(issues, responses_rf, responses_gpt))
     if not issues_responses_list:
         print("There is no issues")
         # If there are no issues, render a page with a specific message
-        return render(request, 'repo_detail.html', {
-            'repo_name': repo_name,
-            'message': 'No Open Issues Found in this Repository'
-        })
+        return render(
+            request,
+            "repo_detail.html",
+            {
+                "repo_name": repo_name,
+                "message": "No Open Issues Found in this Repository",
+            },
+        )
 
     print("There is some issues")
-    return render(request, 'repo_detail.html', {
-        'repo_name': repo_name,
-        'issues_responses': issues_responses,
-    })
+    return render(
+        request,
+        "repo_detail.html",
+        {
+            "repo_name": repo_name,
+            "issues_responses": issues_responses,
+        },
+    )
 
-    
+
 def index(request):
-    return render(request, 'index.html')
+    return render(request, "index.html")
+
 
 @login_required
 def your_dashboard(request):
-    return render(request, 'your_dashboard.html')
+    return render(request, "your_dashboard.html")
 
 
 @login_required
 def repositories_by_link(request):
-    token = request.session.get('github_token')
-    if request.method == 'POST':
-        github_link = request.POST.get('github_link')
+    token = request.session.get("github_token")
+    if request.method == "POST":
+        github_link = request.POST.get("github_link")
         match = re.search(r"github\.com/(.+?)/(.+?)(\.git|$)", github_link)
         if match:
             username, repo_name = match.groups()[:2]
-            openai_key = os.getenv('OPENAI_API_KEY')
+            openai_key = os.getenv("OPENAI_API_KEY")
             # Trigger the RQ job
-            queue = django_rq.get_queue('default')
-            job = queue.enqueue(process_repository_issues, username, repo_name, openai_key)
+            queue = django_rq.get_queue("default")
+            job = queue.enqueue(
+                process_repository_issues, username, repo_name, openai_key
+            )
             job_count = queue.count
             print(f"There are {job_count} jobs in the queue.")
-            request.session['job_id_' + repo_name] = job.id
+            request.session["job_id_" + repo_name] = job.id
             print("Asynchronous Task is in queue")
             # Immediately redirect to a loading page
-            return render(request, 'splash_screen.html', {'repo_name': repo_name})
-    return render(request, 'repositories_by_link.html')
+            return render(request, "splash_screen.html", {"repo_name": repo_name})
+    return render(request, "repositories_by_link.html")
+
 
 @login_required
 def task_status(request, repo_name):
-    queue = django_rq.get_queue('default')
+    queue = django_rq.get_queue("default")
     # Assuming you have stored the job ID in the session or a similar retrievable location
-    job_id = request.session.get('job_id_' + repo_name, '')
+    job_id = request.session.get("job_id_" + repo_name, "")
     job = queue.fetch_job(job_id)
     if job is None or job.is_finished:
-        return JsonResponse({'complete': True})
+        return JsonResponse({"complete": True})
     else:
-        return JsonResponse({'complete': False})
+        return JsonResponse({"complete": False})
+
 
 @login_required
 def render_issues_results(request, username, repo_name):
     cache_key = f"{username}_{repo_name}_issues_responses"
     issues_responses = cache.get(cache_key)
     issues_responses_list = list(issues_responses)
-    
-    if not issues_responses_list:
-        return render(request, 'repo_detail.html', {
-            'repo_name': repo_name,
-            'message': 'No Open Issues Found in this Repository'
-        })
 
-    return render(request, 'repo_detail.html', {
-        'repo_name': repo_name,
-        'issues_responses': issues_responses
-    })
+    if not issues_responses_list:
+        return render(
+            request,
+            "repo_detail.html",
+            {
+                "repo_name": repo_name,
+                "message": "No Open Issues Found in this Repository",
+            },
+        )
+
+    return render(
+        request,
+        "repo_detail.html",
+        {"repo_name": repo_name, "issues_responses": issues_responses},
+    )
+
 
 def home(request):
-    return render(request, 'index.html')
+    return render(request, "index.html")
+
 
 @login_required
 def splash_screen(request, repo_name):
-    return render(request, 'splash_screen.html', {'repo_name': repo_name})
-
-
-
-
-
-
-
-
-
-
+    return render(request, "splash_screen.html", {"repo_name": repo_name})

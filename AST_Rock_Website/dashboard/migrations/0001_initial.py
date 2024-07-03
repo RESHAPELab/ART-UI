@@ -7,17 +7,24 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='GPTMessage',
+            name="GPTMessage",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('system_content', models.TextField()),
-                ('user_content', models.TextField()),
-                ('assistant_content', models.TextField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("system_content", models.TextField()),
+                ("user_content", models.TextField()),
+                ("assistant_content", models.TextField()),
             ],
         ),
     ]
