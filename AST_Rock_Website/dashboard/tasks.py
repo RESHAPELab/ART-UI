@@ -37,13 +37,20 @@ def process_repository_issues(username, repo_name, openai_key):
     responses_gpt= []
 
     max_issues = 20
-        # Iterate over each Issue object and predict using the external model interface
+
     for issue in issues[:max_issues]:
+        try:
+            response_rf = external.predict_issue(issue)
+            responses_rf.append(response_rf)
+
+            response_gpt = external2.predict_issue(issue)
+            responses_gpt.append(response_gpt)
+        except Exception as e:
+            print(f"Error processing issue: {issue}. Error: {str(e)}")
+            # Optionally, you could append a None or a specific error message instead of a response
+            responses_rf.append(None)  # Indicates a failed response
+            responses_gpt.append(None)  # Indicates a failed response
         
-        response = external.predict_issue(issue)
-        responses_rf.append(response)
-        response = external2.predict_issue(issue)
-        responses_gpt.append(response)
             
     print(responses_rf)
     print(responses_gpt)
