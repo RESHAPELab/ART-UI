@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('', views.home, name='home'),
     path('your_dashboard/', views.your_dashboard, name='your_dashboard'),
+    path('loading/', views.splash_screen, name='splash_screen'),
     path('your_repositories/', views.your_repositories, name='your_repositories'),
     path('repositories_by_link/', views.repositories_by_link, name='repositories_by_link'),
     path('', auth_views.LogoutView.as_view(), name='logout'),

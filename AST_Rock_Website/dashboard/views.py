@@ -157,7 +157,7 @@ def repositories_by_link(request):
             # Trigger the Celery task
             process_repository_issues.delay(username, repo_name, openai_key)
             # Immediately redirect to a loading page
-            return HttpResponseRedirect(reverse('splash_screen.html', kwargs={'repo_name': repo_name}))
+            return HttpResponseRedirect(reverse('splash_screen', kwargs={'repo_name': repo_name}))
     return render(request, 'repositories_by_link.html')
 
 @login_required
@@ -178,6 +178,9 @@ def render_issues_results(request, username, repo_name):
 
 def home(request):
     return render(request, 'index.html')
+
+def splash_screen(request):
+    return render(request, 'splash_screen.html')
 
 
 
