@@ -193,8 +193,13 @@ def repositories_by_link(request):
             request.session["job_id_" + repo_name] = job.id
             print("Asynchronous Task is in queue")
             # Immediately redirect to a loading page
-            return render(request, 'splash_screen.html', {'repo_name': repo_name, 'username' : username})
-    return render(request, 'repositories_by_link.html')
+            return render(
+                request,
+                "splash_screen.html",
+                {"repo_name": repo_name, "username": username},
+            )
+    return render(request, "repositories_by_link.html")
+
 
 @login_required
 def task_status(request, repo_name):
@@ -212,10 +217,12 @@ def task_status(request, repo_name):
 def render_issues_results(request, username, repo_name):
     print("Rendering Issue Results")
     cache_key = f"{username}_{repo_name}_issues_responses"
-    
+
     issues_responses = cache.get(cache_key)
-<<<<<<< HEAD
-    issues_responses_list = list(issues_responses)
+    if issues_responses:
+        issues_responses_list = list(issues_responses)  # Ensure it's a list
+    else:
+        issues_responses_list = []
 
     if not issues_responses_list:
         return render(
@@ -230,46 +237,19 @@ def render_issues_results(request, username, repo_name):
     return render(
         request,
         "repo_detail.html",
-        {"repo_name": repo_name, "issues_responses": issues_responses},
+        {
+            "repo_name": repo_name,
+            "issues_responses": issues_responses_list,  # Pass as list
+        },
     )
 
-=======
-    if issues_responses:
-        issues_responses_list = list(issues_responses)  # Ensure it's a list
-    else:
-        issues_responses_list = []
-    
-    if not issues_responses_list:
-        return render(request, 'repo_detail.html', {
-            'repo_name': repo_name,
-            'message': 'No Open Issues Found in this Repository'
-        })
-
-    return render(request, 'repo_detail.html', {
-        'repo_name': repo_name,
-        'issues_responses': issues_responses_list  # Pass as list
-    })
->>>>>>> 4f605d3ba034d6e5caa5a8a2d6d3ed59cb5561df
 
 def home(request):
     return render(request, "index.html")
 
 
 @login_required
-<<<<<<< HEAD
-def splash_screen(request, repo_name):
-    return render(request, "splash_screen.html", {"repo_name": repo_name})
-=======
 def splash_screen(request, repo_name, username):
-    return render(request, 'splash_screen.html', {'repo_name': repo_name ,'username' : username})
-
-
-
-
-
-
-
-
-
-
->>>>>>> 4f605d3ba034d6e5caa5a8a2d6d3ed59cb5561df
+    return render(
+        request, "splash_screen.html", {"repo_name": repo_name, "username": username}
+    )
