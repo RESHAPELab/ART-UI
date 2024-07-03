@@ -178,9 +178,14 @@ def task_status(request, repo_name):
 
 @login_required
 def render_issues_results(request, username, repo_name):
+    print("Rendering Issue Results")
     cache_key = f"{username}_{repo_name}_issues_responses"
+    
     issues_responses = cache.get(cache_key)
-    issues_responses_list = list(issues_responses)
+    if issues_responses:
+        issues_responses_list = list(issues_responses)  # Ensure it's a list
+    else:
+        issues_responses_list = []
     
     if not issues_responses_list:
         return render(request, 'repo_detail.html', {
@@ -190,7 +195,7 @@ def render_issues_results(request, username, repo_name):
 
     return render(request, 'repo_detail.html', {
         'repo_name': repo_name,
-        'issues_responses': issues_responses
+        'issues_responses': issues_responses_list  # Pass as list
     })
 
 def home(request):

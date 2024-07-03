@@ -55,8 +55,15 @@ def process_repository_issues(username, repo_name, openai_key):
     print(responses_rf)
     print(responses_gpt)
         # Zip lists together for easier template use
-    issues_responses = zip(issues, responses_rf, responses_gpt)
+    issues_responses = list(zip(issues, responses_rf, responses_gpt))
 
     cache_key = f"{username}_{repo_name}_issues_responses"
     cache.set(cache_key, issues_responses, timeout=3600)  # Cache for 1 hour
+
+    # Retrieve from cache to test
+    cached_data = cache.get(cache_key)
+    if cached_data is not None:
+        print("Data was successfully cached.")
+    else:
+        print("Failed to cache data.")
     return None

@@ -15,7 +15,7 @@
                     console.log("Received response:", data); // Log the received data
                     if (data.complete) {
                         console.log("Task complete. Redirecting..."); // Log on task completion
-                        window.location.href = "/results/" + username + repo_name;  // URL to the view that renders results
+                        window.location.href = "/results/" + username + "/" + repo_name;  // URL to the view that renders results
                     } else {
                         console.log("Task not complete. Checking again in 2 seconds..."); // Log that task is not complete
                         setTimeout(checkTaskStatus, 2000); // Re-check in 2 seconds
