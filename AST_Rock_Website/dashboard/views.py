@@ -23,6 +23,7 @@ import json
 from .tasks import process_repository_issues
 from django.core.cache import cache
 import django_rq
+from . import version
 
 # Add the src directory to the sys.path
 src_dir = os.path.abspath(
@@ -31,6 +32,7 @@ src_dir = os.path.abspath(
 sys.path.insert(0, src_dir)
 
 # Core Engine Classes.
+import CoreEngine
 from CoreEngine.src import Issue
 from CoreEngine.src.classifier import (
     get_open_issues,
@@ -246,6 +248,15 @@ def render_issues_results(request, username, repo_name):
 
 def home(request):
     return render(request, "index.html")
+
+
+def get_CoreEngine_version(request):
+    return JsonResponse(
+        {
+            "CoreEngine_Version": CoreEngine.__version__,
+            "Web_Version": version.WEBSITE_VERSION,
+        }
+    )
 
 
 @login_required
