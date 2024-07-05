@@ -16,7 +16,7 @@ from CoreEngine.src.external import External_Model_Interface
 def process_repository_issues(username, repo_name, openai_key):
     # Call to get_open_issues function
     issues = get_open_issues_without_token(username, repo_name)
-    print("open issues: ", issues)
+    # print("open issues: ", issues)
 
     db = DatabaseManager(
         dbfile="CoreEngine/output/main.db",
