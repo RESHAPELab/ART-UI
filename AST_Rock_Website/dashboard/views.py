@@ -255,6 +255,8 @@ def get_CoreEngine_version(request):
         {
             "CoreEngine_Version": CoreEngine.__version__,
             "Web_Version": version.WEBSITE_VERSION,
+            "Web_Version_Hash": version.get_version_hash(),
+            "Server_Uptime": version.server_start,
         }
     )
 
