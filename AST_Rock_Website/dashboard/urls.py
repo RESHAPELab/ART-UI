@@ -21,4 +21,5 @@ urlpatterns = [
         name="render_issues_results",
     ),
     path("task-status/<str:repo_name>/", views.task_status, name="task_status"),
+    path("versions", views.get_CoreEngine_version, name="version_check"),
 ]
