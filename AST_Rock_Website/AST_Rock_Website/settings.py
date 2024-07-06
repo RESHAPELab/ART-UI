@@ -16,8 +16,6 @@ import django_heroku
 import dj_database_url
 import dotenv
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
 
 dotenv.load_dotenv()
 
@@ -87,8 +85,8 @@ SOCIALACCOUNT_PROVIDERS = {
     "github": {
         "APP": {
             "client_id": os.getenv("GITHUB_APP_CLIENT_ID"),
-            "secret": os.getenv("GITHUB_SECRET_KEY"),
-            "key": "",
+            "secret": os.getenv("GITHUB_SECRET"),
+            "key": os.getenv("GITHUB_KEY"),
         },
         "SCOPE": ["user", "user:email", "repo"],  # Added 'repo' scope
         "EXTRA_DATA": [
@@ -134,14 +132,14 @@ WSGI_APPLICATION = "AST_Rock_Website.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {"default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))}
+# DATABASES = {"default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))}
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": "db.sqlite3",
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "db.sqlite3",
+    }
+}
 
 
 # Password validation
@@ -217,3 +215,6 @@ RQ_QUEUES = {
         "DEFAULT_TIMEOUT": 500,
     },
 }
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())

@@ -109,21 +109,23 @@ def repo_detail(request, repo_name):
     external_rf = External_Model_Interface(
         openai_key,
         db,
-        "CoreEngine/output/rf_model.pkl",
+        "rf_model.pkl",
         "CoreEngine/data/domain_labels.json",
         "CoreEngine/data/subdomain_labels.json",
         None,
-        None,
+        repo_name,
+        "CoreEngine/output/response_cache/",
     )
 
     external_gpt = External_Model_Interface(
         openai_key,
         db,
-        "CoreEngine/output/gpt_model.pkl",
+        "gpt_model.pkl",
         "CoreEngine/data/domain_labels.json",
         "CoreEngine/data/subdomain_labels.json",
         None,
-        None,
+        repo_name,
+        "CoreEngine/output/response_cache/",
     )
 
     # Prepare to collect responses for each issue
