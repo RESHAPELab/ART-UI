@@ -188,33 +188,33 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": os.getenv("REDIS_URL"),
-    }
-}
-
 # CACHES = {
 #     "default": {
 #         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-#         "LOCATION": "redis://127.0.0.1:6379",
+#         "LOCATION": os.getenv("REDIS_URL"),
 #     }
 # }
 
-# RQ_QUEUES = {
-#     "default": {
-#         "URL": "redis://127.0.0.1:6379",  # Adjust as necessary
-#         "DEFAULT_TIMEOUT": 500,
-#     },
-# }
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
 
 RQ_QUEUES = {
     "default": {
-        "URL": os.getenv("REDIS_URL"),  # Adjust as necessary
+        "URL": "redis://127.0.0.1:6379",  # Adjust as necessary
         "DEFAULT_TIMEOUT": 500,
     },
 }
+
+# RQ_QUEUES = {
+#     "default": {
+#         "URL": os.getenv("REDIS_URL"),  # Adjust as necessary
+#         "DEFAULT_TIMEOUT": 500,
+#     },
+# }
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
