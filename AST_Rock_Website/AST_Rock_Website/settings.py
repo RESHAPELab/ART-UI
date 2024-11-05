@@ -198,13 +198,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
+        "LOCATION": os.getenv("REDIS_URL"),
     }
 }
 
 RQ_QUEUES = {
     "default": {
-        "URL": "redis://127.0.0.1:6379",  # Adjust as necessary
+        "URL": os.getenv("REDIS_URL"),  # Adjust as necessary
         "DEFAULT_TIMEOUT": 500,
     },
 }
