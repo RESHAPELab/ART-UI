@@ -42,8 +42,8 @@ from CoreEngine.src.database_manager import DatabaseManager
 from CoreEngine.src.external import External_Model_Interface
 
 
-@login_required
 def your_repositories(request):
+    return
     user = request.user
     print(user)
 
@@ -86,14 +86,17 @@ def your_repositories(request):
         )
 
 
-@login_required
 def repo_detail(request, repo_name):
 
-    token = request.session.get("github_token")
-    username = request.session.get("username")
+    token = os.getenv("GITHUB_KEY")
+    username = os.getenv("GITHUB_USERNAME")
+
+    openai_key = os.getenv(
+        "GITHUB_KEY"
+    )  # Ensure you store OpenAI API key in session or settings
 
     # Call to get_open_issues function
-    issues = get_open_issues(username, repo_name, token)
+    issues = get_open_issues(username, repo_name, token, max_count=20)
     print("open issues: ", issues)
 
     openai_key = os.getenv(
@@ -173,14 +176,11 @@ def index(request):
     return render(request, "index.html")
 
 
-@login_required
 def your_dashboard(request):
     return render(request, "your_dashboard.html")
 
 
-@login_required
 def repositories_by_link(request):
-    token = request.session.get("github_token")
     if request.method == "POST":
         github_link = request.POST.get("github_link")
         match = re.search(r"github\.com/(.+?)/(.+?)(\.git|$)", github_link)
@@ -205,7 +205,6 @@ def repositories_by_link(request):
     return render(request, "repositories_by_link.html")
 
 
-@login_required
 def task_status(request, repo_name):
     queue = django_rq.get_queue("default")
     # Assuming you have stored the job ID in the session or a similar retrievable location
@@ -217,7 +216,6 @@ def task_status(request, repo_name):
         return JsonResponse({"complete": False})
 
 
-@login_required
 def render_issues_results(request, username, repo_name):
     print("Rendering Issue Results")
     cache_key = f"{username}_{repo_name}_issues_responses"
@@ -263,7 +261,6 @@ def get_CoreEngine_version(request):
     )
 
 
-@login_required
 def splash_screen(request, repo_name, username):
     return render(
         request, "splash_screen.html", {"repo_name": repo_name, "username": username}
