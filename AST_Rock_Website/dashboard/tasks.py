@@ -13,9 +13,9 @@ from CoreEngine.src.database_manager import DatabaseManager
 from CoreEngine.src.external import External_Model_Interface
 
 
-def process_repository_issues(username, repo_name, openai_key):
+def process_repository_issues(username, repo_name, openai_key, quantity):
     # Call to get_open_issues function
-    issues = get_open_issues_without_token(username, repo_name)
+    issues = get_open_issues_without_token(username, repo_name, quantity)
     # print("open issues: ", issues)
 
     db = DatabaseManager(
@@ -47,7 +47,7 @@ def process_repository_issues(username, repo_name, openai_key):
     responses_rf = []
     responses_gpt = []
 
-    max_issues = 20
+    max_issues = quantity
 
     for issue in issues[:max_issues]:
         print(f"Processing {issue.number}")
