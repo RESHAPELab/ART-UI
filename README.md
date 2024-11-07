@@ -34,10 +34,23 @@ SkillScope UI is a dynamic web application designed for classifying open issues 
 5. Install Python Packages
     > ``` sh
     > pip install -r requirements.txt
-6. Setup the Database
+
+6. Install Spacy Package
+  > ``` sh
+  > pip install spacy 
+
+7. Download spacy/en_core_web_md
+  > ``` sh
+  > python3 -m spacy download en_core_web_md  
+
+8.  Collect the staticfiles
+   > ``` sh
+   > python3 manage.py collectstatic   
+
+9. Setup the Database
     > ``` sh
     > python3 manage.py migrate
-7. Run. Use two terminals (make sure to keep the virtual environment slected)
+10. Run. Use two terminals (make sure to keep the virtual environment slected)
     ``` sh
         # One terminal:
         gunicorn AST_Rock_Website.wsgi -b 127.0.0.1:1234
