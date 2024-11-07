@@ -29,19 +29,27 @@ SkillScope UI is a dynamic web application designed for classifying open issues 
     > ``` sh
     > virtualenv venv
     > source venv/bin/activate
-4. Install Python Packages
+4. Create `.env` file
+    > See the ENV section below for the required env variables.
+5. Install Python Packages
     > ``` sh
     > pip install -r requirements.txt
-5. Setup the Database
+6. Setup the Database
     > ``` sh
     > python3 manage.py migrate
-6. Run. Use two terminals (make sure to keep the virtual environment slected)
+7. Run. Use two terminals (make sure to keep the virtual environment slected)
     ``` sh
         # One terminal:
         gunicorn AST_Rock_Website.wsgi -b 127.0.0.1:1234
         # Second terminal:
         python3 manage.py rqworker default
     ```
+
+### .ENV Requirements
+- `DJANGO_SETTINGS_MODULE` : Should be the location of the settings file. `AST_Rock_Website.settings`
+- `OPENAI_API_KEY` : OpenAI key that is able to access the pre-trained models trained from CoreEngine.
+- `REDIS_URL` : Location of the redis-server
+- `DJANGO_SECRET_KEY` : Django Secret Key for session management
 
 ### File Structure
 Inside `AST_Rock_Website/AST_Rock_Website/`
