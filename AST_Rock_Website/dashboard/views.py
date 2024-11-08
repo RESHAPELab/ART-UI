@@ -65,7 +65,12 @@ def repositories_by_link(request):
             # Trigger the RQ job
             queue = django_rq.get_queue("default")
             job = queue.enqueue(
-                process_repository_issues, username, repo_name, openai_key, quantity
+                process_repository_issues,
+                username,
+                repo_name,
+                openai_key,
+                quantity,
+                domain_quantity,
             )
             job_count = queue.count
             print(f"There are {job_count} jobs in the queue.")
@@ -99,12 +104,8 @@ def render_issues_results(request, username, repo_name):
     domain_q = request.session.get("job_id_" + repo_name + "_display", 3)
 
     issues_responses = cache.get(cache_key)
-    if issues_responses:
-        issues_responses_list = list(issues_responses)  # Ensure it's a list
-    else:
-        issues_responses_list = []
 
-    if not issues_responses_list:
+    if not issues_responses:
         return render(
             request,
             "repo_detail.html",
@@ -114,12 +115,59 @@ def render_issues_results(request, username, repo_name):
             },
         )
 
+    # (issues, responses_rf, responses_gpt, responses_gpt_combo)
+
+    issue_data, response_rf_data, response_gpt_data, response_gpt_combo_data = (
+        issues_responses
+    )
+    print(response_gpt_combo_data)
+
+    new_response_rf_data = []
+    for resp in response_rf_data:
+        if resp is None:
+            continue
+        if len(resp) > domain_q:
+            new_response_rf_data.append(resp[0:domain_q])
+            continue
+        new_response_rf_data.append(resp)
+
+    new_response_gpt_data = []
+    for resp in response_gpt_data:
+        if resp is None:
+            continue
+        if len(resp) > domain_q:
+            new_response_gpt_data.append(resp[0:domain_q])
+            continue
+        new_response_gpt_data.append(resp)
+
+    new_response_gpt_combo_data = []
+    for resp in response_gpt_combo_data:
+        if resp is None:
+            continue
+        row = []
+        counter = 0
+        for domain, subdomain_list in resp.items():
+            if counter > domain_q:
+                break
+            counter += 1
+            row.append(subdomain_list)
+        new_response_gpt_combo_data.append(row)
+
+    issues_responses = list(
+        zip(
+            issue_data,
+            new_response_rf_data,
+            new_response_gpt_data,
+            new_response_gpt_combo_data,
+        )
+    )
+
     return render(
         request,
         "repo_detail.html",
         {
             "repo_name": repo_name,
-            "issues_responses": issues_responses_list,  # Pass as list
+            "issues_responses": issues_responses,  # Pass as list
         },
     )
 
