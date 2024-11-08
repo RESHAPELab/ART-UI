@@ -1,7 +1,6 @@
 
 
 {% load static %}
-{% load socialaccount %}
 
 <!DOCTYPE HTML>
 <style>
@@ -77,21 +76,13 @@
             </header>
 
 				<!-- Menu -->
-					<nav id="menu">
-						<ul class="links">
-							<li><a href="{% url 'index' %}" class="button primary fit">Home</a></li>
-							
-							
-						</ul>
-						<ul class="actions stacked">
-							{% if user.is_authenticated %}
-								<li><a href="{% url 'account_logout' %}" class="button primary fit">Log Out</a></li>
-							{% else %}
-								<!-- Show login link if user is not logged in -->
-								<li><a href="{% url 'account_login' %}" class="button primary fit">Log In</a></li>
-							{% endif %}
-						</ul>
-					</nav>
+				<nav id="menu">
+					<ul class="actions stacked" style="width: 100%; justify-content: center; align-items: center;">
+							<li style="width: 100%"><a href="/" class="button primary fit">Home</a></li>
+							<!-- Show login link if user is not logged in -->
+							<li style="width: 100%"><a href="{% url 'view_repository' %}" class="button primary fit">Pick Another Repository</a></li>
+					</ul>
+				</nav>
 
 
 				<!-- Main -->

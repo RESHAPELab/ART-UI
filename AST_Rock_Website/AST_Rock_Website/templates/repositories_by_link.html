@@ -1,5 +1,4 @@
 {% load static %}
-{% load socialaccount %}
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -24,30 +23,34 @@
 
 				<!-- Menu -->
 					<nav id="menu">
-						<ul class="links">
-							<li><a href="{% url 'index' %}" class="button primary fit">Home</a></li>
-							
-							
-						</ul>
-						<ul class="actions stacked">
-							{% if user.is_authenticated %}
-								<li><a href="{% url 'account_logout' %}" class="button primary fit">Log Out</a></li>
-							{% else %}
+						<ul class="actions stacked" style="width: 100%; justify-content: center;">
+								<li><a href="/" class="button primary fit">Home</a></li>
 								<!-- Show login link if user is not logged in -->
-								<li><a href="{% url 'account_login' %}" class="button primary fit">Log In</a></li>
-							{% endif %}
+								<li><a href="{% url 'view_repository' %}" class="button primary fit">Pick Another Repository</a></li>
 						</ul>
 					</nav>
 
 				<!-- Main -->
 					<!-- Min -->
 					<div id="main" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-						<form action="{% url 'repositories_by_link' %}" method="POST" class="alt" style="width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center;">
+						<form action="{% url 'view_repository' %}" method="POST" class="alt" style="width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center;">
 							{% csrf_token %}
-							<input type="url" name="github_link" placeholder="Enter GitHub repository link" required class="alt" style="width: 100%; margin-bottom: 20px;">
+							<ul class="actions" style="width: 100%; justify-content: center; margin-bottom: 20px;">
+								<li>Enter GitHub repository link to query below</li>
+							</ul>
+							<input type="url" name="github_link" placeholder="https://github.com/Example/example" required class="alt" style="width: 100%; margin-bottom: 20px;">
+							<ul class="actions" style="width: 100%; justify-content: center; margin-bottom: 20px;">
+								<li>Enter quantity of issues to classify</li>
+							</ul>
+							<input type="number" name="quantity" value="10" min="1" max="100" required class="primary" style="width: 100%; margin-bottom: 20px;">
+							<ul class="actions" style="width: 100%; justify-content: center; margin-bottom: 20px;">
+								<li>Enter max number of matching domains to pick for each issue</li>
+							</ul>
+							<input type="number" name="domain_quantity" value="3" min="1" max="10" required class="primary" style="width: 100%; margin-bottom: 20px;">
 							<ul class="actions" style="width: 100%; justify-content: center;">
 								<li><input type="submit" value="Submit" class="primary"></li>
 							</ul>
+							
 						</form>
 					</div>
 

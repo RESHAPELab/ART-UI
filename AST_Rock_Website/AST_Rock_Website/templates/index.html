@@ -1,5 +1,4 @@
 {% load static %}
-{% load socialaccount %}
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -17,27 +16,9 @@
 				<!-- Header -->
 					<header id="header" class="alt">
 						<a href="{% url 'index' %}" class="logo"><strong>SkillScope</strong> <span>Precision at Every Push</span></a>
-						<nav>
-							<a href="#menu">Menu</a>
-						</nav>
 					</header>
 
 				<!-- Menu -->
-					<nav id="menu">
-						<ul class="links">
-							<li><a href="{% url 'index' %}" class="button primary fit">Home</a></li>
-						</ul>
-						<ul class="actions stacked">
-							{% if user.is_authenticated %}
-								<!-- Show dashboard link if user is logged in -->
-								<li><a href="{% url 'your_dashboard' %}" class="button primary fit">Your Dashboard</a></li>
-								<li><a href="{% url 'account_logout' %}" class="button primary fit">Log Out</a></li>
-							{% else %}
-								<!-- Show login link if user is not logged in -->
-								<li><a href="{% url 'account_login' %}" class="button primary fit">Log In</a></li>
-							{% endif %}
-						</ul>
-					</nav>
 
 				<!-- Banner -->
 					<section id="banner" class="major">
@@ -48,17 +29,13 @@
 							<div class="content">
 								<p>SkillScope aims to assist new contributors in finding tasks to work on OSS projects by revealing skills needed to solve open tasks. SkillScope mines projects data identifying intrinsic souce code program structure from where It is able to classify internal libraries and funcions and train a ML model ou Fine tune LLM. The model ir LLM can predict the skills showed in its UI.</p>
 								<ul class="actions">
-									{% if user.is_authenticated %}
-										<li><a href="{% url 'your_dashboard' %}"  class="button next scrolly">Your Dashboard</a></li>
-									{% else %}
-										<li><a href="{% provider_login_url 'github' method='oauth2' %}" class="button">Log In</a></li>
-									{% endif %}
+									<li><a href="{% url 'view_repository' %}"  class="button next scrolly">Continue</a></li>
 								</ul>
 							</div>
 						</div>
 					</section>
 
-				<!-- Main
+					<!--
 					<div id="main">
 
 						
@@ -111,19 +88,9 @@
 							</section>
 
 						
-							<section id="two">
-								<div class="inner">
-									<header class="major">
-										<h2>The AST Team</h2>
-									</header>
-									<p>Each team's efforts are interconnected, contributing to a comprehensive system that leverages machine learning and AI to enhance the management and categorization of software development tasks within GitHub repositories.</p>
-									<ul class="actions">
-										<li><a href="{% url 'your_dashboard' %}" class="button next">Your Dashboard</a></li>
-									</ul>
-								</div>
-							</section>
 
-					</div> -->
+					</div> 
+				-->
 
 				<!-- Contact -->
 					

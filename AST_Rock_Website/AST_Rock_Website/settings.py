@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
-import django_heroku
-import dj_database_url
 import dotenv
 
 
@@ -35,6 +33,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "still-mesa-24591-bad3365c7700.herokuapp.com",
     "localhost",
+    "skillscope.development.codingcando.com",
+    "skillscope.codingcando.com",
     "127.0.0.1",
 ]
 
@@ -48,52 +48,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.github",
     "dashboard",
     "django_rq",
 ]
 
 SITE_ID = 1
 
-AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-)
-
-
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
-
-
-# Specifies that only social login should be used (no username/password)
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
-SOCIALACCOUNT_AUTO_SIGNUP = True
-
-# Ensure social account is enabled
-SOCIALACCOUNT_ENABLED = True
-SOCIALACCOUNT_STORE_TOKENS = True
-
-
-# GitHub configuration - Make sure to replace CLIENT_ID and SECRET_KEY with your actual GitHub App credentials
-SOCIALACCOUNT_PROVIDERS = {
-    "github": {
-        "APP": {
-            "client_id": os.getenv("GITHUB_APP_CLIENT_ID"),
-            "secret": os.getenv("GITHUB_SECRET"),
-            "key": os.getenv("GITHUB_KEY"),
-        },
-        "SCOPE": ["user", "user:email", "repo"],  # Added 'repo' scope
-        "EXTRA_DATA": [
-            ("login", "username"),
-        ],
-    }
-}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -103,7 +65,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
@@ -140,25 +101,6 @@ DATABASES = {
         "NAME": "db.sqlite3",
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
 
 
 # Internationalization
@@ -215,6 +157,3 @@ RQ_QUEUES = {
 #         "DEFAULT_TIMEOUT": 500,
 #     },
 # }
-
-# Activate Django-Heroku.
-django_heroku.settings(locals())
