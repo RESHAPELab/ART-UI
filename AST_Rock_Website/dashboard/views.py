@@ -120,7 +120,6 @@ def render_issues_results(request, username, repo_name):
     issue_data, response_rf_data, response_gpt_data, response_gpt_combo_data = (
         issues_responses
     )
-    print(response_gpt_combo_data)
 
     new_response_rf_data = []
     for resp in response_rf_data:
