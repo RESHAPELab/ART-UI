@@ -92,7 +92,7 @@
 							<h1>{{ repo_name }}</h1>
 							<h2>{{ message }}</h2>
 							<ul class="alt">
-								{% for issue, rf_response, gpt_response in issues_responses %}
+								{% for issue, rf_response, gpt_response, gpt_combo_response in issues_responses %}
 								<li>
 									<div>
 										<strong>Issue Number:</strong> {{ issue.number }}
@@ -110,10 +110,35 @@
 									<div id="desc{{ forloop.counter }}" style="display: none;">
 										<p>{{ issue.body }}</p>
 										<div>
-											<strong>Random Forest Classification:</strong> {{ rf_response }}
+											<strong>Random Forest Classification:</strong>
+											<ul>
+											{% for domains in rf_response %}
+												<li>{{domains}}</li>
+											{% endfor %}
+											</ul>
 										</div>
 										<div>
-											<strong>OpenAI Classification:</strong> {{ gpt_response }}
+											<strong>New Binary Classification OpenAI Method:</strong> 
+											<ul>
+											{% for domains in gpt_combo_response %}
+												<li>
+													<ul style="margin: 0px; padding: 0px; border: none">
+														{% for domain in domains %}
+															<li style="margin: 0px; padding: 0px; border: none">{{domain}}</li>
+														{% endfor %}
+													</ul>
+
+												</li>
+											{% endfor %}
+											</ul>
+										</div>
+										<div>
+											<strong>Old OpenAI Classification:</strong>
+											<ul>
+											{% for domains in gpt_response %}
+												<li>{{domains}}</li>
+											{% endfor %}
+											</ul>
 										</div>
 									</div>
 									
