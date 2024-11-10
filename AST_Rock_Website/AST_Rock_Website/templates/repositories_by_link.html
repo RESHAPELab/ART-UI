@@ -47,6 +47,14 @@
 								<li>Enter max number of matching domains to pick for each issue</li>
 							</ul>
 							<input type="number" name="domain_quantity" value="3" min="1" max="10" required class="primary" style="width: 100%; margin-bottom: 20px;">
+							<ul class="actions" style="width: 100%; justify-content: center; margin-bottom: 20px;">
+								<li>Enter algorithm</li>
+							</ul>
+							<select name="algorithm_choice" id="algorithm_choice" required class="primary" style="width: 100%; margin-bottom: 20px;">
+								<option value="rf">Random Forest</option>
+								<option value="gpt">Single GPT Unified</option>
+								<option value="gpt-combined">Binary Classification Tiered GPT</option>
+							</select>
 							<ul class="actions" style="width: 100%; justify-content: center;">
 								<li><input type="submit" value="Submit" class="primary"></li>
 							</ul>

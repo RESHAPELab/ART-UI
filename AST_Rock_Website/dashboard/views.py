@@ -55,6 +55,10 @@ def repositories_by_link(request):
             except:
                 domain_quantity = 3
 
+            model_select = request.POST.get("algorithm_choice")
+            if model_select not in ["rf", "gpt", "gpt-combined"]:
+                model_select = "rf"
+
             if quantity > 100:
                 quantity = 100
             if domain_quantity > 10:
@@ -71,11 +75,13 @@ def repositories_by_link(request):
                 openai_key,
                 quantity,
                 domain_quantity,
+                model_select,
             )
             job_count = queue.count
             print(f"There are {job_count} jobs in the queue.")
             request.session["job_id_" + repo_name] = job.id
             request.session["job_id_" + repo_name + "_display"] = domain_quantity
+            request.session["job_id_" + repo_name + "_model_type"] = model_select
             print("Asynchronous Task is in queue")
             # Immediately redirect to a loading page
             return render(
@@ -99,8 +105,8 @@ def task_status(request, repo_name):
 
 def render_issues_results(request, username, repo_name):
     print("Rendering Issue Results")
-    cache_key = f"{username}_{repo_name}_issues_responses"
-
+    model_select = request.session.get("job_id_" + repo_name + "_model_type", "rf")
+    cache_key = f"{username}_{repo_name}_issues_responses_{model_select}"
     domain_q = request.session.get("job_id_" + repo_name + "_display", 3)
 
     issues_responses = cache.get(cache_key)
@@ -117,9 +123,34 @@ def render_issues_results(request, username, repo_name):
 
     # (issues, responses_rf, responses_gpt, responses_gpt_combo)
 
-    issue_data, response_rf_data, response_gpt_data, response_gpt_combo_data = (
-        issues_responses
-    )
+    issue_data, responses, model_select = issues_responses
+
+    if model_select == "rf":
+        response_rf_data = responses
+        response_gpt_data = []
+        response_gpt_combo_data = []
+        for x in range(len(responses)):
+            response_gpt_data.append([])
+        for x in range(len(responses)):
+            response_gpt_combo_data.append({})
+
+    if model_select == "gpt":
+        response_rf_data = []
+        response_gpt_data = responses
+        response_gpt_combo_data = []
+        for x in range(len(responses)):
+            response_rf_data.append([])
+        for x in range(len(responses)):
+            response_gpt_combo_data.append({})
+
+    if model_select == "gpt-combined":
+        response_rf_data = []
+        response_gpt_data = []
+        response_gpt_combo_data = responses
+        for x in range(len(responses)):
+            response_rf_data.append([])
+        for x in range(len(responses)):
+            response_gpt_data.append([])
 
     new_response_rf_data = []
     for resp in response_rf_data:
