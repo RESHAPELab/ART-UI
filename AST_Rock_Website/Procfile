@@ -1,2 +1,0 @@
-web: gunicorn AST_Rock_Website.wsgi --log-file -
-worker: python manage.py rqworker default
