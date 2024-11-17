@@ -3,13 +3,14 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-*/staticfiles.json
+AST_Rock_Website/staticfiles/staticfiles.json
 
 # C extensions
 *.so
 
 # Custom Changes
 venv2/
+venv/
 
 
 # Distribution / packaging

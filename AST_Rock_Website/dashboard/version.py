@@ -1,6 +1,6 @@
 # When making any changes, change the website version variable below:
 
-WEBSITE_VERSION = "1.3.0"
+WEBSITE_VERSION = "2.0.0"
 
 
 ## Put all "code-related" files here. This calculates a hash that
