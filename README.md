@@ -33,14 +33,13 @@ SkillScope UI is a dynamic web application designed for classifying open issues 
     > source venv/bin/activate
 4. Create `.env` file
     > See the ENV section below for the required env variables.
-5. Install Python Packages
+5. Install Dependencies
+    > ``` sh
+    > sudo apt update
+    > sudo apt install libpq-dev # to install psycopg2
+6. Install Python Packages
     > ``` sh
     > pip install -r requirements.txt
-
-6. Install Spacy Package
-    > ``` sh
-    > pip install spacy 
-
 7. Download spacy/en_core_web_md
     > ``` sh
     > python3 -m spacy download en_core_web_md  
